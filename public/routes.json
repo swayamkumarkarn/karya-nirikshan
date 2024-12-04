@@ -1,18 +1,48 @@
 [
   {
     "path": "/",
-    "component": "./pages/index.jsx"
-  },
-  {
-    "path": "/about",
-    "component": "./pages/about/index.jsx"
-  },
-  {
-    "path": "/about/:id",
-    "component": "./pages/about/[id].jsx"
-  },
-  {
-    "path": "/home",
-    "component": "./pages/home/index.js"
+    "component": "./pages/index.jsx",
+    "layout": "./pages/layout.jsx",
+    "meta": {},
+    "children": [
+      {
+        "path": "/about",
+        "component": "./pages/about/index.jsx",
+        "layout": "./pages/about/layout.jsx",
+        "meta": {},
+        "children": [
+          {
+            "path": "/about/home",
+            "component": "./pages/about/home/index.jsx",
+            "layout": null,
+            "meta": {},
+            "children": [
+              {
+                "path": "/about/home/inhome",
+                "component": "./pages/about/home/inhome/index.jsx",
+                "layout": null,
+                "meta": {},
+                "children": []
+              }
+            ]
+          },
+          {
+            "path": "/about/:id",
+            "component": "./pages/about/[id].jsx",
+            "children": []
+          }
+        ]
+      },
+      {
+        "path": "/home",
+        "component": "./pages/home/index.js",
+        "layout": "./pages/home/layout.jsx",
+        "meta": {
+          "title": "Home Page",
+          "description": "This is the home page"
+        },
+        "children": []
+      }
+    ]
   }
 ]

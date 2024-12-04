@@ -1,7 +1,7 @@
 // src/pages/home/index.js
 import React from 'react';
 
- function Home() {
+export function Home() {
   return <div>Home Page</div>;
 }
 
@@ -10,6 +10,4 @@ export const meta = {
   description: "This is the home page",
 };
 
-  
-  export default Home;
-  
+export default Home;
