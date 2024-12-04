@@ -1,0 +1,18 @@
+[
+  {
+    "path": "/",
+    "component": "./pages/index.jsx"
+  },
+  {
+    "path": "/about",
+    "component": "./pages/about/index.jsx"
+  },
+  {
+    "path": "/about/:id",
+    "component": "./pages/about/[id].jsx"
+  },
+  {
+    "path": "/home",
+    "component": "./pages/home/index.js"
+  }
+]

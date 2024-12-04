@@ -1,0 +1,6 @@
+{
+    "watch": ["src/pages"],
+    "ext": "jsx,js",
+    "exec": "npm run generate:routes"
+  }
+  
