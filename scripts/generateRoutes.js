@@ -4,6 +4,7 @@ const esbuild = require("esbuild");
 
 const PAGES_DIR = path.join(__dirname, "../src/pages");
 const ROUTES_FILE = path.join(__dirname, "../public/routes.json");
+const ROUTES_FILE_FLAT = path.join(__dirname, "../public/routesFlat.json");
 
 // Utility function to safely require or transpile modules
 function safeRequire(filePath) {
@@ -165,4 +166,5 @@ const nestedRoutes = buildRoutesTree(routes);
 
 // Write the generated routes to routes.json
 fs.writeFileSync(ROUTES_FILE, JSON.stringify(nestedRoutes, null, 2), "utf-8");
+fs.writeFileSync(ROUTES_FILE_FLAT, JSON.stringify(routes, null, 2), "utf-8");
 console.log("Routes generated successfully!");

@@ -1,89 +1,98 @@
-import React, { useEffect, useState } from "react";
-import { Routes, Route, Outlet, useLocation } from "react-router-dom";
-import MetaTags from "./components/MetaTags";
+import React, { Suspense, lazy, useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, matchPath } from "react-router-dom";
+import MetaTags from "./components/MetaTags"
 
 const App = () => {
   const [routes, setRoutes] = useState([]);
+  const [routesFlat, setRoutesFlat] = useState([]);
 
   useEffect(() => {
-    // Fetch the routes dynamically from the routes.json file
     fetch("/routes.json")
       .then((response) => response.json())
-      .then((data) => setRoutes(data));
+      .then((data) => setRoutes(data))
+      .catch((error) => console.error("Error fetching routes:", error));
   }, []);
 
-  if (routes.length === 0) {
+  useEffect(() => {
+    fetch("/routesFlat.json")
+      .then((response) => response.json())
+      .then((data) => setRoutesFlat(data))
+      .catch((error) => console.error("Error fetching routes:", error));
+  }, []);
+
+  if (routes.length === 0 || routesFlat.length === 0) {
     return <div>Loading...</div>;
   }
 
-  // Recursive function to render the routes dynamically
-  const renderRoute = (route) => {
-    const Component = React.lazy(() => import(`${route.component}`));
-    const LayoutComponent = route.layout
-      ? React.lazy(() => import(`${route.layout}`))
-      : null;
-
-    return (
-      <Route
-        key={route.path}
-        path={route.path}
-        element={
-          <RouteWithLayout
-            LayoutComponent={LayoutComponent}
-            Component={Component}
-            meta={route.meta}
-            routePath={route.path} // Pass the current route's path to RouteWithLayout
-            hasChildren={!!route.children} // Pass whether the route has children
-          />
+  // Recursive function to find layouts for a path
+  function findLayoutsForPath(path, routes) {
+    const layouts = [];
+  
+    function recursiveFind(currentPath, currentRoutes) {
+      for (const route of currentRoutes) {
+        // Check if the route path matches or is a parameterized route
+        const regex = new RegExp(`^${route.path.replace(/:\w+/g, '\\w+')}`);
+        if (regex.test(currentPath)) {
+          // Add the current layout if it exists
+          if (route.layout) {
+            layouts.push(lazy(() => import(`${route.layout}`)));
+          }
+          
+          // Recursively check children routes if they exist
+          if (route.children && route.children.length > 0) {
+            recursiveFind(currentPath, route.children);
+          }
+          
+          // If we found a match, we can return early
+          return;
         }
-      >
-        {/* Recursively render child routes */}
-        {route.children?.map(renderRoute)}
-      </Route>
+      }
+    }
+  
+    recursiveFind(path, routes);
+    return layouts;
+  }
+
+  const DynamicComponent = ({ route }) => {
+    const Component = lazy(() => import(`${route.component}`));
+    return (
+      <Suspense fallback={<div>Loading component...</div>}>
+          
+        <MetaTags meta={route.meta}/>
+        <Component />
+      </Suspense>
     );
   };
 
-  return (
-    <Routes>
-      {/* Dynamically render all routes */}
-      {routes.map(renderRoute)}
+  const RouteWithLayouts = ({ route }) => {
+    // console.log("inside RouteWithLayouts \t ",route.path,"\t and \t", routes);
+    const layouts = findLayoutsForPath(route.path, routes);
+    
+    console.log("inside RouteWithLayouts \t ",layouts);
+    return (
+      <Suspense fallback={<div>Loading layouts...</div>}>
+        {layouts.reduceRight(
+          (children, Layout) => <Layout>{children}</Layout>,
+          <DynamicComponent route={route} />
+        )}
+      </Suspense>
+    );
+  };
 
-      {/* Fallback for unmatched routes */}
-      <Route path="*" element={<div>404 Not Found</div>} />
-    </Routes>
-  );
-};
-
-// A custom wrapper component to manage layout and conditional rendering
-const RouteWithLayout = ({
-  LayoutComponent,
-  Component,
-  meta,
-  routePath,
-  hasChildren,
-}) => {
-  const location = useLocation();
-
-  // Dynamically determine if the current path matches the route's path
-  const isExactMatch = location.pathname === routePath;
+  const renderRoutes = (routesFlat) =>
+    routesFlat.map((route) => (
+      <Route key={route.path} path={route.path} element={<RouteWithLayouts route={route} />} />
+    ));
 
   return (
-    <React.Suspense fallback={<div>Loading...</div>}>
-      {LayoutComponent ? (
-        <LayoutComponent>
-          <MetaTags meta={meta} />
-          {/* Render the main component only if the current path matches the route's path */}
-          {isExactMatch && <Component />}
-          {/* Render the Outlet only if the route has children */}
-          {hasChildren && <Outlet />}
-        </LayoutComponent>
-      ) : (
-        <>
-          <MetaTags meta={meta} />
-          <Component />
-        </>
-      )}
-    </React.Suspense>
+    <Suspense fallback={<div>Loading app...</div>}>
+      <Router>
+        <Routes>
+          {renderRoutes(routesFlat)}
+          <Route path="*" element={<div>404 Not Found</div>} />
+        </Routes>
+      </Router>
+    </Suspense>
   );
 };
 

@@ -17,6 +17,7 @@
   "scripts": {
     "reactBit": "node scripts/reactBit.js",
     "generate:routes": "node scripts/generateRoutes.js",
+    "gen": "node scripts/genback.js",
     "start": "npm run reactBit",
     "build": "npm run generate:routes && react-scripts build",
     "react": "react-scripts start"
