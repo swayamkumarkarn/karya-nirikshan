@@ -3,7 +3,10 @@
     "path": "/",
     "component": "./pages/index.jsx",
     "layout": "./pages/layout.jsx",
-    "meta": {}
+    "meta": {
+      "title": "Home Page",
+      "description": "This is the home page"
+    }
   },
   {
     "path": "/about",
