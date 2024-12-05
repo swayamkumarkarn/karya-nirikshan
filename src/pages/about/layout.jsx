@@ -1,7 +1,7 @@
 // src/pages/about/layout.jsx
 import React from "react";
 import { Link } from "react-router-dom"; // Optional: for adding navigation links
-import MyLink from "../../components/MyLink";
+import MyLink from "../../lib/component/MyLink";
 
 const AboutLayout = ({ children }) => {
   return (

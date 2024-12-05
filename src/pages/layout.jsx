@@ -2,16 +2,19 @@
 import React from "react";
 import Header from "../components/Header";
 
+import SideBar from "../components/SideBar/index";
+
 const MainLayout = ({ children }) => {
   return (
-    <div className="bg-gray-100">
-      <header>
-        {/* <h3>Main Layout Head</h3> */}
-        <Header/>
-      </header>
-      <main>{children}</main>
-      {/* <h3>Main Layout Footer</h3> */}
-    </div>
+    <>
+      <div className="bg-gray-100 flex">
+        <SideBar />
+        <div className="w-[83%] float-right">
+          <Header />
+          <main className="border-4 border-blue-400">{children}</main>
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -1,0 +1,18 @@
+.imageContainer {
+  display: inline-block;
+  -webkit-mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/300% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 1s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    -webkit-mask-position: left;
+  }
+}
+
+img {
+  max-width: 200px;
+  object-fit: contain; /* To maintain aspect ratio */
+  opacity: 0.6;
+}

@@ -6,7 +6,7 @@ import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
 
 const Header = () => {
     return (
-        <header className="w-[83%] float-right  text-black px-6 py-4 flex justify-between items-center ">
+        <header className="w-full text-black px-6 py-4 flex justify-between items-center ">
            
             <div className="flex items-center space-x-4 flex-grow">
                 <button className="bg-black text-white px-3 py-2 rounded font-bold shadow-md">

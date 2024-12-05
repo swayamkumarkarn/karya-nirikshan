@@ -1,21 +1,18 @@
+import React from "react";
+import Loader from "../components/Loader";
 
-import React from 'react';
-import SideBar from '../components/SideBar/index'
 const Home = () => {
   return (
     <>
-      {/* <div>Home Page</div> */}
-      <SideBar />
+      <h1>HellojhdkjhKJSHNLKVNLK dfjjdjGFJKGBhjbvgkj<br/> gysdsgfkkjghlhlkdjkfjgKJDSFlhaDKLhfjkg</h1>
+      {/* <Loader /> */}
     </>
+  );
+};
 
-  )
-  };
+export const meta = {
+  title: "Home Page",
+  description: "This is the home page",
+};
 
-
-  export const meta = {
-    title: "Home Page",
-    description: "This is the home page",
-  };
-  
-  export default Home;
-  
+export default Home;

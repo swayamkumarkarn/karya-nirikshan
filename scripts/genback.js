@@ -115,7 +115,7 @@ function findLayoutsForPath(path, routes) {
       if (regex.test(currentPath)) {
         // Add the current layout if it exists
         if (route.layout) {
-          layouts.push(lazy(() => import(`${route.layout}`)));
+          layouts.push(`${route.layout}`);
         }
         
         // Recursively check children routes if they exist
