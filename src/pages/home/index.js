@@ -1,8 +1,16 @@
 // src/pages/home/index.js
 import React from 'react';
 
+
 export function Home() {
-  return <div>Home Page</div>;
+  return (
+    <>
+      <div>Home Page</div>
+      {/* <SideBar /> */}
+    </>
+
+  )
+
 }
 
 export const meta = {
