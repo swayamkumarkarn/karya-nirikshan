@@ -38,5 +38,11 @@
       "title": "Home Page",
       "description": "This is the home page"
     }
+  },
+  {
+    "path": "/documents",
+    "component": "./pages/documents/index.jsx",
+    "layout": null,
+    "meta": {}
   }
 ]

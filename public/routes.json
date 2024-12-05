@@ -45,6 +45,13 @@
           "description": "This is the home page"
         },
         "children": []
+      },
+      {
+        "path": "/documents",
+        "component": "./pages/documents/index.jsx",
+        "layout": null,
+        "meta": {},
+        "children": []
       }
     ]
   }

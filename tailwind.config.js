@@ -1,12 +1,14 @@
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}", // Adjust for JavaScript or TypeScript files
+    "./src/**/*.{js,jsx,ts,tsx}",
     "./pages/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        seaGreen: "#347571", // Added custom color as seaGreen
+      },
+    },
   },
   plugins: [],
 }
-
-

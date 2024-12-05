@@ -1,7 +1,6 @@
 // src/pages/about/layout.jsx
 import React from "react";
 import Header from "../components/Header";
-
 import SideBar from "../components/SideBar/index";
 
 const MainLayout = ({ children }) => {
@@ -10,8 +9,12 @@ const MainLayout = ({ children }) => {
       <div className="bg-gray-100 flex">
         <SideBar />
         <div className="w-[83%] float-right">
-          <Header />
-          <main className="border-4 border-blue-400">{children}</main>
+          <div className=" flex flex-col h-screen">
+            <Header />
+            <main className="border border-blue-400 overflow-y-auto h-screen">
+              {children}
+            </main>
+          </div>
         </div>
       </div>
     </>
