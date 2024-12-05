@@ -11,7 +11,7 @@ const MainLayout = ({ children }) => {
         <div className="w-[83%] float-right">
           <div className=" flex flex-col h-screen">
             <Header />
-            <main className="border border-blue-400 overflow-y-auto h-screen">
+            <main className=" border-blue-400 overflow-y-auto h-screen">
               {children}
             </main>
           </div>
