@@ -49,8 +49,6 @@ const Dashboard = () => {
 
       </div>
 
-
-
       <TableHome data={documents} columns={columns} />
     </div>
   );
