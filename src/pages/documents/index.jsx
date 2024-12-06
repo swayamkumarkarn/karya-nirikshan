@@ -1,5 +1,6 @@
 import React from "react";
 import { TiPin } from "react-icons/ti";
+import CustomButton from "../../components/Common/CustomButton";
 
 function DocumentsTable() {
   const documents = [
@@ -8,7 +9,7 @@ function DocumentsTable() {
       documentNo: "123/321/IN",
       department: "Medical",
       date: "23-11-24 04:00pm",
-      title: "Medication",
+      title: "Medication ",
       status: "Active",
     },
     {
@@ -156,7 +157,7 @@ function DocumentsTable() {
       <div
         className="grid grid-cols-2 gap-4"
         style={{
-          gridTemplateColumns: "6fr 3fr", // Adjusting ratio for columns
+          gridTemplateColumns: "7fr 3fr", // Adjusting ratio for columns
         }}
       >
         {/* Left section with content */}
@@ -165,7 +166,7 @@ function DocumentsTable() {
           <div
             className="grid grid-cols-7 gap-4 text-gray-400 font-semibold text-md bg-gray-100 px-4 py-2 rounded-lg text-center"
             style={{
-              gridTemplateColumns: "1fr 4fr 3fr 4.5fr 3fr 3fr", // Adjusting ratio for columns
+              gridTemplateColumns: "1fr 4fr 3fr 4.5fr 5fr 2.5fr", // Adjusting ratio for columns
             }}
           >
             <div>S.No</div>
@@ -183,7 +184,7 @@ function DocumentsTable() {
                 key={doc.sno}
                 className="relative grid grid-cols-7 gap-4 p-3 text-center justify-center items-center bg-white rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-black"
                 style={{
-                  gridTemplateColumns: "1fr 4fr 3fr 4.5fr 3fr 3fr", // Adjusting ratio for columns
+                  gridTemplateColumns: "1fr 4fr 3fr 4.5fr 5fr 2.5fr", // Adjusting ratio for columns
                 }}
               >
                 <div>{doc.sno}</div>
@@ -215,7 +216,7 @@ function DocumentsTable() {
         </div>
 
         {/* Right section with Action buttons */}
-        <div>
+        <div className="">
           {/* Table header row for Actions */}
           <div className="text-gray-400 font-semibold text-md bg-gray-100 px-4 py-2 rounded-lg text-center">
             <div className="">Action</div>
@@ -230,15 +231,45 @@ function DocumentsTable() {
               >
                 {/* Action buttons container */}
                 <div className="flex space-x-1 w-full justify-between p-2">
-                  <button className="bg-white hover:bg-gray-100 text-black font-semibold gap-4 py-2 px-4 border hover:border-black hover:shadow-md rounded w-full">
-                    View
-                  </button>
-                  <button className="bg-white hover:bg-gray-100 text-black font-semibold gap-4 py-2 px-4 border hover:border-black hover:shadow-md rounded w-full">
-                    Edit
-                  </button>
-                  <button className="bg-white hover:bg-gray-100 text-black font-semibold gap-4 py-2 px-4 border hover:border-black hover:shadow-md rounded  w-full">
-                    Print
-                  </button>
+                  <CustomButton
+                    text={"View"}
+                    variant="contained"
+                    fullWidth
+                    color="white"
+                    sx={{
+                      textTransform: "none", // Prevent capitalization
+                      border: "1px solid #B6BFC8",
+                      "&:hover": {
+                        border: "1px solid black", // Black border on hover
+                      },
+                    }}
+                  />
+                  <CustomButton
+                    text={"Edit"}
+                    variant="contained"
+                    fullWidth
+                    color="white"
+                    sx={{
+                      textTransform: "none", // Prevent capitalization
+                      border: "1px solid #B6BFC8",
+                      "&:hover": {
+                        border: "1px solid black", // Black border on hover
+                      },
+                    }}
+                  />
+                  <CustomButton
+                    text={"Print"}
+                    variant="contained"
+                    fullWidth
+                    color="white"
+                    sx={{
+                      textTransform: "none", // Prevent capitalization
+                      border: "1px solid #B6BFC8", // Transparent border by default
+                      "&:hover": {
+                        border: "1px solid black", // Black border on hover
+                      },
+                    }}
+                  />
                 </div>
               </div>
             ))}
@@ -250,8 +281,8 @@ function DocumentsTable() {
 }
 
 export const meta = {
-    title: "All Documents",
-    description: "All Documents",
-  };
+  title: "All Documents",
+  description: "All Documents",
+};
 
 export default DocumentsTable;

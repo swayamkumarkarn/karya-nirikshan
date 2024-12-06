@@ -1,4 +1,5 @@
 import React from "react";
+import CustomButton from "../../components/Common/CustomButton";
 
 const TrackDoc = () => {
   const documents = [
@@ -65,6 +66,8 @@ const TrackDoc = () => {
             <span className="font-bold text-black">
               Reimbursement request for medical resources.
             </span>
+
+            <CustomButton  text ={"Hello"} fullWidth variant="contained" color="primary" />
           </div>
         </div>
       </div>
