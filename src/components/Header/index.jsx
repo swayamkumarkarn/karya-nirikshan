@@ -1,57 +1,54 @@
 import React from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { FaPlus } from "react-icons/fa6";
+import SearchBar from '../Common/Searchbar';
 import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
 
-
-const Header = () => {
+const Header = ({ toggleSidebar, isSidebarOpen }) => {
     return (
-        <header className="w-full text-black px-6 py-4 flex justify-between items-center ">
-           
+        <header
+            className={` text-black px-6 py-4 flex items-center transition-all duration-300 ${isSidebarOpen ? 'w-[100%]' : 'w-full'
+                }`}
+        >
             <div className="flex items-center space-x-4 flex-grow">
                 <button className="bg-black text-white px-3 py-2 rounded font-bold shadow-md">
-                    <HiMiniAdjustmentsHorizontal  className='text-xl'/>
+                    <HiMiniAdjustmentsHorizontal className="text-xl" />
                 </button>
-               
-                <div className='flex gap-5 w-[40%]'>
-                    <div className="relative flex-grow ">
+
+                <div className="flex gap-5  ">
+                    <div className="relative flex-grow">
                         
-                        <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
-                            <FiSearch size={20} />
-                        </span>
-                        <input
-                            type="text"
+                        <SearchBar
                             placeholder="Search by Document details..."
-                            className="w-full px-10 py-2 rounded bg-white text-black border border-gray-300 focus:outline-none"
+                            onChange={(e) => console.log(e.target.value)} // You can implement the search logic here
                         />
                     </div>
+                    
 
-                  
-                    <button className="bg-yellow-500 text-black  px-3 py-2 rounded font-bold shadow-md">
-                        <FaPlus className='text-xl font-bold' />
+                    <button className="bg-yellow-500 text-black px-3 py-2 rounded font-bold shadow-md">
+                        <FaPlus className="text-xl font-bold" />
                     </button>
                 </div>
 
-               
                 <button className="bg-black text-white px-8 py-2 rounded font-semibold shadow-md">
                     Requests
                 </button>
             </div>
 
-          
-          <button>
-          <div className="flex items-center space-x-4 cursor-pointer bg-black p-2 text-white rounded-lg">
-               
-                <div className="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center font-bold">
-                    M
+            <button onClick={toggleSidebar}>
+                <div
+                    className={`flex items-center space-x-4 cursor-pointer p-2 rounded-lg bg-black text-white transition-all duration-300 ${isSidebarOpen ? 'mr-80' : 'mr-0'
+                        }`}
+                >
+                    <div className="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center font-bold">
+                        M
+                    </div>
+                    <div>
+                        <p className="text-sm font-semibold">Medical Department</p>
+                        <p className="text-sm">Admin</p>
+                    </div>
                 </div>
-                
-                <div>
-                    <p className="text-sm font-semibold">Medical Department</p>
-                    <p className="text-sm ">Admin</p>
-                </div>
-            </div>
-          </button>
+            </button>
         </header>
     );
 };
