@@ -69,16 +69,17 @@ const SideBar = () => {
     menuItems.find((item) => item.route === location.pathname)?.id ||
     "Dashboard";
 
-
   const getItemClasses = (item) =>
-    `flex items-center gap-5 p-1 rounded-md cursor-pointer ${
-      activeItem === item ? "font-bold text-black" : "text-gray-400"
+    `flex items-center gap-3 p-2 rounded-md cursor-pointer ${
+      activeItem === item
+        ? "font-bold text-black border border-r-4 border-black bg-white shadow-md" // Left border and padding for active item
+        : "text-gray-400"
     } hover:text-black`;
 
   return (
     <div className="text-gray-400 font-semibold w-[17%] h-screen flex flex-col justify-between">
       {/* Header */}
-      <div className="p-5">
+      <div className="p-4">
         <div className="mb-8 flex items-center gap-4 justify-center">
           <FiList className="text-4xl font-bolder" />
           <div>
