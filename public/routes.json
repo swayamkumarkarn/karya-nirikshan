@@ -52,6 +52,16 @@
         "layout": null,
         "meta": {},
         "children": []
+      },
+      {
+        "path": "/track-doc",
+        "component": "./pages/track-doc/index.jsx",
+        "layout": null,
+        "meta": {
+          "title": "Track Doc",
+          "description": "Doc Tracking"
+        },
+        "children": []
       }
     ]
   }

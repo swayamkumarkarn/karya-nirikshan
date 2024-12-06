@@ -44,5 +44,14 @@
     "component": "./pages/documents/index.jsx",
     "layout": null,
     "meta": {}
+  },
+  {
+    "path": "/track-doc",
+    "component": "./pages/track-doc/index.jsx",
+    "layout": null,
+    "meta": {
+      "title": "Track Doc",
+      "description": "Doc Tracking"
+    }
   }
 ]

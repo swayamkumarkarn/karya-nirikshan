@@ -181,7 +181,7 @@ function DocumentsTable() {
             {documents.map((doc) => (
               <div
                 key={doc.sno}
-                className="relative grid grid-cols-7 gap-4 p-3 text-center justify-center items-center bg-white rounded-lg shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-black"
+                className="relative grid grid-cols-7 gap-4 p-3 text-center justify-center items-center bg-white rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-black"
                 style={{
                   gridTemplateColumns: "1fr 4fr 3fr 4.5fr 3fr 3fr", // Adjusting ratio for columns
                 }}
@@ -230,13 +230,13 @@ function DocumentsTable() {
               >
                 {/* Action buttons container */}
                 <div className="flex space-x-1 w-full justify-between p-2">
-                  <button className="bg-white hover:bg-gray-100 text-black font-semibold gap-4 py-2 px-4 border-2 hover:border-black hover:shadow-md rounded w-full">
+                  <button className="bg-white hover:bg-gray-100 text-black font-semibold gap-4 py-2 px-4 border hover:border-black hover:shadow-md rounded w-full">
                     View
                   </button>
-                  <button className="bg-white hover:bg-gray-100 text-black font-semibold gap-4 py-2 px-4 border-2 hover:border-black hover:shadow-md rounded w-full">
+                  <button className="bg-white hover:bg-gray-100 text-black font-semibold gap-4 py-2 px-4 border hover:border-black hover:shadow-md rounded w-full">
                     Edit
                   </button>
-                  <button className="bg-white hover:bg-gray-100 text-black font-semibold gap-4 py-2 px-4 border-2 hover:border-black hover:shadow-md rounded  w-full">
+                  <button className="bg-white hover:bg-gray-100 text-black font-semibold gap-4 py-2 px-4 border hover:border-black hover:shadow-md rounded  w-full">
                     Print
                   </button>
                 </div>
