@@ -38,10 +38,10 @@
       },
       {
         "path": "/analytics",
-        "component": "./pages/analytics/index.js",
+        "component": "./pages/analytics/index.jsx",
         "layout": "./pages/analytics/layout.jsx",
         "meta": {
-          "title": "Home Page",
+          "title": "Analytics Page",
           "description": "This is the home page"
         },
         "children": []
