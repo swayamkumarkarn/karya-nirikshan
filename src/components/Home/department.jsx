@@ -32,19 +32,19 @@ const department = () => {
                 />
             </div>
 
-            <div className="text-lg mb-1  grid grid-cols-2 justify-left justify-center ">
-                <p className="flex flex-row items-center justify-left">
+            <div className="text-md mb-1  grid grid-cols-2 justify-left justify-center ">
+                <p className="flex flex-row items-center justify-left text-gray-500">
                     Total {" "}</p>
                 <span className="font-semibold text-green-600 flex flex-row items-center text-lg">{item.total}</span>
             </div>
 
-            <p className="text-lg mb-1  grid grid-cols-2 justify-left justify-center ">
-                <p className="flex flex-row items-center justify-left">Resolved{" "}</p>
+            <p className="text-md mb-1  grid grid-cols-2 justify-left justify-center ">
+                <p className="flex flex-row items-center justify-left text-gray-500">Resolved{" "}</p>
                 <span className="font-semibold text-green-600 flex flex-row items-center text-lg">{item.resolved}<TiArrowUpThick /> </span>
             </p>
 
-            <p className="text-lg mb-1 grid grid-cols-2   justify-center">
-                <p className=" flex flex-row items-center justify-left">Pending{" "}</p>
+            <p className="text-md mb-1 grid grid-cols-2   justify-center">
+                <p className=" flex flex-row items-center justify-left text-gray-500">Pending{" "}</p>
                 <span className="font-semibold text-red-600 flex flex-row items-center">{item.pending} <TiArrowDownThick /></span>
             </p>
 
@@ -52,7 +52,7 @@ const department = () => {
                 className={`text-lg font-bold grid grid-cols-2 justify-center  ${item.change > 0 ? "text-green-600" : "text-red-600"
                     }`}
             >
-                <p className="flex flex-row items-center justify-left text-gray-500 ">Today</p>
+                <p className="flex flex-row items-center justify-left text-2xl text-gray-500 ">Today</p>
                 <span className="flex flex-row items-center whitespace-nowrap text-md"><p className='text-3xl text-gray-500'>{item.today} </p>({item.change > 0 ? <TiArrowUpThick /> : <TiArrowDownThick />}{Math.abs(item.change)}%)</span>
             </div>
         </div>
