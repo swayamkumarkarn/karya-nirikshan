@@ -205,8 +205,8 @@ function DocumentsTable() {
 
                 {/* Pin positioned at top-right */}
                 <div className="absolute top-1 right-1">
-                  <div className="hover:border-2 p-1 rounded">
-                    <TiPin className="text-2xl text-yellow-400" />
+                  <div className="hover:border-2 p-1 rounded text-gray-400 hover:text-yellow-400">
+                    <TiPin className="text-2xl " />
                   </div>
                 </div>
               </div>
@@ -248,5 +248,10 @@ function DocumentsTable() {
     </div>
   );
 }
+
+export const meta = {
+    title: "All Documents",
+    description: "All Documents",
+  };
 
 export default DocumentsTable;

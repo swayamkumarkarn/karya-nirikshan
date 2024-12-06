@@ -121,7 +121,7 @@ const TrackDoc = () => {
 };
 
 export const meta = {
-  title: "Track Doc",
+  title: "Track Document",
   description: "Doc Tracking",
 };
 
