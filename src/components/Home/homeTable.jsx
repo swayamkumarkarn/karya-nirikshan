@@ -13,7 +13,7 @@ const HomeTable = ({ data, columns }) => {
         }}
       >
         {columns.map((col) => (
-          <div key={col.key}>{col.label.toUpperCase()}</div>
+          <div className='capitalize' key={col.key}>{col.label}</div>
         ))}
       </div>
 

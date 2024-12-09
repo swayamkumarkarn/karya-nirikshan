@@ -49,6 +49,12 @@
     }
   },
   {
+    "path": "/login",
+    "component": "./pages/login/index.jsx",
+    "layout": null,
+    "meta": {}
+  },
+  {
     "path": "/track-doc",
     "component": "./pages/track-doc/index.jsx",
     "layout": null,

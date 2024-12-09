@@ -12,20 +12,14 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
         isSidebarOpen ? "w-[100%]" : "w-full"
       }`}
     >
-      <div className="flex items-center space-x-4 flex-grow">
-        <button className="bg-black text-white px-3 py-2 rounded font-bold shadow-md">
-          <HiMiniAdjustmentsHorizontal className="text-xl" />
-        </button>
+      <div className="flex items-start space-x-4 flex-grow">
         <CustomButton
-          text=""
           onlyIcon
+          color="white"
+          background="black"
           startIcon={<HiMiniAdjustmentsHorizontal className="text-xl" />}
           onClick={() => console.log("Button clicked!")}
           size="small"
-          sx={{
-            height: "40px", // Set equal height
-            padding: "0",
-          }}
         />
 
         <div className="flex gap-5  ">
@@ -36,21 +30,12 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
             />
           </div>
 
-          <button className="bg-yellow-500 text-black px-3 py-2 rounded font-bold shadow-md">
-            <FaPlus className="text-xl font-bold" />
-          </button>
-
           <CustomButton
-            text=""
             onlyIcon
             color="yellow"
             startIcon={<FaPlus className="text-xl font-bold" />}
             onClick={() => console.log("Button clicked!")}
             size="small"
-            sx={{
-              height: "40px", // Set equal height
-              padding: "0",
-            }}
           />
         </div>
 
@@ -61,9 +46,10 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
         <CustomButton
           text={"Requests"}
           variant="contained"
-          sx={{
-            padding: "7px 24px",
-          }}
+          size={"small"}
+          // sx={{
+          //   padding: "7px 24px",
+          // }}
         />
       </div>
 

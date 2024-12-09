@@ -8,7 +8,7 @@ const Dashboard = () => {
 
 
   const columns = [
-    { key: "id", label: "ID", className: "font-semibold text-gray-400" },
+    { key: "id", label: "Id", className: "font-semibold text-gray-400" },
     { key: "title", label: "Title", className: "font-semibold" },
     { key: "department", label: "Department" },
     { key: "grade", label: "Mark" },

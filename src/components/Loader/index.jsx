@@ -9,6 +9,7 @@ const Loader = () => {
           height={1024}
           src={"images/logo/bilaspur-police-logo.png"}
           alt="Logo"
+          className={styles.image}
         />
       </div>
     </div>

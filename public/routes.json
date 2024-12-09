@@ -57,6 +57,13 @@
         "children": []
       },
       {
+        "path": "/login",
+        "component": "./pages/login/index.jsx",
+        "layout": null,
+        "meta": {},
+        "children": []
+      },
+      {
         "path": "/track-doc",
         "component": "./pages/track-doc/index.jsx",
         "layout": null,

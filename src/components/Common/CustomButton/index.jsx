@@ -30,7 +30,16 @@ export default function CustomButton({
           variant={variant}
           color={color}
           className={className}
-          sx={sx}
+          sx={{
+            width: "36px",
+            height: "36px",
+            backgroundColor: `${color === "yellow" ? "#EAB308" : "black"}`,
+            color: `${color === "yellow" ? "black" : "white"}`,
+            borderRadius: "4px",
+            "&:hover": {
+              backgroundColor: `${color === "yellow" ? "#EAB308" : "black"}`,
+            },
+          }}
         >
           {startIcon}
         </IconButton>
