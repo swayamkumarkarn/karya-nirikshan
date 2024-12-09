@@ -94,3 +94,8 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+export const meta = {
+  title: "Login Page",
+  description: "This is the home page",
+};

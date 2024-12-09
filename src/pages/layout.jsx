@@ -30,7 +30,7 @@ const MainLayout = ({ children }) => {
                 isSidebarOpen={isSidebarOpen}
               />
               <main
-                className={`border-blue-400 border-4 overflow-y-auto h-screen ${
+                className={`border-blue-400  overflow-y-auto h-screen ${
                   isSidebarOpen ? "mr-[25%]" : "ml-0"
                 }`}
               >
