@@ -1,54 +1,44 @@
 import React, { useState } from "react";
-import { FaChevronDown } from "react-icons/fa"; // Importing the arrow icon
+import { FaChevronDown } from "react-icons/fa"; 
 
-const DropdownMenu = () => {
+const DropdownMenu = ({ options = [], defaultOption = "Select", onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedMonth, setSelectedMonth] = useState("January");
+  const [selectedOption, setSelectedOption] = useState(defaultOption);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSelect = (month) => {
-    setSelectedMonth(month);
-    setIsOpen(false); // Close the dropdown after selection
+  const handleSelect = (option) => {
+    setSelectedOption(option);
+    setIsOpen(false); 
+    if (onSelect) onSelect(option); 
   };
 
   return (
     <div className="relative inline-block text-left">
-      {/* Button to toggle dropdown */}
       <button
         onClick={toggleDropdown}
         className="py-2 px-4 border border-gray-400 text-black rounded-md flex items-center gap-2"
       >
-        {selectedMonth} {/* Display the selected month */}
+        {selectedOption}
         <FaChevronDown
-          className={`${isOpen ? "transform rotate-180" : ""}`} // Rotates the arrow when dropdown is open
+          className={`${isOpen ? "transform rotate-180" : ""}`} 
         />
       </button>
 
-      {/* Dropdown Menu */}
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-10">
           <ul className="py-2">
-            <li
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-              onClick={() => handleSelect("February")}
-            >
-              February
-            </li>
-            <li
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-              onClick={() => handleSelect("March")}
-            >
-              March
-            </li>
-            <li
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-              onClick={() => handleSelect("April")}
-            >
-              April
-            </li>
+            {options.map((option, index) => (
+              <li
+                key={index}
+                className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                onClick={() => handleSelect(option)}
+              >
+                {option}
+              </li>
+            ))}
           </ul>
         </div>
       )}

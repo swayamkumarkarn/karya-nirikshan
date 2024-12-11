@@ -40,10 +40,7 @@
         "path": "/analytics",
         "component": "./pages/analytics/index.jsx",
         "layout": "./pages/analytics/layout.jsx",
-        "meta": {
-          "title": "Analytics Page",
-          "description": "This is the home page"
-        },
+        "meta": {},
         "children": []
       },
       {
