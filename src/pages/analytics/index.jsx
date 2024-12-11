@@ -1,227 +1,129 @@
-
 import React from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
+import GrowthGraph from "../../components/Analytics/GrowthGraph";
+import DropdownMenu from "../../components/DropDownMenu/index";
+import ProgressBarItem from "../../components/Analytics/ProgressGraph";
+import CircularProgress from "../../components/Analytics/StatusBar";
+import ActivityChart from "../../components/Analytics/BarChart";
 
-import DropdownMenu from "../../components/DropDownMenu";
+const Dashboard = () => {
+  const timeframes = ["All-time", "Last Week", "Last Month"];
+  const categories = ["All", "Finance", "Medical"];
+  const statuses = ["All", "Resolved", "Pending"];
 
-const data = [
-  {
-    name: "Jan 1",
-    Pending: 4000,
-    Delayed: 2400,
-    Resolved: 2400,
-    gap: 400,
-  },
-  {
-    name: "Jan 2",
-    Pending: 3000,
-    Delayed: 1398,
-    Resolved: 2210,
-    gap: 400,
-  },
-  {
-    name: "Jan 3",
-    Pending: 2000,
-    Delayed: 9800,
-    Resolved: 2290,
-    gap: 400,
-  },
-  {
-    name: "Jan 4",
-    Pending: 2780,
-    Delayed: 3908,
-    Resolved: 2000,
-    gap: 400,
-  },
-  {
-    name: "Jan 5",
-    Pending: 1890,
-    Delayed: 4800,
-    Resolved: 2181,
-    gap: 400,
-  },
-  {
-    name: "Jan 6",
-    Pending: 2390,
-    Delayed: 3800,
-    Resolved: 2500,
-    gap: 400,
-  },
-  {
-    name: "Jan 7",
-    Pending: 3490,
-    Delayed: 4300,
-    Resolved: 2100,
-    gap: 400,
-  },
-  {
-    name: "Jan 8",
-    Pending: 1890,
-    Delayed: 4800,
-    Resolved: 2181,
-    gap: 400,
-  },
-  {
-    name: "Jan 9",
-    Pending: 2390,
-    Delayed: 3800,
-    Resolved: 2500,
-    gap: 400,
-  },
-  {
-    name: "Jan 10",
-    Pending: 3490,
-    Delayed: 4300,
-    Resolved: 2100,
-    gap: 400,
-  },
-  {
-    name: "Jan 11",
-    Pending: 4000,
-    Delayed: 2400,
-    Resolved: 2400,
-    gap: 400,
-  },
-  {
-    name: "Jan 12",
-    Pending: 3000,
-    Delayed: 1398,
-    Resolved: 2210,
-    gap: 400,
-  },
-  {
-    name: "Jan 13",
-    Pending: 2000,
-    Delayed: 9800,
-    Resolved: 2290,
-    gap: 400,
-  },
-  {
-    name: "Jan 14",
-    Pending: 2780,
-    Delayed: 3908,
-    Resolved: 2000,
-    gap: 400,
-  },
-  {
-    name: "Jan 15",
-    Pending: 1890,
-    Delayed: 4800,
-    Resolved: 2181,
-    gap: 400,
-  },
-  {
-    name: "Jan 16",
-    Pending: 2390,
-    Delayed: 3800,
-    Resolved: 2500,
-    gap: 400,
-  },
-  {
-    name: "Jan 17",
-    Pending: 3490,
-    Delayed: 4300,
-    Resolved: 2100,
-    gap: 400,
-  },
-  {
-    name: "Jan 18",
-    Pending: 1890,
-    Delayed: 4800,
-    Resolved: 2181,
-    gap: 400,
-  },
-];
+  const progressData2 = [
+    { title: "Finance", percentage: 74, imageUrl: "/user.png", color: "bg-pink-200" },
+    { title: "Medical", percentage: 52, imageUrl: "/user.png", color: "bg-pink-400" },
+    { title: "Complaints", percentage: 36, imageUrl: "/user.png", color: "bg-pink-600" },
+  ];
 
-export function Home() {
+  const progressData = [
+    { title: "Finance", percentage: 92, imageUrl: "/user.png", color: "bg-green-200" },
+    { title: "Medical", percentage: 85, imageUrl: "/user.png", color: "bg-green-400" },
+    { title: "Complaints", percentage: 89, imageUrl: "/user.png", color: "bg-green-600" },
+  ];
+
+  const statusData = [
+    { title: "Avg Delay", percentage: 25, color: "#ef4444" }, 
+    { title: "Resolved", percentage: 79, color: "#22c55e" }, 
+    { title: "Pending", percentage: 52, color: "#f59e0b" }, 
+  ];
+
+
+  const handleMonthSelect = (selectedMonth) => {
+    console.log("Selected month:", selectedMonth);
+  };
+
   return (
-    <div className="bg-white p-4 max-w-fit rounded-xl">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold mb-1">Document Growth</h1>
-        <DropdownMenu />
+    <div className="px-6 bg-gray-100 min-h-screen ">
+
+      <h1 className="text-2xl mb-5 font-bold  ">Reports</h1>
+      <div className="border-t-2 border-gray-200"></div>
+      <div className="flex justify-between items-center my-5 ">
+
+        <div className="flex gap-4">
+          <DropdownMenu options={timeframes}
+            defaultOption="Select a timeframe"
+            onSelect={handleMonthSelect} />
+
+          <DropdownMenu options={categories}
+            defaultOption="Select a categories"
+            onSelect={handleMonthSelect} />
+          <DropdownMenu options={statuses}
+            defaultOption="Select a status"
+            onSelect={handleMonthSelect} />
+        </div>
       </div>
 
-      {/* Responsive chart container */}
-      <div className="w-fit">
-        <BarChart
-          width={450} // Make chart width responsive
-          height={220} // Fixed height to maintain aspect ratio
-          data={data}
-          barSize={6}
-          margin={{
-            top: 20,
-            right: 5,
-            left: 0,
-            bottom: 5,
-          }}
-          barCategoryGap="5%"
-          barGap={0}
-        >
-          <CartesianGrid
-            horizontal={true}
-            strokeDasharray="6 6"
-            vertical={false}
-            stroke="#E1E1E1"
-          />
-          <Legend
-            layout="horizontal"
-            align="left"
-            verticalAlign="bottom"
-            iconType="circle" // Rounded legend icons
-            iconSize={10} // Control the size of the round indicator
-            wrapperStyle={{
-              paddingTop: "20px",
-              paddingLeft: "30px",
-              fontSize: "10px",
-            }}
-          />
-          <XAxis
-            dataKey="name"
-            angle={-45}
-            textAnchor="end"
-            interval={0}
-            axisLine={false}
-            tick={{ fontSize: 10 }}
-          />
-          <YAxis stroke="#c4c4c4" />
-          <Tooltip />
-          <Bar
-            dataKey="Delayed"
-            stackId="a"
-            fill="#CA6B6E"
-            radius={[50, 50, 50, 50]}
-          />
-          <Bar dataKey="gap" stackId="a" fill="transparent" />
-          <Bar
-            dataKey="Resolved"
-            stackId="a"
-            fill="#478F96"
-            radius={[50, 50, 50, 50]}
-          />
-          <Bar dataKey="gap" stackId="a" fill="transparent" />
-          <Bar
-            dataKey="Pending"
-            stackId="a"
-            fill="#D08726"
-            radius={[50, 50, 50, 50]}
-          />
-        </BarChart>
+      <div className="flex flex-row gap-6">
+        <div className="flex flex-col w-[37%] gap-4">
+          <div className="bg-white shadow rounded-lg p-4">
+           
+            <ActivityChart />
+          </div>
+
+          <div className="bg-white shadow rounded-lg p-4">
+            <h2 className="text-md text-gray-400 font-semibold mb-1">Pending Documents</h2>
+            <ul>
+              {progressData2.map((item, index) => (
+
+                <ProgressBarItem key={index} {...item} />
+              ))}
+            </ul>
+          </div>
+
+          <div className="bg-white shadow rounded-lg p-4">
+            <h2 className="text-md text-gray-400 font-semibold mb-1">Resolved Documents</h2>
+            <ul>
+              {progressData.map((item, index) => (
+                <ProgressBarItem key={index} {...item} />
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="flex flex-col w-[63%] h-full gap-5">
+
+          <div className="grid grid-cols-3 gap-4 h-max w-full">
+            {statusData.map((data, index) => (
+              <div key={index} className="bg-white shadow rounded-lg p-4 py-3">
+                <div className="flex flex-row justify-between items-center py-5 ">
+                  <h3 className="text-md text-gray-600 font-semibold ">{data.title}</h3>
+                 
+                  <DropdownMenu options={timeframes}
+                      defaultOption="Day"
+                      onSelect={handleMonthSelect} />
+                  </div>
+
+                <CircularProgress percentage={data.percentage} color={data.color} />
+              </div>
+            ))}
+          </div>
+
+
+          <div className="flex flex-row gap-4">
+            <div className="flex flex-col gap-4">
+              <div className="bg-white shadow rounded-lg p-6 text-center ">
+                <h3 className="text-md text-gray-400 font-semibold">Total Docs</h3>
+                <p className="text-2xl font-bold mt-2">4,580</p>
+              </div>
+              <div className="bg-white shadow rounded-lg p-6 text-center">
+                <h3 className="text-md text-gray-400 font-semibold">Pending Docs</h3>
+                <p className="text-2xl font-bold mt-2">3,298</p>
+              </div>
+              <div className="bg-white shadow rounded-lg p-6 text-center">
+                <h3 className="text-md text-gray-400 font-semibold">Resolved Docs</h3>
+                <p className="text-2xl font-bold mt-2">1,205</p>
+              </div>
+            </div>
+
+            <div className="bg-white shadow rounded-lg p-4 ">
+              <GrowthGraph />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
-
-export const meta = {
-  title: "Analytics Page",
-  description: "This is the home page",
 };
 
-export default Home;
+export default Dashboard;
