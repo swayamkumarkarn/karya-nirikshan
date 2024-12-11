@@ -1,12 +1,12 @@
 // src/RouteManager.js
 import React, { Suspense, lazy, useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import MetaTags from "./components/MetaTags";
 import Loader from "./components/Loader";
 import NotFound from "./components/NotFound";
+import MetaTags from "./components/MetaTags";
+import { applyMiddleware } from "./middleware";
 
-// Fetch routes data from JSON files
-function useFetchRoutes() {
+const useFetchRoutes = () => {
   const [routes, setRoutes] = useState([]);
   const [routesFlat, setRoutesFlat] = useState([]);
 
@@ -25,13 +25,12 @@ function useFetchRoutes() {
   }, []);
 
   return { routes, routesFlat };
-}
+};
 
-// Recursive function to find layouts for a path
-function findLayoutsForPath(path, routes) {
+const findLayoutsForPath = (path, routes) => {
   const layouts = [];
 
-  function recursiveFind(currentPath, currentRoutes) {
+  const recursiveFind = (currentPath, currentRoutes) => {
     for (const route of currentRoutes) {
       const regex = new RegExp(`^${route.path.replace(/:\w+/g, "\\w+")}`);
       if (regex.test(currentPath)) {
@@ -45,14 +44,19 @@ function findLayoutsForPath(path, routes) {
         return;
       }
     }
-  }
+  };
 
   recursiveFind(path, routes);
   return layouts;
-}
+};
 
 const DynamicComponent = ({ route }) => {
   const Component = lazy(() => import(`${route.component}`));
+
+  if (!applyMiddleware(route)) {
+    return null;
+  }
+
   return (
     <Suspense fallback={<Loader />}>
       <MetaTags meta={route.meta} />
@@ -63,6 +67,10 @@ const DynamicComponent = ({ route }) => {
 
 const RouteWithLayouts = ({ route, routes }) => {
   const layouts = findLayoutsForPath(route.path, routes);
+
+  if (!applyMiddleware(route)) {
+    return null;
+  }
 
   return (
     <Suspense fallback={<Loader />}>
@@ -93,14 +101,7 @@ export const RouteManager = () => {
   return (
     <Routes>
       {renderRoutes(routesFlat, routes)}
-      <Route
-        path="*"
-        element={
-          <>
-            <NotFound />
-          </>
-        }
-      />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

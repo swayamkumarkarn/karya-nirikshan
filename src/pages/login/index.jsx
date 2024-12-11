@@ -59,7 +59,7 @@ const LoginPage = () => {
         <FormInput label="Username" id="username" type="text" />
         <FormInput label="Password" id="password" type="password" />
 
-        <div className="mt-2 mb-8 min-w-36">
+        <div className="mt-2 mb-8 min-w-40">
 
         <CustomButton text="Login" fullWidth sx={{height:"45px",borderRadius:"23px"}} />
         </div>
