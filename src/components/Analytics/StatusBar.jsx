@@ -33,7 +33,7 @@ const CircularProgress = ({ percentage, color }) => {
         />
       </svg>
     
-      <span className="absolute text-2xl font-bold">{percentage}%</span>
+      <span className="absolute text-5xl font-bold">{percentage}%</span>
     </div>
   );
 };

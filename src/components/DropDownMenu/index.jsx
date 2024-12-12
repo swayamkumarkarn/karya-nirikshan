@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa"; 
 
-const DropdownMenu = ({ options = [], defaultOption = "Select", onSelect }) => {
+const DropdownMenu = ({ options = [], defaultOption = "Select", onSelect ,tag}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultOption);
 
@@ -19,16 +19,16 @@ const DropdownMenu = ({ options = [], defaultOption = "Select", onSelect }) => {
     <div className="relative inline-block text-left">
       <button
         onClick={toggleDropdown}
-        className="py-2 px-4 border border-gray-400 text-black rounded-md flex items-center gap-2"
+        className="py-2 px-3 border text-sm border-gray-400 text-black bg-white rounded-md flex items-center gap-2"
       >
-        {selectedOption}
+        {tag ? `${tag} : ${selectedOption}` : selectedOption}
         <FaChevronDown
           className={`${isOpen ? "transform rotate-180" : ""}`} 
         />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-10">
+        <div className="absolute z-10 right-0 mt-2 text-sm w-48 bg-white border border-gray-300 rounded-md shadow-lg ">
           <ul className="py-2">
             {options.map((option, index) => (
               <li

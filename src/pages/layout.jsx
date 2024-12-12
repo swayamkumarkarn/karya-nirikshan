@@ -19,20 +19,20 @@ const MainLayout = ({ children }) => {
   return (
     <>
       {isLayoutVisible && (
-        <div className="bg-gray-100 flex">
+        <div className="bg-gray-100 flex relative">
           <SideBar />
 
+          {/* Right Sidebar */}
           <RightSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-          <div className={"w-[83%] float-right"}>
+
+          <div className="flex-1">
             <div className="flex flex-col h-screen">
               <Header
                 toggleSidebar={toggleSidebar}
                 isSidebarOpen={isSidebarOpen}
               />
               <main
-                className={`border-blue-400  overflow-y-auto h-screen ${
-                  isSidebarOpen ? "mr-[25%]" : "ml-0"
-                }`}
+                className={`overflow-y-auto h-screen`}
               >
                 {children}
               </main>
@@ -42,10 +42,7 @@ const MainLayout = ({ children }) => {
       )}
 
       {!isLayoutVisible && (
-        <main
-          className={`
-          }`}
-        >
+        <main>
           {children}
         </main>
       )}

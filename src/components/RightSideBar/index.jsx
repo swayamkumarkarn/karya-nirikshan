@@ -105,10 +105,10 @@ const RightSidebar = ({ isOpen, toggleSidebar }) => {
 
   return (
     <div
-      className={`fixed top-0 right-0 h-full   w-80 bg-white shadow-lg transform transition-transform z-10 duration-300 ${
-        isOpen ? "translate-x-0" : "translate-x-full"
-      }`}
-    >
+  className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform transition-transform z-50 duration-300 ${
+    isOpen ? "translate-x-0" : "translate-x-full"
+  }`}
+>
       <div className="p-4 border-b border-gray-200 flex justify-between items-center bg-white shadow-sm">
         <h2 className="text-lg font-bold text-black ">Notifications</h2>
       </div>
