@@ -3,16 +3,24 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 // import { ThemeProvider, CssBaseline } from "@mui/material";
 // import { muiTheme } from "./components/Utils/theme";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./store";
 import "./index.css";
 import App from "./App";
+// import store from "./store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>
       {/* <ThemeProvider theme={muiTheme}> */}
-        {/* <CssBaseline />  */}
-        <App />
+      {/* <CssBaseline />  */}
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
       {/* </ThemeProvider> */}
     </Router>
   </React.StrictMode>

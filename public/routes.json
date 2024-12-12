@@ -64,10 +64,7 @@
         "path": "/login",
         "component": "./pages/login/index.jsx",
         "layout": null,
-        "meta": {
-          "title": "Login Page",
-          "description": "This is the home page"
-        },
+        "meta": {},
         "children": []
       },
       {
