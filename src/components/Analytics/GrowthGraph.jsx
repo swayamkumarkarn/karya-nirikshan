@@ -153,10 +153,10 @@ export function Home() {
     return (
         <div className="bg-white text-sm  max-w-fit rounded-xl">
             <div className="flex justify-between items-center mb-4">
-                <h1 className="text-xl font-bold mb-1">Document Growth</h1>
+                <h1 className="text-xl font-semibold mb-1">Document Growth</h1>
                 <DropdownMenu
                     options={months}
-                    defaultOption="Select a Month"
+                    defaultOption="Month"
                     onSelect={handleMonthSelect}
                 />
             </div>

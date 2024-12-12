@@ -11,15 +11,15 @@ const Dashboard = () => {
   const statuses = ["All", "Resolved", "Pending"];
 
   const progressData2 = [
-    { title: "Finance", percentage: 74, imageUrl: "/user.png", color: "bg-pink-200" },
-    { title: "Medical", percentage: 52, imageUrl: "/user.png", color: "bg-pink-400" },
-    { title: "Complaints", percentage: 36, imageUrl: "/user.png", color: "bg-pink-600" },
+    { title: "Finance", percentage: 74, imageUrl: "/assets/images/user.png", color: "bg-pink-200" },
+    { title: "Medical", percentage: 52, imageUrl: "/assets/images/user.png", color: "bg-pink-400" },
+    { title: "Complaints", percentage: 36, imageUrl: "/assets/images/user.png", color: "bg-pink-600" },
   ];
 
   const progressData = [
-    { title: "Finance", percentage: 92, imageUrl: "/user.png", color: "bg-green-200" },
-    { title: "Medical", percentage: 85, imageUrl: "/user.png", color: "bg-green-400" },
-    { title: "Complaints", percentage: 89, imageUrl: "/user.png", color: "bg-green-600" },
+    { title: "Finance", percentage: 92, imageUrl: "/assets/images/user.png", color: "bg-green-200" },
+    { title: "Medical", percentage: 85, imageUrl: "/assets/images/user.png", color: "bg-green-400" },
+    { title: "Complaints", percentage: 89, imageUrl: "/assets/images/user.png", color: "bg-green-600" },
   ];
 
   const statusData = [
@@ -34,7 +34,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="px-6 bg-gray-100 min-h-screen ">
+    <div className="px-6 bg-gray-100 min-h-screen mb-5 Z-none">
 
       <h1 className="text-2xl mb-5 font-bold  ">Reports</h1>
       <div className="border-t-2 border-gray-200"></div>
@@ -43,13 +43,16 @@ const Dashboard = () => {
         <div className="flex gap-4">
           <DropdownMenu options={timeframes}
             defaultOption="Select a timeframe"
+            tag = "Timeframe"
             onSelect={handleMonthSelect} />
 
           <DropdownMenu options={categories}
             defaultOption="Select a categories"
+            tag = "Category"
             onSelect={handleMonthSelect} />
           <DropdownMenu options={statuses}
             defaultOption="Select a status"
+            tag = "Status"
             onSelect={handleMonthSelect} />
         </div>
       </div>
