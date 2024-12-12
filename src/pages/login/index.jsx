@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import { useDispatch } from "react-redux";
 import CustomButton from "../../components/Common/CustomButton";
 import { login } from "../../services/authService";
+import { SAVE_USER_DATA} from "../../actions/auth";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function FormInput({ label, id, type, value, onChange }) {
   return (
@@ -25,9 +29,14 @@ function FormInput({ label, id, type, value, onChange }) {
 }
 
 const LoginPage = () => {
+
+  const navigate = useNavigate();
+  const userData = useSelector((state) => state?.auth?.user);
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch(); // Use Redux dispatch
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,13 +48,16 @@ const LoginPage = () => {
     setError(null);
 
     try {
-      const response = await login(formData);
+      const response = await login(formData); // Call the login service
       console.log("Login successful:", response);
 
-      // Example: Redirect or handle successful login
-      // For example, store the token or navigate:
-      // localStorage.setItem('token', response.token);
-      // navigate('/dashboard');
+      // Dispatch the user data to the Redux store
+      dispatch(SAVE_USER_DATA(response));
+      navigate("/");
+
+      // Optional: Navigate or perform post-login actions
+      // localStorage.setItem("token", response.token);
+      // navigate("/dashboard");
     } catch (err) {
       console.error("Login failed:", err);
       setError(err.message || "An unexpected error occurred");
@@ -53,6 +65,9 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    console.log("Persisted User Data:", userData); // Log persisted data
+  }, [userData]);
 
   return (
     <div className="max-h-screen h-screen flex justify-center items-center relative bg-[#F6F6F6]">
@@ -115,38 +130,8 @@ const LoginPage = () => {
           />
         </div>
       </div>
-
-      {/* Background Right Image */}
-      <div className="absolute top-0 right-0 h-screen w-auto">
-        <img
-          src="/assets/images/login-book.jpg"
-          alt="Login illustration"
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute top-0 right-[50%] h-screen w-auto">
-          <img
-            src="/assets/svg/Line33.svg"
-            alt="Decorative line"
-            className="h-full w-full object-cover"
-          />
-        </div>
-      </div>
-
-      {/* Bottom Left Decorative Image */}
-      <div className="absolute bottom-0 left-0 h-[20%] w-auto">
-        <img
-          src="/assets/svg/Union.svg"
-          alt="Decorative union"
-          className="h-full w-full object-cover"
-        />
-      </div>
     </div>
   );
 };
 
 export default LoginPage;
-
-export const meta = {
-  title: "Login Page",
-  description: "This is the home page",
-};

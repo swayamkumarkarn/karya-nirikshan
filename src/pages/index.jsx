@@ -1,11 +1,13 @@
 import React from "react";
 import Department from "../components/Home/department";
 import TableHome from "../components/Home/homeTable"
-
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Dashboard = () => {
 
 
+  const userData = useSelector((state) => state.auth.user);
 
   const columns = [
     { key: "id", label: "Id", className: "font-semibold text-gray-400" },
@@ -21,6 +23,10 @@ const Dashboard = () => {
     { id: 856, title: "Reimbursement request for medical", department: "Head Clerk", grade: "Grade C" },
     { id: 856, title: "Reimbursement request for medical", department: "Head Clerk", grade: "Grade A" },
   ];
+
+  useEffect(() => {
+    console.log("Persisted User Data:", userData); // Log persisted data
+  }, [userData]);
 
   return (
     <div className="p-6">
