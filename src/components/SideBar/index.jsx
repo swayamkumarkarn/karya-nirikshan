@@ -67,7 +67,7 @@ const SideBar = () => {
   // Set the active item based on the current path
   const activeItem =
     menuItems.find((item) => item.route === location.pathname)?.id ||
-    "Dashboard";
+    "";
 
   const getItemClasses = (item) =>
     `flex items-center gap-3 p-2 rounded-md cursor-pointer ${

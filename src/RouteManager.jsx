@@ -101,7 +101,8 @@ export const RouteManager = () => {
   return (
     <Routes>
       {renderRoutes(routesFlat, routes)}
-      <Route path="*" element={<NotFound />} />
+      <Route path="/unauthorized" element={<NotFound text={"Unauthorized"} />} />
+      <Route path="*" element={<NotFound text={"404"} />} />
     </Routes>
   );
 };

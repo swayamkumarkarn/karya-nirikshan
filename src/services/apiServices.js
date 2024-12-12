@@ -7,6 +7,8 @@ const SERVER_URL ="https://karyanirikshan-backend.vercel.app/api/v1"|| process.e
  * @param {Object} options - Fetch options (method, headers, body, etc.)
  * @returns {Promise<any>} - The response data
  */
+
+
 export const request = async (endpoint, options = {}) => {
   try {
     const response = await fetch(`${SERVER_URL}${endpoint}`, {

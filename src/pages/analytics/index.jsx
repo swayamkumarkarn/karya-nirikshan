@@ -88,8 +88,8 @@ const Dashboard = () => {
 
           <div className="grid grid-cols-3 gap-4 h-max w-full">
             {statusData.map((data, index) => (
-              <div key={index} className="bg-white shadow rounded-lg p-4 py-3">
-                <div className="flex flex-row justify-between items-center py-5 ">
+              <div key={index} className="bg-white shadow rounded-lg p-4 py-4">
+                <div className="flex flex-row justify-between items-center mb-7 ">
                   <h3 className="text-md text-gray-600 font-semibold ">{data.title}</h3>
                  
                   <DropdownMenu options={timeframes}

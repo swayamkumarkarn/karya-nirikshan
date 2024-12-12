@@ -27,6 +27,7 @@ const CircularProgress = ({ percentage, color }) => {
           strokeWidth="3"
           fill="none"
           strokeDasharray={strokeDasharray}
+          strokeLinecap="round"
           cx="18"
           cy="18"
           r="15.9155"
