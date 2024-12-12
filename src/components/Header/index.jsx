@@ -18,15 +18,15 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
           color="white"
           background="black"
           startIcon={<HiMiniAdjustmentsHorizontal className="text-xl" />}
-          onClick={() => console.log("Button clicked!")}
+          onClick={() => console.log("बटन क्लिक किया गया!")}
           size="small"
         />
 
         <div className="flex gap-5  ">
           <div className="relative flex-grow">
             <SearchBar
-              placeholder="Search by Document details..."
-              onChange={(e) => console.log(e.target.value)} // You can implement the search logic here
+              placeholder="दस्तावेज़ विवरण से खोजें..."
+              onChange={(e) => console.log(e.target.value)} // आप यहाँ खोज लॉजिक लागू कर सकते हैं
             />
           </div>
 
@@ -34,17 +34,17 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
             onlyIcon
             color="yellow"
             startIcon={<FaPlus className="text-xl font-bold" />}
-            onClick={() => console.log("Button clicked!")}
+            onClick={() => console.log("बटन क्लिक किया गया!")}
             size="small"
           />
         </div>
 
         {/* <button className="bg-black text-white px-8 py-2 rounded font-semibold shadow-md">
-          Requests
+          अनुरोध
         </button> */}
 
         <CustomButton
-          text={"Requests"}
+          text={"अनुरोध"}
           variant="contained"
           size={"small"}
           // sx={{
@@ -63,8 +63,8 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
             M
           </div>
           <div>
-            <p className="text-sm font-semibold">Medical Department</p>
-            <p className="text-sm">Admin</p>
+            <p className="text-sm font-semibold">चिकित्सा विभाग</p>
+            <p className="text-sm">व्यवस्थापक</p>
           </div>
         </div>
       </button>

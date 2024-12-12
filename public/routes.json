@@ -4,8 +4,8 @@
     "component": "./pages/index.jsx",
     "layout": "./pages/layout.jsx",
     "meta": {
-      "title": "Home Page",
-      "description": "This is the home page"
+      "title": "मुख्य पृष्ठ",
+      "description": "यह मुख्य पृष्ठ है"
     },
     "children": [
       {
@@ -48,8 +48,8 @@
         "component": "./pages/documents/index.jsx",
         "layout": null,
         "meta": {
-          "title": "All Documents",
-          "description": "All Documents"
+          "title": "सभी दस्तावेज़",
+          "description": "सभी दस्तावेज़"
         },
         "children": []
       },
@@ -75,8 +75,8 @@
         "component": "./pages/track-doc/index.jsx",
         "layout": null,
         "meta": {
-          "title": "Track Document",
-          "description": "Doc Tracking"
+          "title": "दस्तावेज़ ट्रैक करें",
+          "description": "दस्तावेज़ ट्रैकिंग"
         },
         "children": []
       }

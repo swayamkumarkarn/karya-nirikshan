@@ -53,7 +53,7 @@ const department = () => {
                     }`}
             >
                 <p className="flex flex-row items-center justify-left text-xl font-bold text-gray-500 ">Today</p>
-                <span className="flex flex-row items-center whitespace-nowrap text-md justify-end"><p className='text-3xl text-gray-500'>{item.today} </p>({item.change > 0 ? <TiArrowUpThick /> : <TiArrowDownThick />}{Math.abs(item.change)}%)</span>
+                <span className="flex flex-row items-center whitespace-nowrap text-md justify-end"><p className='text-3xl text-gray-500'>{item.today} </p>({item.change > 0 ? <TiArrowUpThick className='rotate-45' /> : <TiArrowDownThick className='rotate-45' />}{Math.abs(item.change)}%)</span>
             </div>
         </div>
           ))}

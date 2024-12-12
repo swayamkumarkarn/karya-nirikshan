@@ -3,7 +3,7 @@ import styles from "./NotFound.module.css"; // Import the CSS module
 import SideBar from "../SideBar";
 import Header from "../Header";
 
-const NotFound = ({text}) => {
+const NotFound = ({text,message}) => {
   return (
     <div className="bg-gray-100 flex">
       <SideBar />
@@ -19,10 +19,10 @@ const NotFound = ({text}) => {
                   </div>
 
                   <div className={styles.contant_box_404}>
-                    <h3 className="h2">Look like you're lost</h3>
-                    <p>The page you are looking for is not available!</p>
+                    <h3 className="h2">लगता है कि आप खो गए हैं</h3>
+                    <p>{message || "जिस पृष्ठ को आप ढूंढ रहे हैं वह उपलब्ध नहीं है!"}</p>
                     <a href="/" className={styles.link_404}>
-                      Go to Home
+                      होम पर जाएं
                     </a>
                   </div>
                 </div>

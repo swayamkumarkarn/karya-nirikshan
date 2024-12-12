@@ -8,34 +8,34 @@ import { CiPower } from "react-icons/ci";
 import { useLocation } from "react-router-dom"; // Import useLocation
 
 const menuItems = [
-  { id: "Dashboard", label: "Dashboard", Icon: LuLayoutDashboard, route: "/" },
+  { id: "Dashboard", label: "डैशबोर्ड", Icon: LuLayoutDashboard, route: "/" },
   {
     id: "Analytics",
-    label: "Analytics",
+    label: "विश्लेषण",
     Icon: FaChartBar,
     route: "/analytics",
   },
   {
     id: "Track Doc",
-    label: "Track Doc",
+    label: "दस्तावेज़ ट्रैक करें",
     Icon: IoLocationOutline,
     route: "/track-doc",
   },
   {
     id: "All Documents",
-    label: "All Documents",
+    label: "सभी दस्तावेज़",
     Icon: FaFileAlt,
     route: "/documents",
   },
   {
     id: "Privacy Policy",
-    label: "Privacy Policy",
+    label: "गोपनीयता नीति",
     Icon: FaShieldAlt,
     route: "/privacy-policy",
   },
   {
     id: "Terms & Conditions",
-    label: "Terms & Conditions",
+    label: "नियम एवं शर्तें",
     Icon: FaFileAlt,
     route: "/terms",
   },
@@ -51,11 +51,11 @@ const SideBar = () => {
       let greeting = "";
 
       if (currentHour >= 0 && currentHour < 12) {
-        greeting = "Good Morning";
+        greeting = "सुप्रभात"; // Good Morning in Hindi
       } else if (currentHour >= 12 && currentHour < 18) {
-        greeting = "Good Afternoon";
+        greeting = "शुभ अपराह्न"; // Good Afternoon in Hindi
       } else {
-        greeting = "Good Evening"; // You can add a "Good Evening" if you want to cover evening times
+        greeting = "शुभ संध्या"; // Good Evening in Hindi
       }
 
       return greeting;
@@ -66,8 +66,7 @@ const SideBar = () => {
 
   // Set the active item based on the current path
   const activeItem =
-    menuItems.find((item) => item.route === location.pathname)?.id ||
-    "";
+    menuItems.find((item) => item.route === location.pathname)?.id || "";
 
   const getItemClasses = (item) =>
     `flex items-center gap-3 p-2 rounded-md cursor-pointer ${
@@ -83,13 +82,13 @@ const SideBar = () => {
         <div className="mb-8 flex items-center gap-4 justify-center">
           <FiList className="text-4xl font-bolder" />
           <div>
-            <h2 className="text-xl font-semibold text-black">Welcome,</h2>
-            <p className="text-lg text-gray-500">{greet}</p>
+            <h2 className="text-xl font-semibold text-black">स्वागत है,</h2>
+            <p className="text-lg text-gray-500 ml-4">{greet} 🙏</p>
           </div>
         </div>
 
         {/* Menu */}
-        <h2 className="text-xl mb-5">Menu</h2>
+        <h2 className="text-xl mb-5">मेनू</h2>
         <div className="border-b-2 border-gray-200 mb-4 mx-5"></div>
         <ul className="space-y-3">
           {menuItems.map(({ id, label, Icon, route }) => (
@@ -112,12 +111,12 @@ const SideBar = () => {
           onClick={() => navigateToPage("/logout")} // Redirect to a logout route
         >
           <CiPower className="text-2xl font-bolder" />
-          <span>Logout</span>
+          <span>लॉगआउट</span>
         </div>
         <div className="mt-8 text-sm text-center text-gray-400 flex gap-4 items-center">
           <img src="/bilaspur.svg" alt="bilaspur logo" />
           <div>
-            <p>Created by</p>
+            <p>द्वारा निर्मित</p>
             <p className="font-bold text-md text-black">BitCrackers</p>
           </div>
         </div>
