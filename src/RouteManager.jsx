@@ -1,5 +1,5 @@
 // src/RouteManager.js
-import React, { Suspense, lazy, useState, useEffect } from "react";
+import React, { Suspense, lazy, useState, useEffect, useLayoutEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Loader from "./components/Loader";
 import NotFound from "./components/NotFound";
@@ -10,14 +10,14 @@ const useFetchRoutes = () => {
   const [routes, setRoutes] = useState([]);
   const [routesFlat, setRoutesFlat] = useState([]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetch("/routes.json")
       .then((response) => response.json())
       .then((data) => setRoutes(data))
       .catch((error) => console.error("Error fetching routes:", error));
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetch("/routesFlat.json")
       .then((response) => response.json())
       .then((data) => setRoutesFlat(data))
