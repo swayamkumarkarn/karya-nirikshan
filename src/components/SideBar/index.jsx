@@ -6,6 +6,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { FiList } from "react-icons/fi";
 import { CiPower } from "react-icons/ci";
 import { useLocation } from "react-router-dom"; // Import useLocation
+import TypeWriter from "../Common/TypeWriter";
 
 const menuItems = [
   { id: "Dashboard", label: "डैशबोर्ड", Icon: LuLayoutDashboard, route: "/" },
@@ -76,16 +77,26 @@ const SideBar = () => {
     } hover:text-black`;
 
   return (
-    <div className="text-gray-400 font-semibold w-[17%] h-screen flex flex-col justify-between">
+    <div className="text-gray-400 font-semibold w-[17%] h-screen flex flex-col justify-between ">
       {/* Header */}
-      <div className="p-4">
-        <div className="mb-8 flex items-center gap-4 justify-center">
+      <div className="p-4 relative">
+        <div className="mb-8 flex items-center gap-4 justify-center absolute">
           <FiList className="text-4xl font-bolder" />
           <div>
             <h2 className="text-xl font-semibold text-black">स्वागत है,</h2>
-            <p className="text-lg text-gray-500 ml-4">{greet} 🙏</p>
+            <p className="text-lg text-gray-500 ml-4">
+              <TypeWriter
+                data={[`${greet}`]}
+                typingSpeed={300}
+                wordDelay={5000}
+                cursor={false}
+              />
+              🙏
+            </p>
           </div>
         </div>
+
+        <div className="mb-20"></div>
 
         {/* Menu */}
         <h2 className="text-xl mb-5">मेनू</h2>

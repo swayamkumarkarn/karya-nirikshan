@@ -1,36 +1,61 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import CustomButton from "../../components/Common/CustomButton";
 import { login } from "../../services/authService";
-import { SAVE_USER_DATA} from "../../actions/auth";
+import { SAVE_USER_DATA } from "../../redux/actions/auth";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import TypeWriter from "../../components/Common/TypeWriter";
+import navigateToPage from "../../lib/functionality/navigation";
 
 function FormInput({ label, id, type, value, onChange }) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const isPasswordField = type === "password";
+
   return (
-    <div className=" -mt-3 flex flex-col">
+    <div className="-mt-3 flex flex-col relative">
       <label
         htmlFor={id}
         className="self-start font-semibold text-neutral-400 text-sm -ml-2"
       >
         {label}
       </label>
-      <input
-        type={type}
-        id={id}
-        name={id}
-        value={value}
-        onChange={onChange}
-        className="flex shrink-0 self-center max-w-full rounded-md bg-neutral-200 h-10 w-60 mt-1 mb-6 p-2"
-        aria-label={label}
-      />
+      <div className="relative w-60">
+        <input
+          type={isPasswordField && showPassword ? "text" : type}
+          id={id}
+          name={id}
+          value={value}
+          onChange={onChange}
+          required={true}
+          className="flex shrink-0 self-center max-w-full rounded-md bg-neutral-200 h-10 w-full mt-1 mb-6 p-2 pr-10"
+          aria-label={label}
+        />
+        {isPasswordField && (
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute inset-y-0 -top-4 right-2 flex items-center text-gray-500"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? (
+              <AiFillEyeInvisible size={20} />
+            ) : (
+              <AiFillEye size={20} />
+            )}
+          </button>
+        )}
+      </div>
     </div>
   );
 }
 
 const LoginPage = () => {
-
-  const navigate = useNavigate();
   const userData = useSelector((state) => state?.auth?.user);
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState(null);
@@ -53,11 +78,7 @@ const LoginPage = () => {
 
       // Dispatch the user data to the Redux store
       dispatch(SAVE_USER_DATA(response));
-      navigate("/");
-
-      // Optional: Navigate or perform post-login actions
-      // localStorage.setItem("token", response.token);
-      // navigate("/dashboard");
+      navigateToPage("/");
     } catch (err) {
       console.error("Login failed:", err);
       setError(err.message || "An unexpected error occurred");
@@ -71,7 +92,7 @@ const LoginPage = () => {
 
   return (
     <div className="max-h-screen h-screen flex justify-center items-center relative bg-[#F6F6F6]">
-      <div className="relative bg-white px-16 py-6 pb-10 rounded-xl flex flex-col items-center w-contain z-10 overflow-hidden">
+      <div className="relative bg-white px-16 py-6  pb-10 rounded-xl flex flex-col items-center w-contain z-10 overflow-hidden">
         <div className="absolute bottom-0 left-0 h-[20%] w-auto">
           <img
             src="/assets/svg/Union.svg"
@@ -88,8 +109,12 @@ const LoginPage = () => {
         </div>
         {/* Title */}
         <div className="mb-4">
-          <span className=" -ml-32 font-semibold text-neutral-400 text-sm">
-            Let&apos;s Start Here
+          <span className=" -ml-40 font-semibold text-neutral-400 text-sm">
+            <TypeWriter
+              data={["आइए यहां से शुरू करें", "Let's Start Here"]}
+              typingSpeed={150}
+              wordDelay={3000}
+            />
           </span>
         </div>
 
@@ -104,14 +129,14 @@ const LoginPage = () => {
 
         {/* Form Inputs */}
         <FormInput
-          label="Username"
+          label="उपयोगकर्ता नाम"
           id="username"
           type="text"
           value={formData.username}
           onChange={handleChange}
         />
         <FormInput
-          label="Password"
+          label="पासवर्ड"
           id="password"
           type="password"
           value={formData.password}
@@ -129,6 +154,30 @@ const LoginPage = () => {
             disabled={loading}
           />
         </div>
+      </div>
+      {/* Background Right Image */}
+      <div className="absolute top-0 right-0 h-screen w-auto">
+        <img
+          src="/assets/images/login-book.jpg"
+          alt="Login illustration"
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute top-0 right-[50%] h-screen w-auto">
+          <img
+            src="/assets/svg/Line33.svg"
+            alt="Decorative line"
+            className="h-full w-full object-cover"
+          />
+        </div>
+      </div>
+
+      {/* Bottom Left Decorative Image */}
+      <div className="absolute bottom-0 left-0 h-[20%] w-auto">
+        <img
+          src="/assets/svg/Union.svg"
+          alt="Decorative union"
+          className="h-full w-full object-cover"
+        />
       </div>
     </div>
   );

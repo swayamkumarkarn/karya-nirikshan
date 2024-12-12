@@ -10,85 +10,68 @@ const RightSidebar = ({ isOpen, toggleSidebar }) => {
     {
       id: 1,
       number: "562",
-      text: "Document request for approval from the Head Clerk",
-      category: "Head Clerk",
+      text: "हेड क्लर्क से अनुमोदन के लिए दस्तावेज़ अनुरोध",
+      category: "हेड क्लर्क",
     },
     {
       id: 2,
       number: "355",
-      text: "Marking request for verification in the Medical department",
-      category: "Medical",
+      text: "चिकित्सा विभाग में सत्यापन के लिए चिह्नित अनुरोध",
+      category: "चिकित्सा",
     },
     {
       id: 3,
       number: "123",
-      text: "Reimbursement request submitted under Contingency",
-      category: "Contingency",
+      text: "आपातकालीन स्थिति के तहत प्रस्तुत प्रतिपूर्ति अनुरोध",
+      category: "आपातकालीन",
     },
     {
       id: 1,
       number: "562",
-      text: "Document request for approval from the Head Clerk",
-      category: "Head Clerk",
+      text: "हेड क्लर्क से अनुमोदन के लिए दस्तावेज़ अनुरोध",
+      category: "हेड क्लर्क",
     },
     {
       id: 2,
       number: "355",
-      text: "Marking request for verification in the Medical department",
-      category: "Medical",
+      text: "चिकित्सा विभाग में सत्यापन के लिए चिह्नित अनुरोध",
+      category: "चिकित्सा",
     },
     {
       id: 3,
       number: "123",
-      text: "Reimbursement request submitted under Contingency",
-      category: "Contingency",
+      text: "आपातकालीन स्थिति के तहत प्रस्तुत प्रतिपूर्ति अनुरोध",
+      category: "आपातकालीन",
     },
-    {
-      id: 1,
-      number: "562",
-      text: "Document request for approval from the Head Clerk",
-      category: "Head Clerk",
-    },
-    {
-      id: 2,
-      number: "355",
-      text: "Marking request for verification in the Medical department",
-      category: "Medical",
-    },
-    {
-      id: 3,
-      number: "123",
-      text: "Reimbursement request submitted under Contingency",
-      category: "Contingency",
-    },
+    // More notifications...
   ];
 
   const pinnedDocuments = [
     {
       id: 1,
       number: "856",
-      title: "Reimbursement request for medical",
-      department: "Finance",
-      date: "20 Nov 2024, Monday, 12:42pm",
-      status: "Current",
+      title: "चिकित्सा प्रतिपूर्ति अनुरोध",
+      department: "वित्त",
+      date: "20 नवम्बर 2024, सोमवार, 12:42pm",
+      status: "चालू",
       statusColor: "text-green-500",
     },
     {
       id: 2,
       number: "856",
-      title: "Reimbursement request for medical",
-      department: "Medical",
-      date: "20 Nov 2024, Monday, 12:42pm",
-      status: "Forwarded",
+      title: "चिकित्सा प्रतिपूर्ति अनुरोध",
+      department: "चिकित्सा",
+      date: "20 नवम्बर 2024, सोमवार, 12:42pm",
+      status: "आगे बढ़ा",
       statusColor: "text-blue-500",
     },
     {
       id: 3,
       number: "856",
-      title: "Reimbursement request for medical",
-      department: "Head Clerk",
-      date: "20 Nov 2024, Monday, 12:42pm",
-      status: "Initiated",
+      title: "चिकित्सा प्रतिपूर्ति अनुरोध",
+      department: "हेड क्लर्क",
+      date: "20 नवम्बर 2024, सोमवार, 12:42pm",
+      status: "प्रारंभ",
       statusColor: "text-yellow-500",
     },
   ];
@@ -105,12 +88,12 @@ const RightSidebar = ({ isOpen, toggleSidebar }) => {
 
   return (
     <div
-  className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform transition-transform z-50 duration-300 ${
-    isOpen ? "translate-x-0" : "translate-x-full"
-  }`}
->
+      className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform transition-transform z-50 duration-300 ${
+        isOpen ? "translate-x-0" : "translate-x-full"
+      }`}
+    >
       <div className="p-4 border-b border-gray-200 flex justify-between items-center bg-white shadow-sm">
-        <h2 className="text-lg font-bold text-black ">Notifications</h2>
+        <h2 className="text-lg font-bold text-black ">सूचनाएँ</h2>
       </div>
 
       <div className="h-full overflow-y-auto p-4">
@@ -141,7 +124,7 @@ const RightSidebar = ({ isOpen, toggleSidebar }) => {
               onClick={() => setShowAll(true)}
               className="mt-3 text-gray-500 text-right flex flex-row-reverse text-sm hover:underline"
             >
-              View More
+              और देखें
             </button>
           )}
         </section>
@@ -149,7 +132,7 @@ const RightSidebar = ({ isOpen, toggleSidebar }) => {
         <section className="">
           <div className="flex flex-row justify-between">
             <h3 className="text-sm font-semibold text-gray-600 mb-3 flex items-center">
-              Pinned Document{" "}
+              पिन किए गए दस्तावेज़{" "}
               <span className="ml-2 text-yellow-500">
                 <TiPin className="text-xl " />
               </span>
@@ -170,7 +153,7 @@ const RightSidebar = ({ isOpen, toggleSidebar }) => {
                     {document.title}
                   </p>
                   <p className="text-xs text-gray-500 mt-1 gap-2">
-                    Department{" "}
+                    विभाग{" "}
                     <span className="text-black font-semibold">
                       - {document.department}
                     </span>

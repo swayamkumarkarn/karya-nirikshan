@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 // import { muiTheme } from "./components/Utils/theme";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "./store";
+import { store, persistor } from "./redux/store";
 import "./index.css";
 import App from "./App";
 // import store from "./store";
