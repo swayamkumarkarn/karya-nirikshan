@@ -57,6 +57,13 @@
         "children": []
       },
       {
+        "path": "/form",
+        "component": "./pages/form/index.jsx",
+        "layout": null,
+        "meta": {},
+        "children": []
+      },
+      {
         "path": "/login",
         "component": "./pages/login/index.jsx",
         "layout": null,
