@@ -110,11 +110,7 @@ const LoginPage = () => {
         {/* Title */}
         <div className="mb-4">
           <span className=" -ml-40 font-semibold text-neutral-400 text-sm">
-            <TypeWriter
-              data={["आइए यहां से शुरू करें", "Let's Start Here"]}
-              typingSpeed={150}
-              wordDelay={3000}
-            />
+            <TypeWriter data={["आइए यहां से शुरू करें", "Let's Start Here"]} typingSpeed={150} wordDelay={3000}/>
           </span>
         </div>
 
@@ -129,7 +125,7 @@ const LoginPage = () => {
 
         {/* Form Inputs */}
         <FormInput
-          label="उपयोगकर्ता नाम"
+          label={"उपयोगकर्ता नाम"}
           id="username"
           type="text"
           value={formData.username}
