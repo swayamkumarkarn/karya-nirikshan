@@ -6,7 +6,6 @@ import { IoLocationOutline } from "react-icons/io5";
 import { FiList } from "react-icons/fi";
 import { CiPower } from "react-icons/ci";
 import { useLocation } from "react-router-dom"; // Import useLocation
-import TypeWriter from "../Common/TypeWriter";
 
 const menuItems = [
   { id: "Dashboard", label: "डैशबोर्ड", Icon: LuLayoutDashboard, route: "/" },
@@ -52,11 +51,11 @@ const SideBar = () => {
       let greeting = "";
 
       if (currentHour >= 0 && currentHour < 12) {
-        greeting = "सुप्रभात"; // Good Morning in Hindi
+        greeting = "Good Morning"; // Good Morning in Hindi सुप्रभात
       } else if (currentHour >= 12 && currentHour < 18) {
-        greeting = "शुभ अपराह्न"; // Good Afternoon in Hindi
+        greeting = "Good Afternoon"; // Good Afternoon in Hindi शुभ अपराह्न
       } else {
-        greeting = "शुभ संध्या"; // Good Evening in Hindi
+        greeting = "Good Evening"; // Good Evening in Hindi शुभ संध्या
       }
 
       return greeting;
@@ -70,28 +69,22 @@ const SideBar = () => {
     menuItems.find((item) => item.route === location.pathname)?.id || "";
 
   const getItemClasses = (item) =>
-    `flex items-center gap-3 p-2 rounded-md cursor-pointer ${
+    `flex  text items-center gap-3 p-2 px-4 rounded-md cursor-pointer  transition-all duration-200 ${
       activeItem === item
-        ? "font-bold text-black border border-r-4 border-black bg-white shadow-md" // Left border and padding for active item
+        ? " text-black ml-4 border-gray-400 bg-white shadow-md " // Left border and padding for active item
         : "text-gray-400"
-    } hover:text-black`;
+    } hover:text-black hover:ml-4 hover:border-gray-400 hover:bg-white hover:shadow-md `;
 
   return (
-    <div className="text-gray-400 font-semibold w-[17%] h-screen flex flex-col justify-between ">
+    <div className="text-gray-400 font-semibold w-[17%] h-screen flex flex-col justify-between  ">
       {/* Header */}
       <div className="p-4 relative">
-        <div className="mb-8 flex items-center gap-4 justify-center absolute">
+        <div className="mb-8 flex items-start gap-4 justify-center absolute">
           <FiList className="text-4xl font-bolder" />
           <div>
-            <h2 className="text-xl font-semibold text-black">स्वागत है,</h2>
-            <p className="text-lg text-gray-500 ml-4">
-              <TypeWriter
-                data={[`${greet}`]}
-                typingSpeed={300}
-                wordDelay={5000}
-                cursor={false}
-              />
-              🙏
+            <h2 className="text-xl font-semibold text-black">Welcome,</h2>
+            <p className="text-lg text-gray-500 ml-4">  
+              {greet}
             </p>
           </div>
         </div>
@@ -99,16 +92,16 @@ const SideBar = () => {
         <div className="mb-20"></div>
 
         {/* Menu */}
-        <h2 className="text-xl mb-5">मेनू</h2>
-        <div className="border-b-2 border-gray-200 mb-4 mx-5"></div>
-        <ul className="space-y-3">
+        <h2 className="text-lg mb-2 ml-2">मेनू</h2>
+        <div className="border-b-2 border-gray-200 mb-2 mx-5 "></div>
+        <ul className="space-y-2 text-md">
           {menuItems.map(({ id, label, Icon, route }) => (
             <li
               key={id}
               className={getItemClasses(id)}
               onClick={() => navigateToPage(route)}
             >
-              <Icon className="text-2xl" />
+              <Icon className="text-xl" />
               <span>{label}</span>
             </li>
           ))}
@@ -116,18 +109,18 @@ const SideBar = () => {
       </div>
 
       {/* Footer */}
-      <div className="p-5">
+      <div className="p-4">
         <div
-          className="flex items-center gap-5 p-1 rounded-md cursor-pointer hover:text-black"
+          className="flex items-center gap-3 p-2 rounded-md cursor-pointer  transition-all hover:text-black hover:ml-4 hover:border-gray-400 hover:bg-white hover:shadow-md"
           onClick={() => navigateToPage("/logout")} // Redirect to a logout route
         >
           <CiPower className="text-2xl font-bolder" />
           <span>लॉगआउट</span>
         </div>
-        <div className="mt-8 text-sm text-center text-gray-400 flex gap-4 items-center">
-          <img src="/bilaspur.svg" alt="bilaspur logo" />
+        <div className="mt-4 text-sm text-center text-gray-400 flex gap-4 items-center">
+          <img src="/bilaspur.svg" alt="bilaspur logo" className="rounded" />
           <div>
-            <p>द्वारा निर्मित</p>
+            <p>Created By</p>
             <p className="font-bold text-md text-black">BitCrackers</p>
           </div>
         </div>
