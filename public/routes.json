@@ -64,7 +64,12 @@
         "path": "/login",
         "component": "./pages/login/index.jsx",
         "layout": null,
-        "meta": {},
+        "meta": {
+          "title": "लॉगिन पृष्ठ",
+          "description": "कार्य निरीक्षण एक दस्तावेज़ प्रबंधन प्रणाली",
+          "author": "BitsCrackers",
+          "canonical": "https://karya-nirikshan.vercel.app/login"
+        },
         "children": []
       },
       {
