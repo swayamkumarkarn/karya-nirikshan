@@ -31,13 +31,23 @@ function extractMeta(filePath) {
         );
 
         if (declarator && declarator.init.type === "ObjectExpression") {
+          // Helper function to convert an ObjectExpression node to a JavaScript object
+          function parseObjectExpression(objectNode) {
+            const result = {};
+            objectNode.properties.forEach((prop) => {
+              if (prop.key.type === "Identifier") {
+                if (prop.value.type === "ObjectExpression") {
+                  result[prop.key.name] = parseObjectExpression(prop.value);
+                } else {
+                  result[prop.key.name] = prop.value.value;
+                }
+              }
+            });
+            return result;
+          }
+
           // Convert the meta object from AST back to an actual object
-          metaObject = {};
-          declarator.init.properties.forEach((prop) => {
-            if (prop.key.type === "Identifier") {
-              metaObject[prop.key.name] = prop.value.value;
-            }
-          });
+          metaObject = parseObjectExpression(declarator.init);
         }
       }
     });
@@ -48,6 +58,7 @@ function extractMeta(filePath) {
     return {};
   }
 }
+
 
 // Recursive function to parse the directory structure and generate routes
 function parseDirectory(dir, basePath = "") {
