@@ -4,6 +4,7 @@ import { FaPlus } from "react-icons/fa6";
 import SearchBar from "../Common/Searchbar";
 import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
 import CustomButton from "../Common/CustomButton";
+import navigateToPage from "../../lib/functionality/navigation";
 
 const Header = ({ toggleSidebar, isSidebarOpen }) => {
   return (
@@ -34,7 +35,7 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
             onlyIcon
             color="yellow"
             startIcon={<FaPlus className="text-xl font-bold" />}
-            onClick={() => console.log("बटन क्लिक किया गया!")}
+            onClick={() => navigateToPage("/form")}
             size="small"
           />
         </div>

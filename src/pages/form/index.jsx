@@ -1,185 +1,255 @@
-import React, { useState } from "react";
-import { request } from "../../services/apiServices";
 
-const CreateDocumentForm = () => {
+
+import React, { useState, useEffect } from "react";
+import CustomSelect from '../../components/Common/CustomSelect';
+import CustomInput from '../../components/Common/CustomInput';
+import { fetchReportTypes } from '../../services/FormService/index'; 
+import { fetchDepartments } from '../../services/FormService/index'; 
+import { createDocument } from '../../services/FormService/index'; 
+import { useSelector } from "react-redux";
+
+const Form = () => {
   const [formData, setFormData] = useState({
     registerId: "",
-    dispatchDocNumber: "",
-    departmentId: "",
-    title: "",
+    unitNumber: "",
+    departmentType: "",
+    departmentName: "",
+    referenceNumber: "",
+    subject: "",
+    lastOccurrenceGrade: "",
+    priority: "",
     description: "",
-    createdBy: "",
-    priority: "Low",
-    grade: "A",
-    tags: [],
-    currentDeprtmentId: "",
+
   });
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const userData = useSelector((state) => state?.auth?.user);
+
+  const [registerIdOptions, setRegisterIdOptions] = useState([]);
+  const [departmentOptions, setDepartmentOptions] = useState([]);
+
+  useEffect(() => {
+    const getRegisterTypes = async () => {
+      try {
+        const data = await fetchReportTypes();
+        const options = data.map(item => ({
+          value: item.id,
+          label: item.name,
+        }));
+        setRegisterIdOptions(options);
+      } catch (error) {
+        console.error("Failed to fetch report types:", error);
+      }
+    };
+
+    getRegisterTypes();
+  }, []);
+
+  useEffect(() => {
+    const getDepartments = async () => {
+      if (formData.departmentType) {
+        try {
+          const data = await fetchDepartments(formData.departmentType);
+          const options = data.map(item => ({
+            value: item.id,
+            label: item.hindi_name,
+          }));
+          setDepartmentOptions(options);
+        } catch (error) {
+          console.error("Failed to fetch departments:", error);
+        }
+      }
+    };
+
+    getDepartments();
+  }, [formData.departmentType]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
+    setFormData({
+      ...formData,
       [name]: value,
-    }));
+    });
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setSuccess(null);
+
+
+    const createdBy = userData?.data.id;
+    const currentDeprtmentId = userData?.data.department_id;
+
+    const requestBody = {
+      createdBy,
+      registerId: formData.registerId,
+      dispatchDocNumber: formData.unitNumber,
+      departmentId: formData.departmentName,
+      title: formData.subject,
+      description: formData.description,
+      priority: formData.priority,
+      grade: formData.lastOccurrenceGrade,
+      currentDeprtmentId,
+      tags: [],
+    };
+    console.log("object", requestBody);
+
+
 
     try {
-      const response = await request("/api/v1/document/create", {
-        method: "POST",
-        body: JSON.stringify(formData),
-      });
-      setSuccess("Document created successfully!");
-      console.log("Response:", response);
-    } catch (err) {
-      console.error("Error:", err);
-      setError("Failed to create the document.");
-    } finally {
-      setLoading(false);
+      const response = await createDocument(requestBody);
+      console.log("res", response);
+      alert("पंजीयन सफलता पूर्वक हो गया है।");
+      setFormData({
+        registerId: "",
+        unitNumber: "",
+        departmentType: "",
+        departmentName: "",
+        referenceNumber: "",
+        subject: "",
+        lastOccurrenceGrade: "",
+        priority: "",
+        description: "",
+      })
+    } catch (error) {
+      console.error("Failed to submit form:", error.message);
     }
   };
 
+
+
+  const departmentTypeOptions = [
+    { value: "internal", label: "कार्यालय अंतर्गत मामले" },
+    { value: "external", label: "कार्यालय बाह्य मामले" },
+  ];
+
+  const gradeOptions = [
+    { value: "A", label: "A" },
+    { value: "B", label: "B" },
+    { value: "C", label: "C" },
+    { value: "D", label: "D" },
+  ];
+
+  const priorityOptions = [
+    { value: "low", label: "Low" },
+    { value: "mid", label: "Mid" },
+    { value: "high", label: "High" },
+  ];
+
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-md">
-      <h2 className="text-2xl font-bold mb-4">Create Document</h2>
-      {error && <p className="text-red-500 mb-2">{error}</p>}
-      {success && <p className="text-green-500 mb-2">{success}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="registerId" className="block text-sm font-medium text-gray-700">
-            Register ID
-          </label>
-          <input
-            type="text"
-            id="registerId"
-            name="registerId"
-            value={formData.registerId}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            required
-          />
+    <div className="bg-gray-100 min-h-screen flex h-full w-full justify-center">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-6 rounded-lg shadow-md h-[65%] w-[60%] fixed"
+      >
+        <h2 className="text-xl font-bold mb-4 justify-center flex"> दस्तावेज़ पंजीयन (Document Registration) </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <CustomSelect
+              label="रजिस्टर प्रकार"
+              options={registerIdOptions}
+              value={formData.registerId}
+              onChange={handleChange}
+              name="registerId"
+              required
+            />
+          </div>
+
+          <div>
+            <CustomInput
+              label="दर्ज संख्या"
+              name="unitNumber"
+              value={formData.unitNumber}
+              onChange={handleChange}
+              placeholder="Enter Unit Number"
+              type="text"
+              required
+            />
+          </div>
+
+          <div>
+            <CustomSelect
+              label="विभाग वर्ग"
+              options={departmentTypeOptions}
+              value={formData.departmentType}
+              onChange={handleChange}
+              name="departmentType"
+              required
+            />
+          </div>
+
+          <div>
+            <CustomSelect
+              label="विभाग का नाम"
+              options={departmentOptions}
+              value={formData.departmentName}
+              onChange={handleChange}
+              name="departmentName"
+              required
+            />
+          </div>
+
+          <div>
+            <CustomInput
+              label="पत्र शीर्षक"
+              name="subject"
+              value={formData.subject}
+              onChange={handleChange}
+              placeholder="Enter Subject"
+              type="text"
+              required
+            />
+          </div>
+
+          <div>
+            <CustomInput
+              label="विवरण"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Enter Description"
+              type="text"
+              multiline={true}
+              required
+            />
+          </div>
+
+          <div>
+            <CustomSelect
+              label="ग्रेड"
+              options={gradeOptions}
+              value={formData.lastOccurrenceGrade}
+              onChange={handleChange}
+              name="lastOccurrenceGrade"
+              required
+            />
+          </div>
+
+          <div>
+            <CustomSelect
+              label="प्राथमिकता"
+              options={priorityOptions}
+              value={formData.priority}
+              onChange={handleChange}
+              name="priority"
+              required
+            />
+          </div>
         </div>
-        <div className="mb-4">
-          <label htmlFor="dispatchDocNumber" className="block text-sm font-medium text-gray-700">
-            Dispatch Doc Number
-          </label>
-          <input
-            type="text"
-            id="dispatchDocNumber"
-            name="dispatchDocNumber"
-            value={formData.dispatchDocNumber}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="departmentId" className="block text-sm font-medium text-gray-700">
-            Department ID
-          </label>
-          <input
-            type="text"
-            id="departmentId"
-            name="departmentId"
-            value={formData.departmentId}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            rows="4"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="priority" className="block text-sm font-medium text-gray-700">
-            Priority
-          </label>
-          <select
-            id="priority"
-            name="priority"
-            value={formData.priority}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+
+        <div className="mt-6">
+          <button
+            type="submit"
+            className="w-full bg-black text-white py-2 px-4 rounded-md shadow-md hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-          </select>
+            Submit
+          </button>
         </div>
-        <div className="mb-4">
-          <label htmlFor="grade" className="block text-sm font-medium text-gray-700">
-            Grade
-          </label>
-          <select
-            id="grade"
-            name="grade"
-            value={formData.grade}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          >
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-          </select>
-        </div>
-        <div className="mb-4">
-          <label htmlFor="currentDeprtmentId" className="block text-sm font-medium text-gray-700">
-            Current Department ID
-          </label>
-          <input
-            type="text"
-            id="currentDeprtmentId"
-            name="currentDeprtmentId"
-            value={formData.currentDeprtmentId}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full px-4 py-2 text-white bg-indigo-600 hover:bg-indigo-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          disabled={loading}
-        >
-          {loading ? "Submitting..." : "Submit"}
-        </button>
       </form>
     </div>
   );
 };
 
-export default CreateDocumentForm;
+export default Form;
+
+
