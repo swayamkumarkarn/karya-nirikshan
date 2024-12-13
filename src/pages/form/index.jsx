@@ -23,6 +23,7 @@ const Form = () => {
   });
 
   const userData = useSelector((state) => state?.auth?.user);
+  // console.log("object",userData);
 
   const [registerIdOptions, setRegisterIdOptions] = useState([]);
   const [departmentOptions, setDepartmentOptions] = useState([]);

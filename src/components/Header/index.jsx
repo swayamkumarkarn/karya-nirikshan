@@ -5,8 +5,12 @@ import SearchBar from "../Common/Searchbar";
 import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
 import CustomButton from "../Common/CustomButton";
 import navigateToPage from "../../lib/functionality/navigation";
+import { useState } from "react";
+import NotificationTable from "../NotificationAction/index"
 
 const Header = ({ toggleSidebar, isSidebarOpen }) => {
+  
+  const [open, setOpen] = useState(false);
   return (
     <header
       className={` text-black px-6 py-4 flex items-center transition-all duration-300 ${
@@ -48,6 +52,7 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
           text={"अनुरोध"}
           variant="contained"
           size={"small"}
+          onClick={() => { setOpen(true) }}
           // sx={{
           //   padding: "7px 24px",
           // }}
@@ -69,6 +74,10 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
           </div>
         </div>
       </button>
+      <NotificationTable
+        open={open}
+        setOpen={setOpen}
+      />
     </header>
   );
 };

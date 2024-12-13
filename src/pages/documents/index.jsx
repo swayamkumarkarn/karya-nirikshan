@@ -49,7 +49,7 @@ function DocumentsTable() {
       documentNo: "123/321/IN",
       department: "मेडिकल",
       date: "23-11-24 04:00pm",
-      title: "दवाई",
+      title: "दवाई दवाई दवाई दवाई दवाई दवाई",
       status: "active",
     },
     {
