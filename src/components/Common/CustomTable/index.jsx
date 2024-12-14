@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import PropTypes from 'prop-types';
-import { submitAction } from '../../../services/NotificationService/index'; 
+import { submitAction } from '../../../services/NotificationService'; 
 import CustomTypo from '../CustomTypo/CustomTypo';
 import CardWrap from '../CardWrap';
 import CustomButton from '../CustomButton';
