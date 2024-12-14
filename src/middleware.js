@@ -25,8 +25,8 @@ const userData = useSelector((state) => state?.auth?.user);;
   // Middleware map for routes
   const middlewareMap = {
     "/": [publicMiddleware], // Home is public
-    "/about": [protectedMiddleware], // About page is protected
-    "/analytics": [protectedMiddleware, adminMiddleware], // Analytics requires auth and admin
+    "/about": [protectedMiddleware, adminMiddleware], // About page is protected
+    "/analytics": [protectedMiddleware], // Analytics requires auth and admin
     "/documents": [protectedMiddleware], // Documents require auth
     "/login": [publicMiddleware], // Login is public
     "/track-doc": [protectedMiddleware], // Track document requires auth
