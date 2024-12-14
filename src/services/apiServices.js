@@ -2,7 +2,7 @@
 const SERVER_URL ="https://karyanirikshan-backend.vercel.app/api/v1"|| process.env.REACT_APP_SERVER_URL;
 
 /**
- * Generic request function
+ * Generic request function 
  * @param {string} endpoint - API endpoint
  * @param {Object} options - Fetch options (method, headers, body, etc.)
  * @returns {Promise<any>} - The response data
