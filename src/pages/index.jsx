@@ -12,7 +12,7 @@ const Dashboard = () => {
 
   const columns = [
     { key: "id", label: "आईडी", className: "font-semibold text-gray-400" },
-    { key: "title", label: "शीर्षक", className: "font-semibold" },
+    { key: "title", label: "शीर्षक", className: "font" },
     { key: "department", label: "विभाग" },
     { key: "grade", label: "ग्रेड" },
   ];
@@ -30,24 +30,24 @@ const Dashboard = () => {
 
   return (
     <div className="p-6">
-      <div className="flex flex-row w-[90%] justify-around rounded-xl bg-white mb-6 p-5 shadow-md border-b border-r">
+      <div className="flex flex-row w-[95%] justify-around rounded-xl bg-white mb-6 p-5 shadow-md border-b border-r-4 border-r">
         <div className="p-3 bg-white text-center flex-1 border-r border-gray-300">
           <h2 className="text-sm text-gray-400 font-semibold">कुल दस्तावेज़</h2>
-          <p className="text-5xl font-semibold">156</p>
+          <p className="text-4xl font-semibold">9999999</p>
         </div>
 
         <div className="p-3 bg-white  text-center flex-1 border-r border-gray-300">
           <h2 className="text-sm text-gray-400 font-semibold">सुलझाए गए दस्तावेज़</h2>
-          <p className="text-5xl font-semibold">97</p>
+          <p className="text-4xl font-semibold">9999999</p>
         </div>
 
         <div className="p-3 bg-white text-center flex-1">
           <h2 className="text-sm text-gray-400 font-semibold">लंबित दस्तावेज़</h2>
-          <p className="text-5xl font-semibold">68</p>
+          <p className="text-4xl font-semibold">9999999</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6 w-[90%]">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-6 w-[95%]">
         <Department />
       </div>
 

@@ -8,6 +8,10 @@ module.exports = {
       colors: {
         seaGreen: "#347571", // Added custom color as seaGreen
       },
+      height: {
+        'true-screen': 'var(--true-vh)', 
+        'screen': 'var(--true-vh)', 
+      },
     },
   },
   plugins: [],

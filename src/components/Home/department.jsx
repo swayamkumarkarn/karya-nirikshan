@@ -73,11 +73,11 @@ const department = () => {
     <>
       {data.map((item, index) => (
         <div
-          className={`px-7 py-12 bg-white shadow-md rounded-lg text-center border-l-4 hover:shadow-lg`}
+          className={`px-7 py-12 bg-white shadow-md rounded-lg text-center border-r-4 border-b hover:shadow-lg`}
           key={index}
         >
           <div className="flex justify-between items-center mb-4 -mt-6">
-            <h3 className="text-xl -ml-2 font-semibold">{item.category}</h3>
+            <h3 className="text-lg -ml-2 font-semibold">{item.category}</h3>
             <img
               src={item.img}
               height={40}
@@ -120,11 +120,11 @@ const department = () => {
               item.change > 0 ? "text-green-600" : "text-red-600"
             }`}
           >
-            <p className="flex flex-row items-center justify-left text-xl font-bold text-gray-500 ">
+            <p className="flex flex-row items-center justify-left text-lg font-bold text-gray-500 ">
               आज
             </p>
             <span className="flex flex-row items-center whitespace-nowrap text-md justify-end">
-              <p className="text-3xl text-gray-500">{item.today} </p>(
+              <p className="text-xl text-gray-500">{item.today} </p>(
               {item.change > 0 ? (
                 <TiArrowUpThick className="rotate-45" />
               ) : (

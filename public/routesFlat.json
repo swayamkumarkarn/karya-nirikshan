@@ -34,7 +34,10 @@
     "path": "/analytics",
     "component": "./pages/analytics/index.jsx",
     "layout": "./pages/analytics/layout.jsx",
-    "meta": {}
+    "meta": {
+      "title": "विश्लेषण पृष्ठ",
+      "description": "यह विश्लेषण पृष्ठ है"
+    }
   },
   {
     "path": "/documents",

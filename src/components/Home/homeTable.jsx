@@ -24,11 +24,11 @@ const HomeTable = ({ data, columns }) => {
         ))}
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 font">
         {data.map((row, index) => (
           <div
             key={index} 
-            className="grid gap-4 p-3 text-center justify-center items-center bg-white rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-black"
+            className="grid gap-4 p-3 text-center justify-center items-center bg-white rounded-lg shadow-sm hover:shadow-md border border-b-2 border-r-4 border-gray-200"
             style={{
               gridTemplateColumns: "1fr 3fr 2fr 2fr ",
             }}

@@ -6,6 +6,9 @@ import { IoLocationOutline } from "react-icons/io5";
 import { FiList } from "react-icons/fi";
 import { CiPower } from "react-icons/ci";
 import { useLocation } from "react-router-dom"; // Import useLocation
+import { logout } from "../../services/authService";
+import { logoutAction } from "../../redux/actions/auth";
+import { useSelector, useDispatch } from "react-redux";
 
 const menuItems = [
   { id: "Dashboard", label: "डैशबोर्ड", Icon: LuLayoutDashboard, route: "/" },
@@ -41,9 +44,24 @@ const menuItems = [
   },
 ];
 
+
+
 const SideBar = () => {
   const [greet, setGreet] = useState("");
+  const dispatch = useDispatch();
   const location = useLocation(); // Get the current route using useLocation
+
+  const handleLogout=async()=>{
+    try {
+      const response = await logout();
+      dispatch(logoutAction());
+      navigateToPage("/login");
+    } catch (err) {
+      console.error("Login failed:", err);
+    }
+    
+  }
+
 
   useEffect(() => {
     function greetBasedOnTime() {
@@ -69,7 +87,7 @@ const SideBar = () => {
     menuItems.find((item) => item.route === location.pathname)?.id || "";
 
   const getItemClasses = (item) =>
-    `flex  text items-center gap-3 p-2 px-4 rounded-md cursor-pointer  transition-all duration-200 ${
+    `flex  text-base items-center gap-3 p-2 px-4 rounded-md cursor-pointer  transition-all duration-200 ${
       activeItem === item
         ? " text-black ml-4 border-gray-400 bg-white shadow-md " // Left border and padding for active item
         : "text-gray-400"
@@ -112,7 +130,7 @@ const SideBar = () => {
       <div className="p-4">
         <div
           className="flex items-center gap-3 p-2 rounded-md cursor-pointer  transition-all hover:text-black hover:ml-4 hover:border-gray-400 hover:bg-white hover:shadow-md"
-          onClick={() => navigateToPage("/logout")} // Redirect to a logout route
+          onClick={() => handleLogout()}
         >
           <CiPower className="text-2xl font-bolder" />
           <span>लॉगआउट</span>

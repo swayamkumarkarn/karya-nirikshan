@@ -64,7 +64,7 @@ const Dashboard = () => {
             <ActivityChart />
           </div>
 
-          <div className="bg-white shadow rounded-lg p-4">
+          <div className="bg-white shadow rounded-lg p-4 mt-1">
             <h2 className="text-md text-gray-400 font-semibold mb-1">Pending Documents</h2>
             <ul>
               {progressData2.map((item, index) => (
@@ -89,7 +89,7 @@ const Dashboard = () => {
           <div className="grid grid-cols-3 gap-4 h-max w-full">
             {statusData.map((data, index) => (
               <div key={index} className="bg-white shadow rounded-lg p-4 py-4">
-                <div className="flex flex-row justify-between items-center mb-7 ">
+                <div className="flex flex-row justify-between items-center ">
                   <h3 className="text-md text-gray-600 font-semibold ">{data.title}</h3>
                  
                   <DropdownMenu options={timeframes}
@@ -104,7 +104,7 @@ const Dashboard = () => {
 
 
           <div className="flex flex-row gap-4">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-6">
               <div className="bg-white shadow rounded-lg p-6 text-center ">
                 <h3 className="text-md text-gray-400 font-semibold">Total Docs</h3>
                 <p className="text-2xl font-bold mt-2">4,580</p>
@@ -130,3 +130,8 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+export const meta = {
+  title: "विश्लेषण पृष्ठ",
+  description: "यह विश्लेषण पृष्ठ है",
+};

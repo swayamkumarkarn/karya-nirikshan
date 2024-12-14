@@ -6,3 +6,8 @@ export const login = async (data) => {
       body: JSON.stringify(data),
     });
   };
+export const logout = async () => {
+    return request('/user/logout', {
+      method: 'POST',
+    });
+  };

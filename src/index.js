@@ -10,6 +10,23 @@ import "./index.css";
 import App from "./App";
 // import store from "./store";
 
+// Calculate true height and set as CSS variable
+function updateTrueHeight() {
+  const scaleFactor = 0.9; // Your scaling factor
+  const trueViewportHeight = window.innerHeight / scaleFactor;
+  document.documentElement.style.setProperty(
+    "--true-vh",
+    `${trueViewportHeight}px`
+  );
+}
+
+// Attach listeners
+window.addEventListener("resize", updateTrueHeight);
+window.addEventListener("load", updateTrueHeight);
+
+// Call once during initial load
+updateTrueHeight();
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

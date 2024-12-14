@@ -14,6 +14,14 @@ const userData = useSelector((state) => state?.auth?.user);;
     return false;
   };
 
+  const norProtectedMiddleware = () => {
+    if (!userData) {
+      return true;
+    }
+    window.location.href = "/"; 
+    return false;
+  };
+
   const adminMiddleware = () => {
     if (userData === "admin") {
       return true;
@@ -24,11 +32,11 @@ const userData = useSelector((state) => state?.auth?.user);;
 
   // Middleware map for routes
   const middlewareMap = {
-    "/": [publicMiddleware], // Home is public
-    "/about": [protectedMiddleware, adminMiddleware], // About page is protected
-    "/analytics": [protectedMiddleware], // Analytics requires auth and admin
+    "/": [publicMiddleware],
+    "/about": [protectedMiddleware, adminMiddleware], // About page requires auth and admin 
+    "/analytics": [protectedMiddleware], // Analytics is protected
     "/documents": [protectedMiddleware], // Documents require auth
-    "/login": [publicMiddleware], // Login is public
+    "/login": [norProtectedMiddleware], // Login is public
     "/track-doc": [protectedMiddleware], // Track document requires auth
   };
 

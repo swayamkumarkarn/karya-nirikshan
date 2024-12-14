@@ -5,6 +5,6 @@ export const SAVE_USER_DATA = (payload) => {
     return {type : USER_DATA , payload};
 }
 
-export const logout = () => ({
+export const logoutAction = () => ({
     type: LOGOUT,
 });

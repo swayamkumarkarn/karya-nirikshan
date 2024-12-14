@@ -31,10 +31,21 @@
 
 /* Firefox does not support full radius on thumbs, but webkit-based styles handle it */
 
+html {
+  transform: scale(0.9);
+  transform-origin: top left; /* Ensure scaling is from the top-left corner */
+  overflow: hidden; 
+  width: 111.11vw;
+  height: 111.11vh;
+  position: absolute;
+  top: 0;
+  left: 0;
 
+}
 
 body {
   margin: 0;
+ 
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

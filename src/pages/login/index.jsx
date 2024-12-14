@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import CustomButton from "../../components/Common/CustomButton";
 import { login } from "../../services/authService";
 import { SAVE_USER_DATA } from "../../redux/actions/auth";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import TypeWriter from "../../components/Common/TypeWriter";
 import navigateToPage from "../../lib/functionality/navigation";
