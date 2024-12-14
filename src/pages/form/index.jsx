@@ -1,14 +1,10 @@
-
-
 import React, { useState, useEffect } from "react";
 import CustomSelect from '../../components/Common/CustomSelect';
 import CustomInput from '../../components/Common/CustomInput';
-import { fetchReportTypes } from '../../services/formService'; 
-import { fetchDepartments } from '../../services/formService'; 
-import { createDocument } from '../../services/formService'; 
+import { fetchReportTypes, fetchDepartments, createDocument } from '../../services/formService';
 import { useSelector } from "react-redux";
 import navigateToPage from "../../lib/functionality/navigation";
-import {  InputLabel} from '@mui/material';
+import { Alert, Snackbar, InputLabel } from '@mui/material';
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -21,14 +17,13 @@ const Form = () => {
     lastOccurrenceGrade: "",
     priority: "",
     description: "",
-
   });
-
-  const userData = useSelector((state) => state?.auth?.user);
-  // console.log("object",userData);
 
   const [registerIdOptions, setRegisterIdOptions] = useState([]);
   const [departmentOptions, setDepartmentOptions] = useState([]);
+  const [alert, setAlert] = useState({ open: false, severity: "", message: "" });
+
+  const userData = useSelector((state) => state?.auth?.user);
 
   useEffect(() => {
     const getRegisterTypes = async () => {
@@ -74,10 +69,12 @@ const Form = () => {
     });
   };
 
+  const handleAlertClose = () => {
+    setAlert({ open: false, severity: "", message: "" });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     const createdBy = userData?.data.id;
     const currentDeprtmentId = userData?.data.department_id;
@@ -94,16 +91,19 @@ const Form = () => {
       currentDeprtmentId,
       tags: [],
     };
-    console.log("object", requestBody);
-
-
 
     try {
       const response = await createDocument(requestBody);
       console.log("res", response);
-      alert("पंजीयन सफलता पूर्वक हो गया है।");
-      navigateToPage("/documents");
 
+      // Show success alert
+      setAlert({
+        open: true,
+        severity: "success",
+        message: "पंजीयन सफलता पूर्वक हो गया है।",
+      });
+
+      // Reset form fields and navigate to another page
       setFormData({
         registerId: "",
         unitNumber: "",
@@ -114,13 +114,19 @@ const Form = () => {
         lastOccurrenceGrade: "",
         priority: "",
         description: "",
-      })
+      });
+      navigateToPage("/documents");
     } catch (error) {
       console.error("Failed to submit form:", error.message);
+
+      // Show error alert
+      setAlert({
+        open: true,
+        severity: "error",
+        message: "पंजीयन करने में त्रुटि हुई है। कृपया पुनः प्रयास करें।",
+      });
     }
   };
-
-
 
   const departmentTypeOptions = [
     { value: "internal", label: "कार्यालय अंतर्गत मामले" },
@@ -131,7 +137,6 @@ const Form = () => {
     { value: "A", label: "A" },
     { value: "B", label: "B" },
     { value: "C", label: "C" },
-    // { value: "D", label: "D" },
   ];
 
   const priorityOptions = [
@@ -144,9 +149,11 @@ const Form = () => {
     <div className="bg-gray-100 min-h-screen flex h-full w-full justify-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-lg shadow-md h-[65%] w-[60%] fixed"
+        className="bg-white p-6 rounded-lg shadow-md h-[70%] w-[60%] fixed"
       >
-        <h2 className="text-xl font-bold mb-4 justify-center flex"> दस्तावेज़ पंजीयन (Document Registration) </h2>
+        <h2 className="text-xl font-bold mb-4 justify-center flex">
+          दस्तावेज़ पंजीयन (Document Registration)
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -207,17 +214,14 @@ const Form = () => {
           </div>
 
           <div>
-          <InputLabel size='15px'>विवरण</InputLabel>
+            <InputLabel size="15px">विवरण</InputLabel>
             <textarea
               label="विवरण"
               name="description"
               value={formData.description}
               onChange={handleChange}
               placeholder="Enter Description"
-              type="text"
               className="w-[100%] h-20 p-2 border-2 border-gray-300 rounded-md"
-
-              multiline={true}
               required
             />
           </div>
@@ -254,10 +258,20 @@ const Form = () => {
           </button>
         </div>
       </form>
+
+      {/* MUI Snackbar for Alerts */}
+      <Snackbar
+        open={alert.open}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={handleAlertClose} severity={alert.severity} sx={{ width: "100%" }}>
+          {alert.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
 
 export default Form;
-
-

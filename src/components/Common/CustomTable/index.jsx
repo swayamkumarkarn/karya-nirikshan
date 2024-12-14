@@ -6,14 +6,21 @@ import { submitAction } from '../../../services/NotificationService';
 import CustomTypo from '../CustomTypo/CustomTypo';
 import CardWrap from '../CardWrap';
 import CustomButton from '../CustomButton';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const CustomTable = ({ title, rows, headData, gridWidth, loading, reFetchData }) => {
     const [tableRows, setTableRows] = useState(rows);
-    const userId = useSelector((state) => state?.auth?.user?.data?.id); 
+    const [alertData, setAlertData] = useState({ open: false, message: '', severity: 'success' }); // Alert state management.
+    const userId = useSelector((state) => state?.auth?.user?.data?.id);
 
     const handleAction = async (rowIndex, actionType, rowId) => {
         if (!userId) {
-            alert('User ID is missing!');
+            setAlertData({
+                open: true,
+                message: 'User ID is missing!',
+                severity: 'error',
+            });
             return;
         }
 
@@ -24,10 +31,18 @@ const CustomTable = ({ title, rows, headData, gridWidth, loading, reFetchData })
                 await reFetchData();
             }
 
-            alert(`Successfully ${actionType}`);
+            setAlertData({
+                open: true,
+                message: `Successfully ${actionType}`,
+                severity: 'success',
+            });
         } catch (error) {
             console.error(`Error during ${actionType.toLowerCase()} action:`, error);
-            alert(`Failed to ${actionType.toLowerCase()}. Please try again.`);
+            setAlertData({
+                open: true,
+                message: `Failed to ${actionType.toLowerCase()}. Please try again.`,
+                severity: 'error',
+            });
         }
     };
 
@@ -121,6 +136,18 @@ const CustomTable = ({ title, rows, headData, gridWidth, loading, reFetchData })
                     </Table>
                 </TableContainer>
             </Box>
+
+            {/* Custom Alert */}
+            {alertData.open && (
+                <Stack sx={{ width: '100%' }} spacing={2} className="mt-4">
+                    <Alert
+                        severity={alertData.severity}
+                        onClose={() => setAlertData({ open: false, message: '', severity: 'success' })}
+                    >
+                        {alertData.message}
+                    </Alert>
+                </Stack>
+            )}
         </CardWrap>
     );
 };
