@@ -1,50 +1,49 @@
-// src/middleware.js
+import { useSelector } from "react-redux";
 
-// Example authentication and role-based logic
-const isAuthenticated = () => localStorage.getItem("authToken") !== null;
-const isAdmin = () => localStorage.getItem("userRole") === "admin";
+// Middleware logic moved into a hook
+export const useMiddleware = (route) => {
+const userData = useSelector((state) => state?.auth?.user);;
 
-// Middleware functions
-const publicMiddleware = () => true; // Public routes are always accessible
-const protectedMiddleware = () => {
-  if (isAuthenticated()) {
-    return true;
-  }
-  window.location.href = "/login";
-  return false;
-};
-const adminMiddleware = () => {
-  if (isAuthenticated() && isAdmin()) {
-    return true;
-  }
-  window.location.href = "/unauthorized"; // Redirect to unauthorized page
-  return false;
-};
+  const publicMiddleware = () => true; // Public routes are always accessible
 
-// Middleware map for routes
-const middlewareMap = {
-//   "/": [publicMiddleware],
-//   "/about": [protectedMiddleware], 
-//   "/analytics": [protectedMiddleware, adminMiddleware], 
-//   "/documents": [protectedMiddleware], 
-//   "/login": [publicMiddleware],
-//   "/track-doc": [protectedMiddleware], 
-};
+  const protectedMiddleware = () => {
+    if (userData) {
+      return true;
+    }
+    window.location.href = "/login"; // Redirect if not authenticated
+    return false;
+  };
 
-// Default middleware if a route isn't explicitly mapped
-const defaultMiddleware = [publicMiddleware];
+  const adminMiddleware = () => {
+    if (userData === "admin") {
+      return true;
+    }
+    window.location.href = "/unauthorized"; // Redirect to unauthorized page
+    return false;
+  };
 
-// Helper to apply middleware
-export const applyMiddleware = (route) => {
+  // Middleware map for routes
+  const middlewareMap = {
+    "/": [publicMiddleware], // Home is public
+    "/about": [protectedMiddleware], // About page is protected
+    "/analytics": [protectedMiddleware, adminMiddleware], // Analytics requires auth and admin
+    "/documents": [protectedMiddleware], // Documents require auth
+    "/login": [publicMiddleware], // Login is public
+    "/track-doc": [protectedMiddleware], // Track document requires auth
+  };
+
+  // Default middleware if a route isn't explicitly mapped
+  const defaultMiddleware = [publicMiddleware];
+
+  // Get middleware for the current route
   const middlewares = middlewareMap[route.path] || defaultMiddleware;
 
+  // Apply all middlewares
   for (const middleware of middlewares) {
     if (!middleware(route)) {
-      // If any middleware fails, access is denied
       return false;
     }
   }
 
-  // If all middlewares pass, access is granted
   return true;
 };

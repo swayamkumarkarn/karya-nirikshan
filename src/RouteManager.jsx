@@ -1,10 +1,9 @@
-// src/RouteManager.js
 import React, { Suspense, lazy, useState, useEffect, useLayoutEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Loader from "./components/Loader";
 import NotFound from "./components/NotFound";
 import MetaTags from "./components/MetaTags";
-import { applyMiddleware } from "./middleware";
+import { useMiddleware } from "./middleware"; // Updated to use a custom hook for middleware logic
 
 const useFetchRoutes = () => {
   const [routes, setRoutes] = useState([]);
@@ -52,9 +51,10 @@ const findLayoutsForPath = (path, routes) => {
 
 const DynamicComponent = ({ route }) => {
   const Component = lazy(() => import(`${route.component}`));
+  const canAccess = useMiddleware(route); // Use custom middleware logic
 
-  if (!applyMiddleware(route)) {
-    return null;
+  if (!canAccess) {
+    return null; // Prevent rendering if middleware checks fail
   }
 
   return (
@@ -67,9 +67,10 @@ const DynamicComponent = ({ route }) => {
 
 const RouteWithLayouts = ({ route, routes }) => {
   const layouts = findLayoutsForPath(route.path, routes);
+  const canAccess = useMiddleware(route); // Use custom middleware logic
 
-  if (!applyMiddleware(route)) {
-    return null;
+  if (!canAccess) {
+    return null; // Prevent rendering if middleware checks fail
   }
 
   return (
@@ -101,7 +102,15 @@ export const RouteManager = () => {
   return (
     <Routes>
       {renderRoutes(routesFlat, routes)}
-      <Route path="/unauthorized" element={<NotFound text={"अधिकारहीन"} message={"आपको इस पृष्ठ तक पहुँचने की अनुमति नहीं है"} />} />
+      <Route
+        path="/unauthorized"
+        element={
+          <NotFound
+            text={"अधिकारहीन"}
+            message={"आपको इस पृष्ठ तक पहुँचने की अनुमति नहीं है"}
+          />
+        }
+      />
       <Route path="*" element={<NotFound text={"404"} />} />
     </Routes>
   );

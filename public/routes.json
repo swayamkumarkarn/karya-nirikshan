@@ -86,7 +86,13 @@
           "title": "दस्तावेज़ ट्रैक करें",
           "description": "दस्तावेज़ ट्रैकिंग"
         },
-        "children": []
+        "children": [
+          {
+            "path": "/track-doc/:id",
+            "component": "./pages/track-doc/[id].jsx",
+            "children": []
+          }
+        ]
       }
     ]
   }

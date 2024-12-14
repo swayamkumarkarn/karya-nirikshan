@@ -1,6 +1,16 @@
 import React from "react";
+import DocumentDetails from "../../components/TrackDocument/DocumentDetails";
 
 const TrackDoc = () => {
+  const documentData = {
+    documentNumber: "856",
+    applicant: "राकेश सिंह",
+    department: "हेड क्लर्क",
+    category: "छुट्टी",
+    status: "अपूर्ण",
+    title: "चिकित्सा संसाधनों के लिए प्रतिपूर्ति अनुरोध।",
+  };
+  
   const documents = [
     {
       date: "26-11-24",
@@ -31,43 +41,11 @@ const TrackDoc = () => {
       remark: "",
     },
   ];
+  
   return (
     <>
-      <div className="px-4 py-3">
-        <h1 className="text-xl font-bold mb-1">दस्तावेज़ विवरण</h1>
-
-        <div className="border rounded-lg shadow-md p-4 bg-white max-w-lg">
-          <div className="grid grid-cols-2 py-1 gap-y-1  text-sm text-gray-400 items-start" style={{
-            gridTemplateColumns: "4fr 8fr", // Adjusting ratio for columns
-          }}>
-            {/* Row 1 */}
-            <span className="font-semibold">दस्तावेज़ संख्या:</span>
-            <span className="font-semibold text-black">856</span>
-
-            {/* Row 2 */}
-            <span className="font-semibold">आवेदक:</span>
-            <span className="font-semibold text-black">राकेश सिंह</span>
-
-            {/* Row 3 */}
-            <span className="font-semibold">विभाग:</span>
-            <span className="font-semibold text-black">हेड क्लर्क</span>
-
-            {/* Row 4 */}
-            <span className="font-semibold">श्रेणी:</span>
-            <span className="font-semibold text-seaGreen">छुट्टी</span>
-
-            {/* Row 5 */}
-            <span className="font-semibold">स्थिति:</span>
-            <span className="text-yellow-500 font-semibold">अपूर्ण</span>
-
-            {/* Row 6 (Full width) */}
-            <span className="font-semibold">शीर्षक:</span>
-            <span className="font-bold text-black">
-              चिकित्सा संसाधनों के लिए प्रतिपूर्ति अनुरोध।
-            </span>
-          </div>
-        </div>
-      </div>
+      {/* <DocDetails id={"c96d2f3c-9b72-44ce-af8f-b173a35e7084"}/> */}
+      <DocumentDetails {...documentData}/>
 
       <div className="px-4 py-3">
         <h1 className="text-xl font-bold mb-1">इवेंट विवरण</h1>

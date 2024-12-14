@@ -1,90 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TiPin } from "react-icons/ti";
 import CustomButton from "../../components/Common/CustomButton";
+import { getAllDocument } from "../../services/documentService";
 
 function DocumentsTable() {
-  const documents = [
-    {
-      sno: 1,
-      documentNo: "123/321/IN",
-      department: "मेडिकल",
-      date: "23-11-24 04:00pm",
-      title: "दवाई",
-      status: "active",
-    },
-    {
-      sno: 2,
-      documentNo: "123/321/IN",
-      department: "मेडिकल",
-      date: "23-11-24 04:00pm",
-      title: "दवाई",
-      status: "active",
-    },
-    {
-      sno: 3,
-      documentNo: "123/321/IN",
-      department: "मेडिकल",
-      date: "23-11-24 04:00pm",
-      title: "दवाई",
-      status: "notactive",
-    },
-    {
-      sno: 4,
-      documentNo: "123/321/IN",
-      department: "मेडिकल",
-      date: "23-11-24 04:00pm",
-      title: "दवाई",
-      status: "notactive",
-    },
-    {
-      sno: 5,
-      documentNo: "123/321/IN",
-      department: "मेडिकल",
-      date: "23-11-24 04:00pm",
-      title: "दवाई",
-      status: "active",
-    },
-    {
-      sno: 6,
-      documentNo: "123/321/IN",
-      department: "मेडिकल",
-      date: "23-11-24 04:00pm",
-      title: "दवाई दवाई दवाई दवाई दवाई दवाई",
-      status: "active",
-    },
-    {
-      sno: 7,
-      documentNo: "123/321/IN",
-      department: "मेडिकल",
-      date: "23-11-24 04:00pm",
-      title: "दवाई",
-      status: "active",
-    },
-    {
-      sno: 8,
-      documentNo: "123/321/IN",
-      department: "मेडिकल",
-      date: "23-11-24 04:00pm",
-      title: "दवाई",
-      status: "active",
-    },
-    {
-      sno: 9,
-      documentNo: "123/321/IN",
-      department: "मेडिकल",
-      date: "23-11-24 04:00pm",
-      title: "दवाई",
-      status: "active",
-    },
-    {
-      sno: 10,
-      documentNo: "123/321/IN",
-      department: "मेडिकल",
-      date: "23-11-24 04:00pm",
-      title: "दवाई",
-      status: "active",
-    },
-  ];
+  const [documents, setDocuments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      try {
+        const response = await getAllDocument();
+        setDocuments(response.data || []);
+      } catch (err) {
+        console.error("Failed to fetch documents:", err.message);
+        setError("Failed to fetch documents.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDocuments();
+  }, []);
+
+  const shimmerRows = Array.from({ length: 8 }, (_, i) => i); // Placeholder for shimmer effect
 
   return (
     <div className="px-4 py-3">
@@ -116,79 +56,116 @@ function DocumentsTable() {
       </div>
 
       {/* Combined Rows */}
-      {documents.map((doc) => (
-        <div
-          className="grid grid-cols-2 gap-4 mb-2"
-          key={doc.sno}
-          style={{ gridTemplateColumns: "7fr 3fr" }}
-        >
-          {/* Table Row */}
-          <div
-            className="relative grid grid-cols-7 gap-4 p-3 text-center items-center bg-white rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-black"
-            style={{ gridTemplateColumns: "1fr 4fr 3fr 4.5fr 5fr 2.5fr" }}
-          >
-            <div>{doc.sno}</div>
-            <div className="font-semibold">{doc.documentNo}</div>
-            <div>{doc.department}</div>
-            <div className="text-seaGreen font-semibold">{doc.date}</div>
-            <div>{doc.title}</div>
-            <div className="">
-              <span
-                className={`inline-block px-4 py-1 font-bold ${
-                  doc.status === "active"
-                    ? "  rounded-lg text-yellow-500"
-                    : "bg-red-100 rounded-lg text-red-800"
-                }`}
+      {loading
+        ? shimmerRows.map((_, index) => (
+            <div
+              className="grid grid-cols-2 gap-4 mb-2 animate-pulse"
+              key={index}
+              style={{ gridTemplateColumns: "7fr 3fr" }}
+            >
+              {/* Shimmer Table Row */}
+              <div
+                className="relative grid grid-cols-7 gap-4 p-4 text-center items-center bg-white rounded-lg shadow-sm hover:shadow-md border border-gray-200"
+                style={{ gridTemplateColumns: "1fr 4fr 3fr 4.5fr 5fr 2.5fr" }}
               >
-                {doc.status === "active" ? "सक्रिय" : "निष्क्रिय"}
-              </span>
-            </div>
-            {/* Pin */}
-            <div className="absolute top-1 right-1">
-              <div className="hover:border-2 hover:border-black hover:bg-white  rounded text-gray-400 hover:text-yellow-400">
-                <TiPin className="text-2xl" />
+                <div className="bg-gray-300 h-5 w-6 rounded"></div>
+                <div className="bg-gray-300 h-5 w-full rounded"></div>
+                <div className="bg-gray-300 h-5 w-full rounded"></div>
+                <div className="bg-gray-300 h-5 w-full rounded"></div>
+                <div className="bg-gray-300 h-5 w-full rounded"></div>
+                <div className="bg-gray-300 h-6 w-16 rounded"></div>
+                <div className="absolute top-1 right-1 bg-gray-300 h-6 w-6 rounded-full"></div>
+              </div>
+
+              {/* Shimmer Action Buttons */}
+              <div className="flex justify-evenly items-center gap-2">
+                <div className="bg-gray-300 h-10 w-24 rounded"></div>
+                <div className="bg-gray-300 h-10 w-24 rounded"></div>
+                <div className="bg-gray-300 h-10 w-24 rounded"></div>
               </div>
             </div>
-          </div>
+          ))
+        : documents.map((doc, index) => (
+            <div
+              className="grid grid-cols-2 gap-4 mb-2"
+              key={doc.id}
+              style={{ gridTemplateColumns: "7fr 3fr" }}
+            >
+              {/* Table Row */}
+              <div
+                className="relative grid grid-cols-7 gap-4 p-3 text-center items-center bg-white rounded-lg shadow-sm hover:shadow-md border border-gray-200"
+                style={{ gridTemplateColumns: "1fr 4fr 3fr 4.5fr 5fr 2.5fr" }}
+              >
+                <div>{index + 1}</div>
+                <div className="font-semibold">{doc.document_number}</div>
+                <div>{doc.department_hindi_name}</div>
+                <div className="text-seaGreen font-semibold">
+                  {new Date(doc.created_at).toLocaleString("en-IN", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </div>
+                <div>{doc.title}</div>
+                <div className="">
+                  <span
+                    className={`inline-block px-4 py-1 font-bold ${
+                      doc.status === "created"
+                        ? "bg-yellow-100 rounded-lg text-yellow-500"
+                        : "bg-red-100 rounded-lg text-red-800"
+                    }`}
+                  >
+                    {doc.status === "created" ? "सक्रिय" : "निष्क्रिय"}
+                  </span>
+                </div>
+                {/* Pin */}
+                <div className="absolute top-1 right-1">
+                  <div className="hover:border-2 hover:border-black hover:bg-white rounded text-gray-400 hover:text-yellow-400">
+                    <TiPin className="text-2xl" />
+                  </div>
+                </div>
+              </div>
 
-          {/* Action Buttons */}
-          <div className="flex justify-evenly items-center gap-2">
-            <CustomButton
-              text={"देखें"}
-              variant="contained"
-              fullWidth
-              color="white"
-              sx={{
-                textTransform: "none",
-                border: "1px solid #B6BFC8",
-                "&:hover": { border: "1px solid black" },
-              }}
-            />
-            <CustomButton
-              text={"संपादित करें"}
-              variant="contained"
-              fullWidth
-              color="white"
-              sx={{
-                textTransform: "none",
-                border: "1px solid #B6BFC8",
-                "&:hover": { border: "1px solid black" },
-              }}
-            />
-            <CustomButton
-              text={"प्रिंट करें"}
-              variant="contained"
-              fullWidth
-              color="white"
-              sx={{
-                textTransform: "none",
-                border: "1px solid #B6BFC8",
-                "&:hover": { border: "1px solid black" },
-              }}
-            />
-          </div>
-        </div>
-      ))}
+              {/* Action Buttons */}
+              <div className="flex justify-evenly items-center gap-2">
+                <CustomButton
+                  text={"देखें"}
+                  variant="contained"
+                  fullWidth
+                  color="white"
+                  sx={{
+                    textTransform: "none",
+                    border: "1px solid #B6BFC8",
+                    "&:hover": { border: "1px solid black" },
+                  }}
+                />
+                <CustomButton
+                  text={"संपादित करें"}
+                  variant="contained"
+                  fullWidth
+                  color="white"
+                  sx={{
+                    textTransform: "none",
+                    border: "1px solid #B6BFC8",
+                    "&:hover": { border: "1px solid black" },
+                  }}
+                />
+                <CustomButton
+                  text={"प्रिंट करें"}
+                  variant="contained"
+                  fullWidth
+                  color="white"
+                  sx={{
+                    textTransform: "none",
+                    border: "1px solid #B6BFC8",
+                    "&:hover": { border: "1px solid black" },
+                  }}
+                />
+              </div>
+            </div>
+          ))}
     </div>
   );
 }

@@ -76,5 +76,9 @@
       "title": "दस्तावेज़ ट्रैक करें",
       "description": "दस्तावेज़ ट्रैकिंग"
     }
+  },
+  {
+    "path": "/track-doc/:id",
+    "component": "./pages/track-doc/[id].jsx"
   }
 ]
