@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import CustomTable from "../Common/CustomTable/index"; 
 import CustomPopup from "../Common/CustomPopUp";
-import ApiService from "../../services/NotificationService/index"; 
+import GetNotification from "../../services/NotificationService/index"; 
+import { useSelector } from "react-redux";
 
 const App = ({ open, setOpen }) => {
   const tableHeadData = ["दस्तावेज क्रमांक", "शीर्षक", "कार्यालय", "दिनांक", "प्रतिक्रिया"];
   const gridTemplate = "1fr 1fr 1fr 1fr 1fr"; 
 
   const [tableRows, setTableRows] = useState([]);
+  const departmentId = useSelector((state) => state?.auth?.user?.data?.department_id);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await ApiService.fetchDocumentList();
+        const data = await GetNotification.fetchDocumentList(departmentId);
         const formattedData = data.map((item) => ({
             id: item.id,  
             documentNumber: item.document_number, 

@@ -1,29 +1,27 @@
 import axios from "axios";
 
-class ApiService {
-  static async fetchDocumentList() {
-    try {
-      const response = await axios.get(
-        "https://karyanirikshan-backend.vercel.app/api/v1/transfer/getlist/c9faaea4-4b13-41dc-ad49-f9b6aeaac5b0"
-      );
-      if (response.data && response.data.success) {
-        return response.data.data;
-      } else {
-        throw new Error("Failed to fetch data");
-      }
-    } catch (error) {
-      console.error("Error fetching document list:", error);
-      throw error;
+const SERVER_URL ="https://karyanirikshan-backend.vercel.app/api/v1"|| process.env.REACT_APP_SERVER_URL;
+
+class GetNotification {
+  static async fetchDocumentList(id) {
+    const response = await axios.get(
+      `${SERVER_URL}/transfer/getlist/${id}`
+    );
+
+    if (response.data?.success) {
+      return response.data.data;
+    } else {
+      throw new Error("Failed to fetch data");
     }
   }
 }
 
-export default ApiService;
+export default GetNotification;
 
 export const submitAction = async (Id,userId,type) => {
-    console.log(" data is ",Id  ,userId,    type);
+ 
     try {
-        const response = await axios.post('https://karyanirikshan-backend.vercel.app/api/v1/transfer/submit', {
+        const response = await axios.post(`${SERVER_URL}/transfer/submit`, {
         Id,
             userId,
             type
