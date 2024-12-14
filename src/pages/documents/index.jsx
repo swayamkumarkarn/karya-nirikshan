@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TiPin } from "react-icons/ti";
 import CustomButton from "../../components/Common/CustomButton";
 import { getAllDocument } from "../../services/documentService";
+import navigateToPage from "../../lib/functionality/navigation";
 
 function DocumentsTable() {
   const [documents, setDocuments] = useState([]);
@@ -133,6 +134,7 @@ function DocumentsTable() {
                 <CustomButton
                   text={"देखें"}
                   variant="contained"
+                  onClick={()=>{navigateToPage(`/track-doc/${doc.id}`)}}
                   fullWidth
                   color="white"
                   sx={{
