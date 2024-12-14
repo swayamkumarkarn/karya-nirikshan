@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from "react";
 import CustomSelect from '../../components/Common/CustomSelect';
 import CustomInput from '../../components/Common/CustomInput';
-import { fetchReportTypes } from '../../services/FormService/index'; 
-import { fetchDepartments } from '../../services/FormService/index'; 
-import { createDocument } from '../../services/FormService/index'; 
+import { fetchReportTypes } from '../../services/formService'; 
+import { fetchDepartments } from '../../services/formService'; 
+import { createDocument } from '../../services/formService'; 
 import { useSelector } from "react-redux";
+import navigateToPage from "../../lib/functionality/navigation";
+import {  InputLabel} from '@mui/material';
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -100,6 +102,8 @@ const Form = () => {
       const response = await createDocument(requestBody);
       console.log("res", response);
       alert("पंजीयन सफलता पूर्वक हो गया है।");
+      navigateToPage("/documents");
+
       setFormData({
         registerId: "",
         unitNumber: "",
@@ -127,7 +131,7 @@ const Form = () => {
     { value: "A", label: "A" },
     { value: "B", label: "B" },
     { value: "C", label: "C" },
-    { value: "D", label: "D" },
+    // { value: "D", label: "D" },
   ];
 
   const priorityOptions = [
@@ -203,13 +207,16 @@ const Form = () => {
           </div>
 
           <div>
-            <CustomInput
+          <InputLabel size='15px'>विवरण</InputLabel>
+            <textarea
               label="विवरण"
               name="description"
               value={formData.description}
               onChange={handleChange}
               placeholder="Enter Description"
               type="text"
+              className="w-[100%] h-20 p-2 border-2 border-gray-300 rounded-md"
+
               multiline={true}
               required
             />
