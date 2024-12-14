@@ -69,11 +69,11 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
           }`}
         >
           <div className="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center font-bold">
-            {userData.department_name[0]}
+            {userData?.department_name[0]}
           </div>
           <div className="text-center">
             <p className="text-md">{userData?.department_hindi_name}</p>
-            <p className="text-sm">{userData.name} </p> 
+            <p className="text-sm">{userData?.name} </p> 
           </div>
         </div>
       </button>

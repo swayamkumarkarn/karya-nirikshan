@@ -8,7 +8,7 @@ import { CiPower } from "react-icons/ci";
 import { useLocation } from "react-router-dom"; // Import useLocation
 import { logout } from "../../services/authService";
 import { logoutAction } from "../../redux/actions/auth";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const menuItems = [
   { id: "Dashboard", label: "डैशबोर्ड", Icon: LuLayoutDashboard, route: "/" },
@@ -53,7 +53,7 @@ const SideBar = () => {
 
   const handleLogout=async()=>{
     try {
-      const response = await logout();
+      await logout();
       dispatch(logoutAction());
       navigateToPage("/login");
     } catch (err) {

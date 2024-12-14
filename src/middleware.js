@@ -32,12 +32,13 @@ const userData = useSelector((state) => state?.auth?.user);;
 
   // Middleware map for routes
   const middlewareMap = {
-    "/": [publicMiddleware],
+    "/": [protectedMiddleware],
     "/about": [protectedMiddleware, adminMiddleware], // About page requires auth and admin 
     "/analytics": [protectedMiddleware], // Analytics is protected
     "/documents": [protectedMiddleware], // Documents require auth
     "/login": [norProtectedMiddleware], // Login is public
     "/track-doc": [protectedMiddleware], // Track document requires auth
+    "/track-doc/:id": [protectedMiddleware], // Track document requires auth
   };
 
   // Default middleware if a route isn't explicitly mapped

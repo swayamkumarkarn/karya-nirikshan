@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useState, useEffect, useLayoutEffect } from "react";
+import React, { Suspense, lazy, useState, useLayoutEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Loader from "./components/Loader";
 import NotFound from "./components/NotFound";

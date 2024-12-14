@@ -90,7 +90,7 @@ const LoginPage = () => {
   }, [userData]);
 
   return (
-    <div className="max-h-screen h-screen flex justify-center items-center relative bg-[#F6F6F6]">
+    <div className="h-screen flex justify-center items-center relative bg-[#F6F6F6]">
       <div className="relative bg-white px-16 py-6  pb-10 rounded-xl flex flex-col items-center w-contain z-10 overflow-hidden">
         <div className="absolute bottom-0 left-0 h-[20%] w-auto">
           <img
