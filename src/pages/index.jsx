@@ -37,7 +37,7 @@ const Dashboard = () => {
         </div>
 
         <div className="p-3 bg-white  text-center flex-1 border-r border-gray-300">
-          <h2 className="text-sm text-gray-400 font-semibold">सुलझाए गए दस्तावेज़</h2>
+          <h2 className="text-sm text-gray-400 font-semibold">निराकृत दस्तावेज़</h2>
           <p className="text-4xl font-semibold">9999999</p>
         </div>
 

@@ -5,7 +5,7 @@ import { TiArrowUpThick } from "react-icons/ti";
 const department = () => {
   const data = [
     {
-      category: "वित्त",
+      category: "स्टेनो",
       total: 121,
       resolved: 48,
       pending: 41,
@@ -98,7 +98,7 @@ const department = () => {
 
           <p className="text-md mb-1 grid grid-cols-2 justify-left justify-center ">
             <p className="flex flex-row items-center justify-left text-gray-500">
-              संपन्न{" "}
+            निराकृत{" "}
             </p>
             <span className="font-semibold text-green-600 flex flex-row items-center text-lg justify-end">
               {item.resolved}
