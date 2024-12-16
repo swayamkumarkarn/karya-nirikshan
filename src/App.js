@@ -7,7 +7,7 @@ const App = () => {
   return (
     <Suspense fallback={<Loader />}>
       <RouteManager />
-    </Suspense>
+    </Suspense> 
   );
 };
 
