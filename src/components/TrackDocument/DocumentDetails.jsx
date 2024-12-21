@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { getDocumentById } from "../../services/documentService";
 import CustomButton from "../Common/CustomButton";
+import DepartmentResolve from "../ActionButtons/departmentResolve";
+import Update from "../ActionButtons/update";
+import Forward from "../ActionButtons/forward";
+import AllResolve from "../ActionButtons/allResolve";
 
 const DocumentDetails = ({ id }) => {
   const [document, setDocument] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // const [open, setOpen] = useState(false);
+
+  const [acceptOpen, setAcceptOpen] = useState(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const [resolveOpen, setResolveOpen] = useState(false);
+  const [forwardOpen, setForwardOpen] = useState(false);
 
   useEffect(() => {
     const fetchDocument = async () => {
@@ -157,16 +168,20 @@ const DocumentDetails = ({ id }) => {
 
         <div className="flex items-center justify-evenly">
 
-          <CustomButton text={"प्राप्त करें"} />
-          <CustomButton text={"अपडेट करें"} />
-          <CustomButton text={"निस्तारित करें"} />
-          <CustomButton text={"आगे बढ़ाएं"} />
+          <CustomButton text={"शाखा निस्तारित"}  onClick={() => setAcceptOpen(true)} />
+          <CustomButton text={"अपडेट करें"}  onClick={() => setUpdateOpen(true)} />
+          <CustomButton text={"पूर्ण निस्तारित "}  onClick={() => setResolveOpen(true)} />
+          <CustomButton text={"आगे बढ़ाएं"} onClick={() => setForwardOpen(true)} />
 
 
 
         </div>
 
       </div>
+      <DepartmentResolve open={acceptOpen} setOpen={setAcceptOpen}  />
+      <Update open={updateOpen} setOpen={setUpdateOpen} />
+      <AllResolve open={resolveOpen} setOpen={setResolveOpen} />
+      <Forward open={forwardOpen} setOpen={setForwardOpen} />
     </div>
   );
 };

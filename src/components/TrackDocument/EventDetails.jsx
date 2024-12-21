@@ -28,7 +28,7 @@ const EventDetails = ({ id }) => {
   if (loading) {
     return (
       <div className="px-4 py-3">
-        <h1 className="text-xl font-bold mb-1">इवेंट विवरण</h1>
+        <h1 className="text-xl font-bold mb-1">कार्य विवरण</h1>
         <div className="border rounded-lg shadow-md p-4 bg-white max-w-5xl">
           <div
             className="grid grid-cols-5 gap-4 py-2 animate-pulse"
@@ -54,7 +54,7 @@ const EventDetails = ({ id }) => {
 
   return (
     <div className="px-4 py-3">
-      <h1 className="text-xl font-bold mb-1">इवेंट विवरण</h1>
+      <h1 className="text-xl font-bold mb-1">कार्य विवरण</h1>
 
       {/* Table Header */}
       <div

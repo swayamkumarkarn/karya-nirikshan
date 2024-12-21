@@ -5,7 +5,7 @@ import { fetchDocumentList } from "../../services/NotificationService";
 import { useSelector } from "react-redux";
 
 const App = ({ open, setOpen }) => {
-  const tableHeadData = ["दस्तावेज क्रमांक", "शीर्षक", "कार्यालय", "दिनांक", "प्रतिक्रिया"];
+  const tableHeadData = ["दस्तावेज क्रमांक", "शीर्षक", "शाखा", "दिनांक", "प्रतिक्रिया"];
   const gridTemplate = "1fr 1fr 1fr 1fr 1fr";
 
   const [tableRows, setTableRows] = useState([]);

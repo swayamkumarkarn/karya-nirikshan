@@ -37,7 +37,8 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
           </div>
 
           <CustomButton
-            onlyIcon
+          text={"नया दस्तावेज"}
+            // onlyIcon
             color="yellow"
             startIcon={<FaPlus className="text-xl font-bold" />}
             onClick={() => navigateToPage("/form")}
@@ -50,7 +51,7 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
         </button> */}
 
         <CustomButton
-          text={"अनुरोध"}
+          text={"आवक दस्तावेज"}
           variant="contained"
           size={"small"}
           onClick={() => {

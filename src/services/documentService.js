@@ -3,7 +3,7 @@ import { request } from "./apiServices";
 
 // Function to fetch all documents
 export const getAllDocument = async () => {
-  return request("/document/getlist", { method: "GET" });
+  return request("/document/getlist", { method: "POST" });
 };
 
 // Function to fetch a specific document by ID

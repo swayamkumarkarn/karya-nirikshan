@@ -21,7 +21,7 @@ const Form = () => {
 
   const [registerIdOptions, setRegisterIdOptions] = useState([]);
   const [departmentOptions, setDepartmentOptions] = useState([]);
-  const [alert, setAlert] = useState({ open: false, severity: "", message: "" });
+  // const [alert, setAlert] = useState({ open: false, severity: "", message: "" });
 
   const userData = useSelector((state) => state?.auth?.user);
 
@@ -69,16 +69,16 @@ const Form = () => {
     });
   };
 
-  const handleAlertClose = () => {
-    setAlert({ open: false, severity: "", message: "" });
-  };
+  // const handleAlertClose = () => {
+  //   setAlert({ open: false, severity: "", message: "" });
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const createdBy = userData?.data.id;
     const currentDeprtmentId = userData?.data.department_id;
-
+  
     const requestBody = {
       createdBy,
       registerId: formData.registerId,
@@ -91,19 +91,23 @@ const Form = () => {
       currentDeprtmentId,
       tags: [],
     };
-
+  
     try {
       const response = await createDocument(requestBody);
-      console.log("res", response);
+      console.log("Response:", response);
 
-      // Show success alert
-      setAlert({
-        open: true,
-        severity: "success",
-        message: "पंजीयन सफलता पूर्वक हो गया है।",
-      });
 
-      // Reset form fields and navigate to another page
+  
+      // Show success alert with the document number
+      // setAlert({
+      //   open: true,
+      //   severity: "success",
+      //   message: `पंजीयन सफलता पूर्वक हो गया है। दस्तावेज़ संख्या: ${response.data.document_number}`,
+      // });
+
+      alert(`पंजीयन सफलता पूर्वक हो गया है। दस्तावेज़ संख्या: ${response.data.document_number}`);
+  
+      // Reset form fields
       setFormData({
         registerId: "",
         unitNumber: "",
@@ -115,18 +119,21 @@ const Form = () => {
         priority: "",
         description: "",
       });
+  
+      // Navigate to another page
       navigateToPage("/documents");
     } catch (error) {
       console.error("Failed to submit form:", error.message);
-
+  
       // Show error alert
-      setAlert({
-        open: true,
-        severity: "error",
-        message: "पंजीयन करने में त्रुटि हुई है। कृपया पुनः प्रयास करें।",
-      });
+      // setAlert({
+      //   open: true,
+      //   severity: "error",
+      //   message: "पंजीयन करने में त्रुटि हुई है। कृपया पुनः प्रयास करें।",
+      // });
     }
   };
+  
 
   const departmentTypeOptions = [
     { value: "internal", label: "कार्यालय अंतर्गत मामले" },
@@ -146,10 +153,10 @@ const Form = () => {
   ];
 
   return (
-    <div className="bg-gray-100 min-h-screen flex h-full w-full justify-center">
+    <div className="bg-gray-100 min-h-screen flex  w-full justify-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-lg shadow-md h-[70%] w-[60%] fixed"
+        className="bg-white p-6 rounded-lg shadow-md  w-[60%] fixed"
       >
         <h2 className="text-xl font-bold mb-4 justify-center flex">
           दस्तावेज़ पंजीयन (Document Registration)
@@ -181,7 +188,7 @@ const Form = () => {
 
           <div>
             <CustomSelect
-              label="विभाग वर्ग"
+              label="शाखा वर्ग"
               options={departmentTypeOptions}
               value={formData.departmentType}
               onChange={handleChange}
@@ -192,7 +199,7 @@ const Form = () => {
 
           <div>
             <CustomSelect
-              label="विभाग का नाम"
+              label="शाखा का नाम"
               options={departmentOptions}
               value={formData.departmentName}
               onChange={handleChange}
@@ -221,7 +228,7 @@ const Form = () => {
               value={formData.description}
               onChange={handleChange}
               placeholder="Enter Description"
-              className="w-[100%] h-20 p-2 border-2 border-gray-300 rounded-md"
+              className="w-[100%] h-20 p-2 border-2 border-gray-300 rounded-md resize-none"
               required
             />
           </div>
@@ -260,7 +267,7 @@ const Form = () => {
       </form>
 
       {/* MUI Snackbar for Alerts */}
-      <Snackbar
+      {/* <Snackbar
         open={alert.open}
         autoHideDuration={6000}
         onClose={handleAlertClose}
@@ -269,7 +276,7 @@ const Form = () => {
         <Alert onClose={handleAlertClose} severity={alert.severity} sx={{ width: "100%" }}>
           {alert.message}
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
     </div>
   );
 };
