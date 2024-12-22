@@ -72,6 +72,15 @@
     }
   },
   {
+    "path": "/my-docs",
+    "component": "./pages/my-docs/index.jsx",
+    "layout": null,
+    "meta": {
+      "title": "सभी दस्तावेज़",
+      "description": "सभी दस्तावेज़"
+    }
+  },
+  {
     "path": "/track-doc",
     "component": "./pages/track-doc/index.jsx",
     "layout": null,

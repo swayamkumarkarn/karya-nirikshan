@@ -19,16 +19,22 @@ const menuItems = [
     route: "/analytics",
   },
   {
-    id: "Track Doc",
-    label: "दस्तावेज़ ट्रैक करें",
-    Icon: IoLocationOutline,
-    route: "/track-doc",
-  },
-  {
     id: "All Documents",
     label: "सभी दस्तावेज़",
     Icon: FaFileAlt,
     route: "/documents",
+  },
+  {
+    id: "My Documents",
+    label: "मेरे दस्तावेज़",
+    Icon: FaFileAlt,
+    route: "/my-docs",
+  },
+  {
+    id: "Track Doc",
+    label: "दस्तावेज़ ट्रैक करें",
+    Icon: IoLocationOutline,
+    route: "/track-doc",
   },
   {
     id: "Privacy Policy",
