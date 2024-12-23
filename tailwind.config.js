@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        seaGreen: "#347571", // Added custom color as seaGreen
+        seaGreen: "#347571",
+        yel: "#EAB308" // Added custom color as seaGreen
       },
       height: { 
         'true-screen': 'var(--true-vh)', 

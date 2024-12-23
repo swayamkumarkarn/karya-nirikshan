@@ -109,9 +109,12 @@ function parseDirectory(dir, basePath = "") {
       if (file.match(/^\[.+\]\.jsx$/) || file.match(/^\[.+\]\.js$/)) {
         const param = file.match(/^\[(.+)\]\.(jsx|js)$/)[1];
         const routePath = `${basePath}/:${param}`;
+        const meta = extractMeta(fullPath); // Extract meta object here
+
         routes.push({
           path: routePath,
           component: `./pages${basePath}/${file}`,
+          meta: meta, // Include the meta object
         });
       } else if (file.endsWith(".jsx") || file.endsWith(".js")) {
         const routeName = file.replace(/\.(jsx|js)$/, "");
@@ -135,6 +138,7 @@ function parseDirectory(dir, basePath = "") {
 
   return routes;
 }
+
 
 function handleRootIndex(routes) {
   const rootIndexJs = path.join(PAGES_DIR, "index.js");

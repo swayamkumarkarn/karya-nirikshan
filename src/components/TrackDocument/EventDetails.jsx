@@ -30,22 +30,37 @@ const EventDetails = ({ id }) => {
   if (loading) {
     return (
       <div className="px-4 py-3">
-        <h1 className="text-xl font-bold mb-1">कार्य विवरण</h1>
-        <div className="border rounded-lg shadow-md p-4 bg-white max-w-5xl">
-          <div
-            className="grid grid-cols-5 gap-4 py-2 animate-pulse"
-            style={{
-              gridTemplateColumns: "2fr 2fr 4fr 4fr 4fr 6fr",
-            }}
-          >
-            {Array.from({ length: 6 }).map((_, index) => (
-              <React.Fragment key={index}>
-                <div className="bg-gray-300 h-6 w-3/4 rounded"></div>
-                <div className="bg-gray-300 h-6 w-full rounded"></div>
-              </React.Fragment>
-            ))}
-          </div>
+        <h1 className="text-xl font-bold mb-1">दस्तावेज़ लॉग</h1>
+        <div
+          className="grid grid-cols-5 gap-4 text-gray-400 font-semibold text-md bg-gray-100 px-4 py-2 rounded-lg text-center"
+          style={{
+            gridTemplateColumns: "2fr 2fr 4fr 4fr 4fr 6fr",
+          }}
+        >
+          <div>दिनांक</div>
+          <div>समय</div>
+          <div>शाखा</div>
+          <div>विवरण</div>
+          <div>द्वारा संभाला गया</div>
+          <div>टिप्पणी</div>
         </div>
+        {Array.from({ length: 6 }).map((_, index) => (
+          <div className="border rounded-lg mb-4 shadow-md p-2 px-4 bg-white max-w-7xl">
+            <div
+              className="grid grid-cols-5 gap-4 py-2 animate-pulse"
+              style={{
+                gridTemplateColumns: "2fr 2fr 4fr 4fr 4fr 6fr",
+              }}
+            >
+              {Array.from({ length: 6 }).map((_, index) => (
+                <React.Fragment key={index}>
+                  <div className="bg-gray-300 h-4 w-3/4 rounded"></div>
+                  {/* <div className="bg-gray-300 h-6 w-full rounded"></div> */}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     );
   }
@@ -56,7 +71,7 @@ const EventDetails = ({ id }) => {
 
   return (
     <div className="px-4 py-3">
-      <h1 className="text-xl font-bold mb-1">कार्य विवरण</h1>
+      <h1 className="text-xl font-bold mb-1">दस्तावेज़ लॉग</h1>
 
       {/* Table Header */}
       <div
@@ -65,10 +80,10 @@ const EventDetails = ({ id }) => {
           gridTemplateColumns: "2fr 2fr 4fr 4fr 4fr 6fr",
         }}
       >
-        <div>तारीख</div>
+        <div>दिनांक</div>
         <div>समय</div>
-        <div>विभाग</div>
-        <div>इवेंट</div>
+        <div>शाखा</div>
+        <div>विवरण</div>
         <div>द्वारा संभाला गया</div>
         <div>टिप्पणी</div>
       </div>
@@ -76,10 +91,12 @@ const EventDetails = ({ id }) => {
       {/* Event Log Rows */}
       <div className="space-y-4">
         {eventLogs.map((log) => {
-          const [date, time] = new Date(log.timestamp).toLocaleString("en-IN", {
-            dateStyle: "short",
-            timeStyle: "short",
-          }).split(", ");
+          const [date, time] = new Date(log.timestamp)
+            .toLocaleString("en-IN", {
+              dateStyle: "short",
+              timeStyle: "medium",
+            })
+            .split(", ");
 
           return (
             <div

@@ -8,7 +8,6 @@ import AllResolve from "../ActionButtons/allResolve";
 import { useSelector } from "react-redux";
 
 const DocumentDetails = ({ id }) => {
-
   const [document, setDocument] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,13 +37,15 @@ const DocumentDetails = ({ id }) => {
     fetchDocument();
   }, [id]);
 
+ 
+
   // console.log("object",document);
 
   if (loading) {
     return (
       <div className="px-4 py-3">
         <h1 className="text-xl font-bold mb-1">दस्तावेज़ विवरण</h1>
-        <div >
+        <div>
           <div className=" border rounded-lg shadow-md p-4 bg-white max-w-lg">
             <div
               className="grid grid-cols-2 py-1 gap-y-1 text-sm text-gray-400 items-start"
@@ -82,11 +83,8 @@ const DocumentDetails = ({ id }) => {
               <span className="font-semibold">स्थिति:</span>
               <span className="bg-gray-300 h-4 w-full rounded animate-pulse"></span>
             </div>
-
-
           </div>
         </div>
-
       </div>
     );
   }
@@ -98,8 +96,7 @@ const DocumentDetails = ({ id }) => {
   return (
     <div className="px-4 py-3">
       <h1 className="text-xl font-bold mb-1">दस्तावेज़ विवरण</h1>
-      <div className="grid grid-cols-2 min-w-full"
-       >
+      <div className="grid grid-cols-2 min-w-full">
         <div className="border rounded-lg shadow-md p-4 w-full bg-white max-w-lg">
           <div
             className="grid grid-cols-2 py-1 gap-y-1 text-sm text-gray-400 items-start"
@@ -135,12 +132,13 @@ const DocumentDetails = ({ id }) => {
             <span className="font-semibold">ग्रेड:</span>
             <span>
               <div
-                className={`w-fit px-3 font-semibold rounded-lg ${document.grade === "A"
-                  ? "bg-red-100 text-red-800"
-                  : document.grade === "B"
+                className={`w-fit px-3 font-semibold rounded-lg ${
+                  document.grade === "A"
+                    ? "bg-red-100 text-red-800"
+                    : document.grade === "B"
                     ? "bg-yellow-100 text-yellow-800"
                     : "bg-green-100 text-green-800"
-                  }`}
+                }`}
               >
                 ग्रेड - {document.grade}
               </div>
@@ -153,38 +151,64 @@ const DocumentDetails = ({ id }) => {
 
             <span className="font-semibold">स्थिति:</span>
             <span
-              className={`font-semibold ${document.status === "created"
-                ? "text-yellow-500"
-                : document.status === "completed"
-                  ? "text-green-500"
-                  : "text-red-500"
-                }`}
+              className={`w-fit px-3 font-semibold ${
+                document.status === "created"
+                  ? "bg-yellow-100 rounded-lg text-yel"
+                  : document.status === "pending"
+                  ? "bg-orange-100 rounded-lg text-orange-500"
+                  : document.status === "completed"
+                  ? "bg-green-100 rounded-lg text-green-700"
+                  : "bg-red-100 rounded-lg text-red-800"
+              }`}
             >
               {document.status === "created"
-                ? "निर्मित (Created)"
+                ? "निर्मित"
+                : document.status === "pending"
+                ? "प्रतीक्षित"
                 : document.status === "completed"
-                  ? "पूर्ण (Completed)"
-                  : "अपूर्ण (Incomplete)"}
+                ? "पूर्ण"
+                : "निष्क्रिय"}
             </span>
           </div>
         </div>
 
-        <div className="flex items-center justify-evenly">
-
+       {(user.department_id ==document.current_department) && ( <div className="flex items-center justify-evenly">
           {/* <CustomButton text={"शाखा निस्तारित"}  onClick={() => setAcceptOpen(true)} /> */}
-          <CustomButton text={"अपडेट करें"}  onClick={() => setUpdateOpen(true)} />
-          <CustomButton text={"पूर्ण निस्तारित "}  onClick={() => setResolveOpen(true)} />
-          <CustomButton text={"आगे बढ़ाएं"} onClick={() => setForwardOpen(true)} />
-
-
-
-        </div>
-
+          <CustomButton
+            text={"अपडेट करें"}
+            onClick={() => setUpdateOpen(true)}
+          />
+          <CustomButton
+            text={"पूर्ण निस्तारित "}
+            onClick={() => setResolveOpen(true)}
+          />
+          <CustomButton
+            text={"आगे बढ़ाएं"}
+            onClick={() => setForwardOpen(true)}
+          />
+        </div>)}
       </div>
       {/* <DepartmentResolve open={acceptOpen} setOpen={setAcceptOpen}  /> */}
-      <Update open={updateOpen} setOpen={setUpdateOpen}  documentId={document.id} handledDepartmentId={user.department_id} handledUserId={user.id}/>
-      <AllResolve open={resolveOpen} setOpen={setResolveOpen} userId={user.id} documentId={document.id}/>
-      <Forward open={forwardOpen} setOpen={setForwardOpen} documentId={document.id} forwardedBy={user.id} fromDepartmentId={user.department_id}/>
+      <Update
+        open={updateOpen}
+        setOpen={setUpdateOpen}
+        documentId={document.id}
+        handledDepartmentId={user.department_id}
+        handledUserId={user.id}
+      />
+      <AllResolve
+        open={resolveOpen}
+        setOpen={setResolveOpen}
+        userId={user.id}
+        documentId={document.id}
+      />
+      <Forward
+        open={forwardOpen}
+        setOpen={setForwardOpen}
+        documentId={document.id}
+        forwardedBy={user.id}
+        fromDepartmentId={user.department_id}
+      />
     </div>
   );
 };

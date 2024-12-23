@@ -32,6 +32,7 @@
           {
             "path": "/about/:id",
             "component": "./pages/about/[id].jsx",
+            "meta": {},
             "children": []
           }
         ]
@@ -103,6 +104,9 @@
           {
             "path": "/track-doc/:id",
             "component": "./pages/track-doc/[id].jsx",
+            "meta": {
+              "description": "दस्तावेज़ ट्रैकिंग"
+            },
             "children": []
           }
         ]

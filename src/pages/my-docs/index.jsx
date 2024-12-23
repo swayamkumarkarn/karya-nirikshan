@@ -9,7 +9,7 @@ function DocumentsTable() {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-    const userData = useSelector((state) => state?.auth?.user?.data);
+  const userData = useSelector((state) => state?.auth?.user?.data);
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -109,6 +109,7 @@ function DocumentsTable() {
                     year: "2-digit",
                     hour: "2-digit",
                     minute: "2-digit",
+                    second:"2-digit",
                   })}
                 </div>
                 <div>{doc.title}</div>
@@ -116,11 +117,21 @@ function DocumentsTable() {
                   <span
                     className={`inline-block px-4 py-1 font-bold ${
                       doc.status === "created"
-                        ? "bg-yellow-100 rounded-lg text-yellow-500"
+                        ? "bg-yellow-100 rounded-lg text-yel"
+                        : doc.status === "pending"
+                        ? "bg-orange-100 rounded-lg text-orange-500"
+                        : doc.status === "completed"
+                        ? "bg-green-100 rounded-lg text-green-700"
                         : "bg-red-100 rounded-lg text-red-800"
                     }`}
                   >
-                    {doc.status === "created" ? "सक्रिय" : "निष्क्रिय"}
+                    {doc.status === "created"
+                      ? "निर्मित"
+                      : doc.status === "pending"
+                      ? "प्रतीक्षित"
+                      : doc.status === "completed"
+                      ? "पूर्ण"
+                      : "निष्क्रिय"}
                   </span>
                 </div>
                 {/* Pin */}
@@ -136,7 +147,9 @@ function DocumentsTable() {
                 <CustomButton
                   text={"देखें"}
                   variant="contained"
-                  onClick={()=>{navigateToPage(`/track-doc/${doc.id}`)}}
+                  onClick={() => {
+                    navigateToPage(`/track-doc/${doc.id}`);
+                  }}
                   fullWidth
                   color="white"
                   sx={{

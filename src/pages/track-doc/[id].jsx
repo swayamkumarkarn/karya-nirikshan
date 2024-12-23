@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import DocumentDetails from "../../components/TrackDocument/DocumentDetails";
 import EventDetails from "../../components/TrackDocument/EventDetails";
 
 import { useParams } from "react-router-dom";
+
 
 const TrackDocId = () => {
   const { id } = useParams();
@@ -20,7 +21,7 @@ const TrackDocId = () => {
 };
 
 export const meta = {
-  title: "दस्तावेज़ ट्रैक करें",
+  title: `दस्तावेज़ ट्रैकर`,
   description: "दस्तावेज़ ट्रैकिंग",
 };
 

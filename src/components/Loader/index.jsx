@@ -7,9 +7,9 @@ const Loader = () => {
         <img
           width={1024}
           height={1024}
-          src={"images/logo/bilaspur-police-logo.png"}
+          src={"/images/logo/bilaspur-police-logo.png"}
           alt="Logo"
-          className={styles.image}
+          className={styles.image} 
         />
       </div>
     </div>
