@@ -45,7 +45,7 @@ function DocumentsTable() {
           >
             <div>क्रमांक</div>
             <div>दस्तावेज़ संख्या</div>
-            <div>विभाग</div>
+            <div>शाखा</div>
             <div>तिथि और समय</div>
             <div>शीर्षक/विवरण</div>
             <div>स्थिति</div>

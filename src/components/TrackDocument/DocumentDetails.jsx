@@ -115,7 +115,7 @@ const DocumentDetails = ({ id }) => {
             <span className="font-semibold">दर्ज रजिस्टर:</span>
             <span className="text-black">{document.register_hindi_name}</span>
 
-            <span className="font-semibold">संदर्भ विभाग:</span>
+            <span className="font-semibold">संदर्भ शाखा:</span>
             <span className="text-black">{document.department_hindi_name}</span>
 
             <span className="font-semibold">शीर्षक:</span>
@@ -144,7 +144,7 @@ const DocumentDetails = ({ id }) => {
               </div>
             </span>
 
-            <span className="font-semibold">वर्तमान विभाग:</span>
+            <span className="font-semibold">वर्तमान शाखा:</span>
             <span className="text-black">
               {document.current_department_hindi_name}
             </span>

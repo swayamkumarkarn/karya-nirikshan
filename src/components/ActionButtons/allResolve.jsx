@@ -3,55 +3,44 @@ import CustomPopup from '../Common/CustomPopUp';
 import { Snackbar, Alert, InputLabel } from '@mui/material';
 import CustomButton from '../Common/CustomButton';
 import { docDispose } from '../../services/documentService';
+import {setAlert,clearAlert} from "../../redux/actions/alert";
+import { useSelector, useDispatch } from "react-redux";
 
 const AllResolve = ({ open, setOpen, documentId, userId }) => {
     const [remark, setRemark] = useState('');
-    const [alert, setAlert] = useState({ open: false, severity: 'success', message: '' });
+    const dispatch = useDispatch();
 
     const handleAccept = async () => {
         try {
             if (!documentId || !userId) {
-                setAlert({
-                    open: true,
-                    severity: 'warning',
-                    message: 'दस्तावेज़ आईडी और उपयोगकर्ता आईडी अनिवार्य है।',
-                });
+               
+                dispatch(setAlert("warning", "दस्तावेज़ आईडी और उपयोगकर्ता आईडी अनिवार्य है।"));
                 return;
             }
 
             await docDispose(documentId, userId, remark);
-            setAlert({
-                open: true,
-                severity: 'success',
-                message: ' दस्तावेज़ निराकरण पूर्ण हुआ।',
-            });
+            
+            dispatch(setAlert("success", "दस्तावेज़ निराकरण पूर्ण हुआ।"));
             setOpen(false); // Close the popup after accepting
         } catch (error) {
             console.error('Error disposing document:', error);
-            setAlert({
-                open: true,
-                severity: 'error',
-                message: 'दस्तावेज़ के निराकरण में त्रुटि हुई।',
-            });
+            
+            dispatch(setAlert("error", "दस्तावेज़ के निराकरण में त्रुटि हुई।"));
+
         }
     };
 
     const handleCancel = () => {
-        setAlert({
-            open: true,
-            severity: 'info',
-            message: 'कार्य रद्द कर दिया गया।',
-        });
+       
+        dispatch(setAlert("warning", " कार्य पूर्ण नहीं किया गया हैं।"));
         setOpen(false); // Close the popup after canceling
+        setRemark('');
     };
 
-    const handleCloseAlert = () => {
-        setAlert({ ...alert, open: false });
-    };
 
     return (
         <>
-            <CustomPopup open={open} setOpen={setOpen} maxWidth="sm">
+            <CustomPopup open={open} setOpen={setOpen} maxWidth="sm" onClose={handleCancel} >
                 <h2 className="text-xl font-bold mb-4 flex justify-center">
                     दस्तावेज़ का कार्य पूरा हो चुका है?
                 </h2>
@@ -90,20 +79,6 @@ const AllResolve = ({ open, setOpen, documentId, userId }) => {
                 </div>
             </CustomPopup>
 
-            <Snackbar
-                open={alert.open}
-                autoHideDuration={5000}
-                onClose={handleCloseAlert}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            >
-                <Alert
-                    onClose={handleCloseAlert}
-                    severity={alert.severity}
-                    sx={{ width: '100%' }}
-                >
-                    {alert.message}
-                </Alert>
-            </Snackbar>
         </>
     );
 };
