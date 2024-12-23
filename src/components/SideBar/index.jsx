@@ -50,14 +50,12 @@ const menuItems = [
   },
 ];
 
-
-
 const SideBar = () => {
   const [greet, setGreet] = useState("");
   const dispatch = useDispatch();
   const location = useLocation(); // Get the current route using useLocation
 
-  const handleLogout=async()=>{
+  const handleLogout = async () => {
     try {
       await logout();
       dispatch(logoutAction());
@@ -65,9 +63,7 @@ const SideBar = () => {
     } catch (err) {
       console.error("Login failed:", err);
     }
-    
-  }
-
+  };
 
   useEffect(() => {
     function greetBasedOnTime() {
@@ -93,23 +89,21 @@ const SideBar = () => {
     menuItems.find((item) => item.route === location.pathname)?.id || "";
 
   const getItemClasses = (item) =>
-    `flex  text-base items-center gap-3 p-2 px-4 rounded-md cursor-pointer  transition-all duration-200 ${
+    `flex items-center gap-3 p-2 px-4 rounded-md cursor-pointer transition-all duration-300 ease-in-out ${
       activeItem === item
-        ? " text-black ml-4 border-gray-400 bg-white shadow-md " // Left border and padding for active item
-        : "text-gray-400"
-    } hover:text-black hover:ml-4 hover:border-gray-400 hover:bg-white hover:shadow-md `;
+        ? "text-black bg-gray-100 font-semibold shadow-lg" // Active item style
+        : "text-gray-500 hover:text-black hover:bg-gray-100 hover:shadow-md"
+    }`;
 
   return (
-    <div className="text-gray-400 font-semibold w-[17%] h-screen flex flex-col justify-between  ">
+    <div className="text-gray-400 font-semibold w-[17%] h-screen flex flex-col justify-between">
       {/* Header */}
       <div className="p-4 relative">
         <div className="mb-8 flex items-start gap-4 justify-center absolute">
-          <FiList className="text-4xl font-bolder" />
+          <FiList className="text-4xl font-bold" />
           <div>
             <h2 className="text-xl font-semibold text-black">Welcome,</h2>
-            <p className="text-lg text-gray-500 ml-4">  
-              {greet}
-            </p>
+            <p className="text-lg text-gray-500">{greet}</p>
           </div>
         </div>
 
@@ -135,10 +129,10 @@ const SideBar = () => {
       {/* Footer */}
       <div className="p-4">
         <div
-          className="flex items-center gap-3 p-2 rounded-md cursor-pointer  transition-all hover:text-black hover:ml-4 hover:border-gray-400 hover:bg-white hover:shadow-md"
+          className="flex items-center gap-3 p-2 rounded-md cursor-pointer transition-all duration-300 ease-in-out hover:text-black hover:bg-gray-100 hover:shadow-md"
           onClick={() => handleLogout()}
         >
-          <CiPower className="text-2xl font-bolder" />
+          <CiPower className="text-2xl font-bold" />
           <span>लॉगआउट</span>
         </div>
         <div className="mt-4 text-sm text-center text-gray-400 flex gap-4 items-center">

@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import TypeWriter from "../../components/Common/TypeWriter";
 import navigateToPage from "../../lib/functionality/navigation";
-import { Snackbar, Alert } from "@mui/material";
+import {setAlert,clearAlert} from "../../redux/actions/alert"
 
 function FormInput({ label, id, type, value, onChange }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -58,9 +58,9 @@ function FormInput({ label, id, type, value, onChange }) {
 const LoginPage = () => {
   const userData = useSelector((state) => state?.auth?.user);
   const [formData, setFormData] = useState({ username: "", password: "" });
-  const [error, setError] = useState(null);
+
   const [loading, setLoading] = useState(false);
-  const [openSnackbar, setOpenSnackbar] = useState(false);
+  
 
   const dispatch = useDispatch(); // Use Redux dispatch
 
@@ -71,30 +71,34 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     setLoading(true);
-    setError(null);
+   
 
     try {
-      const response = await login(formData); // Call the login service
-      console.log("Login successful:", response);
+        const response = await login(formData); // Call the login service
+        console.log("Login successful:", response);
 
-      // Dispatch the user data to the Redux store
-      dispatch(SAVE_USER_DATA(response));
-      navigateToPage("/");
+        // Dispatch the user data to the Redux store
+        dispatch(SAVE_USER_DATA(response));
+
+        // Dispatch success alert
+        dispatch(setAlert("success", "कार्य निरीक्षण में आपका स्वागत है।"));
+
+        // Navigate after clearing the alert
+        setTimeout(() => {
+            dispatch(clearAlert());
+            navigateToPage("/");
+        }, 1000);
     } catch (err) {
-      console.error("Login failed:", err.message);
-      setError( "कोई अनपेक्षित  त्रुटि हुई है।");
-      setOpenSnackbar(true); // Open the snackbar on error
-    } finally {
-      setLoading(false);
-      // console.log(err.message);
-      
-      setError( "कृपया अपना लॉगिन आईडी और पासवर्ड जांचें।");
-    }
-  };
+        console.error("Login failed:", err.message);
 
-  const handleCloseSnackbar = () => {
-    setOpenSnackbar(false);
-  };
+        // Dispatch error alert
+        dispatch(setAlert("error", "कृपया अपना लॉगिन आईडी और पासवर्ड जांचें।"));
+    } finally {
+        setLoading(false);
+    }
+};
+
+
 
   useEffect(() => {
     console.log("Persisted User Data:", userData); // Log persisted data
@@ -120,7 +124,7 @@ const LoginPage = () => {
         {/* Title */}
         <div className="mb-4">
           <span className=" -ml-40 font-semibold text-neutral-400 text-sm">
-            <TypeWriter data={["आइए यहां से शुरू करें", "Let's Start Here"]} typingSpeed={150} wordDelay={3000}/>
+            <TypeWriter data={["आइए यहां से शुरू करें", "Let's Start Here"]} typingSpeed={150} wordDelay={3000} />
           </span>
         </div>
 
@@ -149,18 +153,7 @@ const LoginPage = () => {
           onChange={handleChange}
         />
 
-        {error && (
-          <Snackbar
-            open={openSnackbar}
-            autoHideDuration={6000}
-            onClose={handleCloseSnackbar}
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          >
-            <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
-              {error}
-            </Alert>
-          </Snackbar>
-        )}
+       
 
         <div className="mt-2 mb-8 min-w-40">
           <CustomButton

@@ -2,9 +2,10 @@ import { Button, Dialog, DialogContent } from '@mui/material';
 import React from 'react';
 import { RxCross2 } from "react-icons/rx";
 
-const CustomPopup = ({ open, setOpen, children, maxWidth = "md" }) => {
+const CustomPopup = ({ open, setOpen, children, maxWidth = "md" ,onClose}) => {
   const handleClose = () => {
     setOpen(false);
+    if (onClose) onClose(); 
   };
 
   return (

@@ -101,7 +101,7 @@ const EventDetails = ({ id }) => {
           return (
             <div
               key={log.id}
-              className="grid grid-cols-5 gap-4 p-3 text-center justify-center items-center bg-white rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-black"
+              className="grid grid-cols-5 gap-4 p-3 text-center justify-center items-center bg-white rounded-lg shadow-sm hover:shadow-md border border-gray-200 "
               style={{
                 gridTemplateColumns: "2fr 2fr 4fr 4fr 4fr 6fr",
               }}

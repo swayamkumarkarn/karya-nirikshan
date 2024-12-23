@@ -13,7 +13,7 @@ const Dashboard = () => {
   const columns = [
     { key: "id", label: "आईडी", className: "font-semibold text-gray-400" },
     { key: "title", label: "शीर्षक", className: "font" },
-    { key: "department", label: "विभाग" },
+    { key: "department", label: "शाखा" },
     { key: "grade", label: "ग्रेड" },
   ];
 

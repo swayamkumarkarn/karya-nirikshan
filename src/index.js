@@ -8,6 +8,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./redux/store";
 import "./index.css";
 import App from "./App";
+import GlobalAlert from "./components/Common/GlobalAlert/alert";
 // import store from "./store";
 
 // Calculate true height and set as CSS variable
@@ -35,6 +36,7 @@ root.render(
       {/* <CssBaseline />  */}
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
+        <GlobalAlert/>
           <App />
         </PersistGate>
       </Provider>
