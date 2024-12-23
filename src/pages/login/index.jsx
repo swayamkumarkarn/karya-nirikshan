@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import TypeWriter from "../../components/Common/TypeWriter";
 import navigateToPage from "../../lib/functionality/navigation";
+import { Snackbar, Alert } from "@mui/material";
 
 function FormInput({ label, id, type, value, onChange }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -59,6 +60,7 @@ const LoginPage = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const dispatch = useDispatch(); // Use Redux dispatch
 
@@ -79,12 +81,21 @@ const LoginPage = () => {
       dispatch(SAVE_USER_DATA(response));
       navigateToPage("/");
     } catch (err) {
-      console.error("Login failed:", err);
-      setError(err.message || "An unexpected error occurred");
+      console.error("Login failed:", err.message);
+      setError( "कोई अनपेक्षित  त्रुटि हुई है।");
+      setOpenSnackbar(true); // Open the snackbar on error
     } finally {
       setLoading(false);
+      // console.log(err.message);
+      
+      setError( "कृपया अपना लॉगिन आईडी और पासवर्ड जांचें।");
     }
   };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
   useEffect(() => {
     console.log("Persisted User Data:", userData); // Log persisted data
   }, [userData]);
@@ -138,7 +149,18 @@ const LoginPage = () => {
           onChange={handleChange}
         />
 
-        {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
+        {error && (
+          <Snackbar
+            open={openSnackbar}
+            autoHideDuration={6000}
+            onClose={handleCloseSnackbar}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+              {error}
+            </Alert>
+          </Snackbar>
+        )}
 
         <div className="mt-2 mb-8 min-w-40">
           <CustomButton
@@ -179,7 +201,6 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
 
 export const meta = {
   title: "लॉगिन पृष्ठ",

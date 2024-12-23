@@ -25,6 +25,8 @@ const EventDetails = ({ id }) => {
     fetchEventLogs();
   }, [id]);
 
+  // console.log("object",eventLogs);
+
   if (loading) {
     return (
       <div className="px-4 py-3">

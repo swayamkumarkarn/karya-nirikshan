@@ -26,19 +26,57 @@ export const getEventLogById = async (id) => {
 };
 
 
-export const docDispose = async (documentId, userId) => {
+export const docDispose = async (documentId, userId, remark) => {
   if (!(documentId && userId)) {
-    throw new Error("Document ID and UserId is required");
+    throw new Error("Document ID and UserId are required in service" );
   }
 
-  return request(`/document/dispose`, { method: "POST",body: JSON.stringify({documentId, userId , remark}) });
+  try {
+    const response = await request(`/document/dispose`, {
+      method: "POST",
+      body: JSON.stringify({ documentId, userId, remark }),
+    });
+
+    return response; // Return the API response
+  } catch (error) {
+    console.error("Error in docDispose:", error);
+    throw error; // Rethrow the error for the caller to handle
+  }
 };
 
 
-export const docForward = async (documentId,fromDepartmentId,toDepartmentId, forwardedBy, remark) => {
+export const docForward = async (documentId,fromDepartmentId,toDepartmentId, forwardedBy, remarks) => {
   if (!(documentId && fromDepartmentId &&toDepartmentId && forwardedBy)) {
     throw new Error("Provide All mandatory field is required");
   }
 
-  return request(`/transfer/create`, { method: "POST",body: JSON.stringify({documentId,fromDepartmentId,toDepartmentId, forwardedBy, remark}) });
+  return request(`/transfer/create`, { method: "POST",body: JSON.stringify({documentId,fromDepartmentId,toDepartmentId, forwardedBy, remarks}) });
+};
+
+export const updateLog = async ( documentId, handledDepartmentId, handledUserId, action, remark ) => {
+ 
+
+  // if (!action) {
+  //   throw new Error('The "action" field is mandatory.');
+  // }
+
+  // const requestBody = ;
+  // console.log("request",requestBody);
+  console.log("object",
+    documentId,
+    handledDepartmentId,
+    handledUserId,
+    action,
+    remark,
+  )
+
+  return request(`/log/update`, { method: "POST",body: JSON.stringify({
+    documentId,
+    handledDepartmentId,
+    handledUserId,
+    action,
+    remark,
+  }) });
+
+ 
 };

@@ -5,13 +5,14 @@ import DepartmentResolve from "../ActionButtons/departmentResolve";
 import Update from "../ActionButtons/update";
 import Forward from "../ActionButtons/forward";
 import AllResolve from "../ActionButtons/allResolve";
+import { useSelector } from "react-redux";
 
 const DocumentDetails = ({ id }) => {
+
   const [document, setDocument] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // const [open, setOpen] = useState(false);
+  const user = useSelector((state) => state?.auth?.user?.data);
 
   const [acceptOpen, setAcceptOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
@@ -36,6 +37,8 @@ const DocumentDetails = ({ id }) => {
 
     fetchDocument();
   }, [id]);
+
+  // console.log("object",document);
 
   if (loading) {
     return (
@@ -168,7 +171,7 @@ const DocumentDetails = ({ id }) => {
 
         <div className="flex items-center justify-evenly">
 
-          <CustomButton text={"शाखा निस्तारित"}  onClick={() => setAcceptOpen(true)} />
+          {/* <CustomButton text={"शाखा निस्तारित"}  onClick={() => setAcceptOpen(true)} /> */}
           <CustomButton text={"अपडेट करें"}  onClick={() => setUpdateOpen(true)} />
           <CustomButton text={"पूर्ण निस्तारित "}  onClick={() => setResolveOpen(true)} />
           <CustomButton text={"आगे बढ़ाएं"} onClick={() => setForwardOpen(true)} />
@@ -178,10 +181,10 @@ const DocumentDetails = ({ id }) => {
         </div>
 
       </div>
-      <DepartmentResolve open={acceptOpen} setOpen={setAcceptOpen}  />
-      <Update open={updateOpen} setOpen={setUpdateOpen} />
-      <AllResolve open={resolveOpen} setOpen={setResolveOpen} />
-      <Forward open={forwardOpen} setOpen={setForwardOpen} />
+      {/* <DepartmentResolve open={acceptOpen} setOpen={setAcceptOpen}  /> */}
+      <Update open={updateOpen} setOpen={setUpdateOpen}  documentId={document.id} handledDepartmentId={user.department_id} handledUserId={user.id}/>
+      <AllResolve open={resolveOpen} setOpen={setResolveOpen} userId={user.id} documentId={document.id}/>
+      <Forward open={forwardOpen} setOpen={setForwardOpen} documentId={document.id} forwardedBy={user.id} fromDepartmentId={user.department_id}/>
     </div>
   );
 };
