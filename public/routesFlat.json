@@ -82,6 +82,13 @@
     }
   },
   {
+    "path": "/open-track-doc/:id",
+    "component": "./pages/open-track-doc/[id].jsx",
+    "meta": {
+      "description": "दस्तावेज़ ट्रैकिंग"
+    }
+  },
+  {
     "path": "/track-doc",
     "component": "./pages/track-doc/index.jsx",
     "layout": null,

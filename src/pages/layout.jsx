@@ -6,11 +6,20 @@ import RightSidebar from "../components/RightSideBar/index";
 
 const MainLayout = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-
   const location = useLocation();
-  const routesWithoutLayout = ["/login"]; // Add more routes if needed
 
-  const isLayoutVisible = !routesWithoutLayout.includes(location.pathname);
+  // Define exact paths
+  const exactPathsWithoutLayout = ["/login"];
+
+  // Define paths to match with "startsWith"
+  const startsWithPathsWithoutLayout = ["/open-track-doc"];
+
+  // Determine layout visibility
+  const isLayoutVisible =
+    !exactPathsWithoutLayout.includes(location.pathname) &&
+    !startsWithPathsWithoutLayout.some((route) =>
+      location.pathname.startsWith(route)
+    );
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -31,21 +40,13 @@ const MainLayout = ({ children }) => {
                 toggleSidebar={toggleSidebar}
                 isSidebarOpen={isSidebarOpen}
               />
-              <main
-                className={`overflow-y-auto h-screen`}
-              >
-                {children}
-              </main>
+              <main className={`overflow-y-auto h-screen`}>{children}</main>
             </div>
           </div>
         </div>
       )}
 
-      {!isLayoutVisible && (
-        <main>
-          {children}
-        </main>
-      )}
+      {!isLayoutVisible && <main>{children}</main>}
     </>
   );
 };
