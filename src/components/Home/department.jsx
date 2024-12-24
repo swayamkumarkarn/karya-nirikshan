@@ -97,7 +97,7 @@ const department = ({departmentCard}) => {
           </div>
 
           <p className="text-md mb-1 grid grid-cols-2 justify-left justify-center ">
-            <p className="flex flex-row items-center justify-left text-gray-500">
+            <p className="flex flex-row items-center justify-left text-gray-500"> 
             निराकृत{" "}
             </p>
             <span className={`font-semibold text-green-600 flex flex-row items-center text-lg justify-end ${item.completed_progress?"":"mr-3"} `}>
