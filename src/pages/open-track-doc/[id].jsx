@@ -9,7 +9,7 @@ const TrackDocId = () => {
 
   // id="968ef1b5-1d0d-4c07-9374-067b748d1e06"
   return (
-    <div className="bg-gray-100 overflow-y-scroll mt-0 h-screen ">
+    <div className="bg-gray-100 w-full overflow-hidden overflow-y-scroll mt-1 h-true-screen sm:h-screen ">
       <DocumentDetails id={id} />
       <Log id={id} />
 
