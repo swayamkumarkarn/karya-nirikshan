@@ -1,8 +1,11 @@
+//RouteManager.jsx
+
 import React, { Suspense, lazy, useState, useLayoutEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Loader from "./components/Loader";
 import NotFound from "./components/NotFound";
-import MetaTags from "./components/MetaTags";
+// import MetaTags from "./components/MetaTags";
+import MetaTags from "./components/MetaTagsHelmet";
 import { useMiddleware } from "./middleware"; // Updated to use a custom hook for middleware logic
 
 const useFetchRoutes = () => {

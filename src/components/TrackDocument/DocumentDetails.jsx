@@ -6,6 +6,7 @@ import Update from "../ActionButtons/update";
 import Forward from "../ActionButtons/forward";
 import AllResolve from "../ActionButtons/allResolve";
 import { useSelector } from "react-redux";
+import QRScanner from "./QRScanner";
 
 const DocumentDetails = ({ id }) => {
   const [document, setDocument] = useState(null);
@@ -36,8 +37,6 @@ const DocumentDetails = ({ id }) => {
 
     fetchDocument();
   }, [id]);
-
- 
 
   // console.log("object",document);
 
@@ -95,9 +94,12 @@ const DocumentDetails = ({ id }) => {
 
   return (
     <div className="px-4 py-3">
-      <h1 className="text-xl font-bold mb-1">दस्तावेज़ विवरण</h1>
       <div className="grid grid-cols-2 min-w-full">
-        <div className="border rounded-lg shadow-md p-4 w-full bg-white max-w-lg">
+        <span className="text-xl font-bold mb-1">दस्तावेज़ विवरण</span>
+        <span className="text-xl font-bold mb-1">QR स्कैनर</span>
+      </div>
+      <div className="grid grid-cols-2 min-w-full">
+        <div className="border rounded-lg shadow-md p-6 w-full bg-white max-w-xl ">
           <div
             className="grid grid-cols-2 py-1 gap-y-1 text-sm text-gray-400 items-start"
             style={{
@@ -170,23 +172,40 @@ const DocumentDetails = ({ id }) => {
                 : "निष्क्रिय"}
             </span>
           </div>
+          <div>
+            {" "}
+            {user.department_id == document.current_department && (
+              <div className=" mt-3 gap-4 flex items-center justify-evenly">
+                {/* <CustomButton text={"शाखा निस्तारित"}  onClick={() => setAcceptOpen(true)} /> */}
+                <CustomButton
+                  text={"अपडेट करें"}
+                  sx={{fontSize:"14px"}}
+                  size="small"
+                  fullWidth
+                  onClick={() => setUpdateOpen(true)}
+                />
+                <CustomButton
+                  text={"पूर्ण निस्तारित "}
+                  sx={{fontSize:"14px"}}
+                   size="small"
+                   fullWidth
+                  onClick={() => setResolveOpen(true)}
+                />
+                <CustomButton
+                  text={"आगे बढ़ाएं"}
+                  sx={{fontSize:"14px"}}
+                   size="small"
+                   fullWidth
+                  onClick={() => setForwardOpen(true)}
+                />
+              </div>
+            )}
+          </div>
         </div>
 
-       {(user.department_id ==document.current_department) && ( <div className="flex items-center justify-evenly">
-          {/* <CustomButton text={"शाखा निस्तारित"}  onClick={() => setAcceptOpen(true)} /> */}
-          <CustomButton
-            text={"अपडेट करें"}
-            onClick={() => setUpdateOpen(true)}
-          />
-          <CustomButton
-            text={"पूर्ण निस्तारित "}
-            onClick={() => setResolveOpen(true)}
-          />
-          <CustomButton
-            text={"आगे बढ़ाएं"}
-            onClick={() => setForwardOpen(true)}
-          />
-        </div>)}
+        <div className="">
+          <QRScanner value={`https://karya-nirikshan.vercel.app/open-track-doc/${id}`} />
+        </div>
       </div>
       {/* <DepartmentResolve open={acceptOpen} setOpen={setAcceptOpen}  /> */}
       <Update
