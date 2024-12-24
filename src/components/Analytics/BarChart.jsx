@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BarChart,
   Bar,
@@ -10,43 +10,53 @@ import {
   defs,
   linearGradient,
 } from 'recharts';
-import DropdownMenu from '../DropDownMenu';
+import { fetchActivityData } from '../../services/analyticsService';
 
 const ActivityChart = () => {
-  // Data for the chart
-  const data = [
-    { name: 'JAN', value: 100 },
-    { name: 'FEB', value: 200 },
-    { name: 'MAR', value: 300 },
-    { name: 'APR', value: 250 },
-    { name: 'MAY', value: 400 },
-    { name: 'JUN', value: 350 },
-    { name: 'JUL', value: 150 },
-    { name: 'AUG', value: 100 },
-    { name: 'SEP', value: 300 },
-    { name: 'OCT', value: 350 },
-    { name: 'NOV', value: 400 },
-    { name: 'DEC', value: 450 },
-  ];
 
-  const filter = ['January', 'February', 'March', 'April', 'May', 'June'];
+  const [analyticsData, setAnalyticsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const handleMonthSelect = (selectedMonth) => {
-    console.log('Selected month:', selectedMonth);
-  };
+  useEffect(() => {
+  
+    fetchActivityData()
+      .then((response) => {
+        if (response.success) {
+          const formattedData = response.data.map((item) => ({
+            name: item.name,
+            value: parseInt(item.value, 10), 
+          }));
+          setAnalyticsData(formattedData);
+        } else {
+          setError('Failed to load analytics data.');
+        }
+      })
+      .catch((err) => {
+        console.error('Error fetching analytics data:', err);
+        setError('An error occurred while fetching data.');
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
 
   return (
-    <div className="bg-white rounded-lg ">
+    <div className="bg-white rounded-lg">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-md font-semibold text-gray-800">Activity</h2>
-        <DropdownMenu
-          options={filter}
-          defaultOption="Month"
-          onSelect={handleMonthSelect}
-        />
       </div>
       <ResponsiveContainer width="100%" height={220}>
-        <BarChart data={data} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
+        <BarChart
+          data={analyticsData}
+          margin={{ top: 20, right: 20, left: 0, bottom: 0 }}
+        >
           <defs>
             <linearGradient id="barColor" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#3B82F6" stopOpacity={1} />
@@ -76,7 +86,12 @@ const ActivityChart = () => {
               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
             }}
           />
-          <Bar dataKey="value" fill="url(#barColor)" radius={[10, 10, 0, 0]} barSize={12} />
+          <Bar
+            dataKey="value"
+            fill="url(#barColor)"
+            radius={[10, 10, 0, 0]}
+            barSize={12}
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>
