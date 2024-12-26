@@ -83,7 +83,7 @@ const Dashboard = () => {
           <p className="text-4xl font-semibold">{mainCard?.pending_documents}</p>
         </div>
         <div className="p-3 bg-white text-center flex-1">
-          <h2 className="text-sm text-gray-400 font-semibold">आज जोड़े गए दस्तावेज़</h2>
+          <h2 className="text-sm text-gray-400 font-semibold">आज पंजीकृत दस्तावेज़</h2>
           <p className="text-4xl font-semibold">{mainCard?.today_inserted_documents}</p>
         </div>
       </div>

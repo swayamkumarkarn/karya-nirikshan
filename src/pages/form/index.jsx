@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import CustomSelect from '../../components/Common/CustomSelect';
 import CustomInput from '../../components/Common/CustomInput';
 import { fetchReportTypes, fetchDepartments, createDocument } from '../../services/formService';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import navigateToPage from "../../lib/functionality/navigation";
 import { Alert, Snackbar, InputLabel } from '@mui/material';
+import { setAlert } from "../../redux/actions/alert";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +22,7 @@ const Form = () => {
 
   const [registerIdOptions, setRegisterIdOptions] = useState([]);
   const [departmentOptions, setDepartmentOptions] = useState([]);
+  const dispatch = useDispatch(); 
   // const [alert, setAlert] = useState({ open: false, severity: "", message: "" });
 
   const userData = useSelector((state) => state?.auth?.user);
@@ -106,6 +108,7 @@ const Form = () => {
       // });
 
       alert(`पंजीयन सफलता पूर्वक हो गया है। दस्तावेज़ संख्या: ${response.data.document_number}`);
+      dispatch(setAlert("success", "पंजीयन सफलता पूर्वक हो गया है।"));
   
       // Reset form fields
       setFormData({
@@ -124,6 +127,7 @@ const Form = () => {
       navigateToPage("/documents");
     } catch (error) {
       console.error("Failed to submit form:", error.message);
+      dispatch(setAlert("error", "पंजीयन करने में त्रुटि हुई है। कृपया पुनः प्रयास करें।"));
   
       // Show error alert
       // setAlert({
