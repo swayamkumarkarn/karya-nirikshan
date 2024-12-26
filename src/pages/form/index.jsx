@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
-import CustomSelect from '../../components/Common/CustomSelect';
-import CustomInput from '../../components/Common/CustomInput';
-import { fetchReportTypes, fetchDepartments, createDocument } from '../../services/formService';
+import CustomSelect from "../../components/Common/CustomSelect";
+import CustomInput from "../../components/Common/CustomInput";
+import {
+  fetchReportTypes,
+  fetchDepartments,
+  createDocument,
+  fetchCategoryList,
+} from "../../services/formService";
 import { useDispatch, useSelector } from "react-redux";
 import navigateToPage from "../../lib/functionality/navigation";
-import { Alert, Snackbar, InputLabel } from '@mui/material';
 import { setAlert } from "../../redux/actions/alert";
 
 const Form = () => {
@@ -13,25 +17,26 @@ const Form = () => {
     unitNumber: "",
     departmentType: "",
     departmentName: "",
-    referenceNumber: "",
-    subject: "",
-    lastOccurrenceGrade: "",
+    complaintType: "",
+    // referenceNumber: "",
+    title: "",
+    grade: "",
     priority: "",
     description: "",
   });
 
   const [registerIdOptions, setRegisterIdOptions] = useState([]);
   const [departmentOptions, setDepartmentOptions] = useState([]);
-  const dispatch = useDispatch(); 
-  // const [alert, setAlert] = useState({ open: false, severity: "", message: "" });
+  const [complaintTypeOptions, setComplaintTypeOptions] = useState([]);
 
+  const dispatch = useDispatch();
   const userData = useSelector((state) => state?.auth?.user);
 
   useEffect(() => {
     const getRegisterTypes = async () => {
       try {
         const data = await fetchReportTypes();
-        const options = data.map(item => ({
+        const options = data.map((item) => ({
           value: item.id,
           label: item.name,
         }));
@@ -49,7 +54,7 @@ const Form = () => {
       if (formData.departmentType) {
         try {
           const data = await fetchDepartments(formData.departmentType);
-          const options = data.map(item => ({
+          const options = data.map((item) => ({
             value: item.id,
             label: item.hindi_name,
           }));
@@ -63,81 +68,92 @@ const Form = () => {
     getDepartments();
   }, [formData.departmentType]);
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
+
+   
     setFormData({
       ...formData,
       [name]: value,
     });
-  };
 
-  // const handleAlertClose = () => {
-  //   setAlert({ open: false, severity: "", message: "" });
-  // };
+    // Handle dynamic fetching of complaint types for "शिकायत शाखा"
+    if (name === "departmentName") {
+      const selectedDepartment = departmentOptions.find(
+        (option) => option.value === value
+      );
+
+      // If the selected department is "शिकायत शाखा", fetch complaint types
+      if (selectedDepartment && selectedDepartment.label === "शिकायत शाखा") {
+        console.log("object",value);
+        try {
+          const categoryList = await fetchCategoryList(value); // Pass department ID
+          const options = categoryList.map((item) => ({
+            value: item.id,
+            label: item.hindi_name || item.name,
+          }));
+          setComplaintTypeOptions(options);
+        } catch (error) {
+          console.error("Failed to fetch complaint types:", error.message);
+        }
+      } else {
+        // Clear complaint type options if not "शिकायत शाखा"
+        setComplaintTypeOptions([]);
+        setFormData((prevData) => ({ ...prevData, complaintType: "" }));
+      }
+    }
+  };
+  // console.log("departmentOptions",departmentOptions);
+  // console.log("complaintTypeOptions",complaintTypeOptions);
+
+  console.log("formdata",formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const createdBy = userData?.data.id;
     const currentDeprtmentId = userData?.data.department_id;
-  
+
     const requestBody = {
       createdBy,
+      category_id : formData.complaintType ,
       registerId: formData.registerId,
       dispatchDocNumber: formData.unitNumber,
       departmentId: formData.departmentName,
-      title: formData.subject,
+      title: formData.title,
       description: formData.description,
       priority: formData.priority,
-      grade: formData.lastOccurrenceGrade,
+      grade: formData.grade,
       currentDeprtmentId,
       tags: [],
     };
-  
+    console.log("complaintTypeOptions",requestBody);
+
     try {
       const response = await createDocument(requestBody);
       console.log("Response:", response);
 
-
-  
-      // Show success alert with the document number
-      // setAlert({
-      //   open: true,
-      //   severity: "success",
-      //   message: `पंजीयन सफलता पूर्वक हो गया है। दस्तावेज़ संख्या: ${response.data.document_number}`,
-      // });
-
       alert(`पंजीयन सफलता पूर्वक हो गया है। दस्तावेज़ संख्या: ${response.data.document_number}`);
       dispatch(setAlert("success", "पंजीयन सफलता पूर्वक हो गया है।"));
-  
-      // Reset form fields
+
       setFormData({
         registerId: "",
         unitNumber: "",
         departmentType: "",
         departmentName: "",
-        referenceNumber: "",
-        subject: "",
-        lastOccurrenceGrade: "",
+        // referenceNumber: "",
+        title: "",
+        grade: "",
         priority: "",
         description: "",
       });
-  
-      // Navigate to another page
+
       navigateToPage("/documents");
     } catch (error) {
       console.error("Failed to submit form:", error.message);
       dispatch(setAlert("error", "पंजीयन करने में त्रुटि हुई है। कृपया पुनः प्रयास करें।"));
-  
-      // Show error alert
-      // setAlert({
-      //   open: true,
-      //   severity: "error",
-      //   message: "पंजीयन करने में त्रुटि हुई है। कृपया पुनः प्रयास करें।",
-      // });
     }
   };
-  
 
   const departmentTypeOptions = [
     { value: "internal", label: "कार्यालय अंतर्गत मामले" },
@@ -212,27 +228,28 @@ const Form = () => {
             />
           </div>
 
+          {/* Render "शिकायत के प्रकार" dropdown dynamically */}
+          {complaintTypeOptions.length > 0 && (
+            <div>
+              <CustomSelect
+                label="शिकायत के प्रकार"
+                options={complaintTypeOptions}
+                value={formData.complaintType}
+                onChange={handleChange}
+                name="complaintType"
+                required
+              />
+            </div>
+          )}
+
           <div>
             <CustomInput
               label="पत्र शीर्षक"
-              name="subject"
-              value={formData.subject}
+              name="title"
+              value={formData.title}
               onChange={handleChange}
-              placeholder="Enter Subject"
+              placeholder="Enter title"
               type="text"
-              required
-            />
-          </div>
-
-          <div>
-            <InputLabel size="15px">विवरण</InputLabel>
-            <textarea
-              label="विवरण"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Enter Description"
-              className="w-[100%] h-20 p-2 border-2 border-gray-300 rounded-md resize-none"
               required
             />
           </div>
@@ -241,9 +258,9 @@ const Form = () => {
             <CustomSelect
               label="ग्रेड"
               options={gradeOptions}
-              value={formData.lastOccurrenceGrade}
+              value={formData.grade}
               onChange={handleChange}
-              name="lastOccurrenceGrade"
+              name="grade"
               required
             />
           </div>
@@ -258,6 +275,18 @@ const Form = () => {
               required
             />
           </div>
+
+          <div>
+            <label>विवरण</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Enter Description"
+              className="w-[100%] h-20 p-2 border-2 border-gray-300 rounded-md resize-none"
+              required
+            />
+          </div>
         </div>
 
         <div className="mt-6">
@@ -269,18 +298,6 @@ const Form = () => {
           </button>
         </div>
       </form>
-
-      {/* MUI Snackbar for Alerts */}
-      {/* <Snackbar
-        open={alert.open}
-        autoHideDuration={6000}
-        onClose={handleAlertClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={handleAlertClose} severity={alert.severity} sx={{ width: "100%" }}>
-          {alert.message}
-        </Alert>
-      </Snackbar> */}
     </div>
   );
 };

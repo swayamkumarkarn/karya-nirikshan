@@ -16,6 +16,7 @@ export const fetchDepartments = async (type) => {
 
 // Create document
 export const createDocument = async (documentData) => {
+  console.log("document data",documentData);
   const data = await request("/document/create", {
     method: 'POST',
     body: JSON.stringify(documentData),
@@ -23,3 +24,10 @@ export const createDocument = async (documentData) => {
   return data;
 };
 
+// Fetch category list by ID
+export const fetchCategoryList = async (id) => {
+  if (!id) throw new Error("ID is required to fetch category list");
+  
+  const data = await request(`/category/getlist/${id}`);
+  return data?.data ;
+};
