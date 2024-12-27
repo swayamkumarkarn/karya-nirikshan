@@ -1,20 +1,45 @@
-import React from "react";
-// import { FiSearch } from "react-icons/fi";
-import { FaPlus } from "react-icons/fa6";
-import SearchBar from "../Common/Searchbar";
+import React, { useState } from "react";
+import { FaPlus, FaPaperPlane } from "react-icons/fa6";
 import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
-import CustomButton from "../Common/CustomButton";
-import navigateToPage from "../../lib/functionality/navigation";
-import { useState } from "react";
-import NotificationTable from "../NotificationAction/index";
 import { useSelector } from "react-redux";
+import SearchBar from "../Common/Searchbar";
+import CustomButton from "../Common/CustomButton";
+import NotificationTable from "../NotificationAction";
+import navigateToPage from "../../lib/functionality/navigation";
+import { fetchSearchData } from "../../services/searchService";
 
 const Header = ({ toggleSidebar, isSidebarOpen }) => {
   const [open, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
   const userData = useSelector((state) => state?.auth?.user?.data);
+
+  const handleSearch = async () => {
+    if (!searchQuery) {
+      alert("कृपया खोजने के लिए कुछ दर्ज करें!");
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const response = await fetchSearchData(searchQuery.toUpperCase());
+      setSearchResults(response.data);
+      if (response.data.id) {
+        navigateToPage(`/track-doc/${response.data.id}`);
+      } else {
+        alert(`दस्तावेज़ नहीं मिला: ${searchQuery}`);
+      }
+    } catch (err) {
+      console.error("खोजने में विफल:", err.message);
+      alert("खोजने में त्रुटि हुई। कृपया पुनः प्रयास करें।");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <header
-      className={` text-black px-6 py-4 flex items-center transition-all duration-300 ${
+      className={`text-black px-6 py-4 flex items-center transition-all duration-300 ${
         isSidebarOpen ? "w-[100%]" : "w-full"
       }`}
     >
@@ -27,42 +52,35 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
           onClick={() => console.log("बटन क्लिक किया गया!")}
           size="small"
         />
-
-        <div className="flex gap-5  ">
-          <div className="relative flex-grow">
-            <SearchBar
-              placeholder="दस्तावेज़ विवरण से खोजें..."
-              onChange={(e) => console.log(e.target.value)} // आप यहाँ खोज लॉजिक लागू कर सकते हैं
-            />
-          </div>
-
+        <div className="flex gap-4 items-center">
+          <SearchBar
+            placeholder="दस्तावेज़ विवरण से खोजें..."
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
           <CustomButton
-          text={"नया दस्तावेज"}
-            // onlyIcon
+            onlyIcon
+            color="white"
+            background="black"
+            startIcon={<FaPaperPlane className="text-md" />}
+            onClick={handleSearch}
+            size="small"
+            disabled={isLoading} // Disable while loading
+          />
+          <CustomButton
+            text="नया दस्तावेज"
             color="yellow"
             startIcon={<FaPlus className="text-xl font-bold" />}
             onClick={() => navigateToPage("/form")}
             size="small"
           />
         </div>
-
-        {/* <button className="bg-black text-white px-8 py-2 rounded font-semibold shadow-md">
-          अनुरोध
-        </button> */}
-
         <CustomButton
-          text={"आवक दस्तावेज"}
+          text="आवक दस्तावेज"
           variant="contained"
-          size={"small"}
-          onClick={() => {
-            setOpen(true);
-          }}
-          // sx={{
-          //   padding: "7px 24px",
-          // }}
+          size="small"
+          onClick={() => setOpen(true)}
         />
       </div>
-
       <button onClick={toggleSidebar}>
         <div
           className={`flex items-center space-x-4 cursor-pointer p-2 px-4 rounded-lg bg-black text-white transition-all duration-300 ${
@@ -74,7 +92,7 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
           </div>
           <div className="text-center">
             <p className="text-md">{userData?.department_hindi_name}</p>
-            <p className="text-sm">{userData?.name} </p> 
+            <p className="text-sm">{userData?.name}</p>
           </div>
         </div>
       </button>
