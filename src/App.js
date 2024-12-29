@@ -2,12 +2,15 @@
 import React, { Suspense } from "react";
 import { RouteManager } from "./RouteManager";
 import Loader from "./components/Loader";
+import { RefreshProvider } from "./contexts/RefreshContext"; // Import RefreshProvider
 
 const App = () => {
   return (
-    <Suspense fallback={<Loader />}>
-      <RouteManager />
-    </Suspense> 
+    <RefreshProvider>
+      <Suspense fallback={<Loader />}>
+        <RouteManager />
+      </Suspense>
+    </RefreshProvider>
   );
 };
 

@@ -5,10 +5,15 @@ import CustomButton from '../Common/CustomButton';
 import { docDispose } from '../../services/documentService';
 import {setAlert,clearAlert} from "../../redux/actions/alert";
 import { useSelector, useDispatch } from "react-redux";
+import { useRefresh } from "../../contexts/RefreshContext";
 
-const AllResolve = ({ open, setOpen, documentId, userId }) => {
+const AllResolve = ({ open, setOpen, documentId, userId , onLogCreated }) => {
     const [remark, setRemark] = useState('');
     const dispatch = useDispatch();
+      const { triggerRefresh } = useRefresh();
+
+    
+         const [logData, setLogData] = useState("");
 
     const handleAccept = async () => {
         try {
@@ -22,6 +27,11 @@ const AllResolve = ({ open, setOpen, documentId, userId }) => {
             
             dispatch(setAlert("success", "दस्तावेज़ निराकरण पूर्ण हुआ।"));
             setOpen(false); // Close the popup after accepting
+            setLogData("");
+            if (onLogCreated) {
+              onLogCreated(); // Notify parent to refresh logs
+            }
+            triggerRefresh(); 
         } catch (error) {
             console.error('Error disposing document:', error);
             

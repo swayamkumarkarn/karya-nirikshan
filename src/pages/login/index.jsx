@@ -6,7 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import TypeWriter from "../../components/Common/TypeWriter";
 import navigateToPage from "../../lib/functionality/navigation";
-import {setAlert,clearAlert} from "../../redux/actions/alert"
+import { setAlert, clearAlert } from "../../redux/actions/alert"
+import { submitAction } from "../../services/NotificationService";
 
 function FormInput({ label, id, type, value, onChange }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -58,10 +59,7 @@ function FormInput({ label, id, type, value, onChange }) {
 const LoginPage = () => {
   const userData = useSelector((state) => state?.auth?.user);
   const [formData, setFormData] = useState({ username: "", password: "" });
-
   const [loading, setLoading] = useState(false);
-  
-
   const dispatch = useDispatch(); // Use Redux dispatch
 
   const handleChange = (e) => {
@@ -71,32 +69,31 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     setLoading(true);
-   
 
     try {
-        const response = await login(formData); // Call the login service
-        console.log("Login successful:", response);
+      const response = await login(formData); // Call the login service
+      console.log("Login successful:", response);
 
-        // Dispatch the user data to the Redux store
-        dispatch(SAVE_USER_DATA(response));
+      // Dispatch the user data to the Redux store
+      dispatch(SAVE_USER_DATA(response));
 
-        // Dispatch success alert
-        dispatch(setAlert("success", "कार्य निरीक्षण में आपका स्वागत है।"));
+      // Dispatch success alert
+      dispatch(setAlert("success", "कार्य निरीक्षण में आपका स्वागत है।"));
 
-        // Navigate after clearing the alert
-        setTimeout(() => {
-            dispatch(clearAlert());
-            navigateToPage("/");
-        }, 1000);
+      // Navigate after clearing the alert
+      setTimeout(() => {
+        dispatch(clearAlert());
+        navigateToPage("/");
+      }, 1000);
     } catch (err) {
-        console.error("Login failed:", err.message);
+      console.error("Login failed:", err.message);
 
-        // Dispatch error alert
-        dispatch(setAlert("error", "कृपया अपना लॉगिन आईडी और पासवर्ड जांचें।"));
+      // Dispatch error alert
+      dispatch(setAlert("error", "कृपया अपना लॉगिन आईडी और पासवर्ड जांचें।"));
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-};
+  };
 
 
 
@@ -106,7 +103,10 @@ const LoginPage = () => {
 
   return (
     <div className="h-screen flex justify-center items-center relative bg-[#F6F6F6]">
-      <div className="relative bg-white px-16 py-6  pb-10 rounded-xl flex flex-col items-center w-contain z-10 overflow-hidden">
+      <div
+        className="relative bg-white px-16 py-6 pb-10 rounded-xl flex flex-col items-center w-contain z-10 overflow-hidden"
+       // Attach the keydown event listener here
+      >
         <div className="absolute bottom-0 left-0 h-[20%] w-auto">
           <img
             src="/assets/svg/Union.svg"
@@ -138,32 +138,33 @@ const LoginPage = () => {
         </div>
 
         {/* Form Inputs */}
-        <FormInput
-          label={"उपयोगकर्ता नाम"}
-          id="username"
-          type="text"
-          value={formData.username}
-          onChange={handleChange}
-        />
-        <FormInput
-          label="पासवर्ड"
-          id="password"
-          type="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-
-       
-
-        <div className="mt-2 mb-8 min-w-40">
-          <CustomButton
-            text={loading ? "Logging in..." : "Login"}
-            fullWidth
-            sx={{ height: "45px", borderRadius: "23px" }}
-            onClick={handleLogin}
-            disabled={loading}
+        <form>
+          <FormInput
+            label={"यूज़रनेम / नाम"}
+            id="username"
+            type="text"
+            value={formData.username}
+            onChange={handleChange}
           />
-        </div>
+          <FormInput
+            label="पासवर्ड"
+            id="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+
+          <div className="mt-2 mb-8 min-w-40">
+            <CustomButton
+              text={loading ? "Logging in..." : "Login"}
+              fullWidth
+              sx={{ height: "45px", borderRadius: "23px" }}
+              onClick={handleLogin}
+              disabled={loading}
+              type={submitAction}
+            />
+          </div>
+        </form>
       </div>
       {/* Background Right Image */}
       <div className="absolute top-0 right-0 h-screen w-auto">
@@ -194,6 +195,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
 
 export const meta = {
   title: "लॉगिन पृष्ठ",

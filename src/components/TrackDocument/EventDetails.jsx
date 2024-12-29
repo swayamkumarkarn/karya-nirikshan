@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { getEventLogById } from "../../services/documentService";
+import { useRefresh } from "../../contexts/RefreshContext";
 
-const EventDetails = ({ id }) => {
+const EventDetails = ({ id , refresh }) => {
   const [eventLogs, setEventLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [logs, setLogs] = useState([]);
 
-  useEffect(() => {
+  const { refreshData, resetRefresh } = useRefresh();
+ 
+
+  
     const fetchEventLogs = async () => {
       try {
         const response = await getEventLogById(id);
@@ -21,11 +26,12 @@ const EventDetails = ({ id }) => {
         setLoading(false);
       }
     };
+    useEffect(() => {
 
     fetchEventLogs();
-  }, [id]);
+  }, [id,refresh,refreshData]);
 
-  // console.log("object",eventLogs);
+  
 
   if (loading) {
     return (

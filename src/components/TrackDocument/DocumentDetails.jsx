@@ -7,8 +7,9 @@ import Forward from "../ActionButtons/forward";
 import AllResolve from "../ActionButtons/allResolve";
 import { useSelector } from "react-redux";
 import QRScanner from "./QRScanner";
+import { useRefresh } from "../../contexts/RefreshContext";
 
-const DocumentDetails = ({ id }) => {
+const DocumentDetails = ({ id, onLogCreated ,refresh}) => {
   const [document, setDocument] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,24 +20,28 @@ const DocumentDetails = ({ id }) => {
   const [resolveOpen, setResolveOpen] = useState(false);
   const [forwardOpen, setForwardOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchDocument = async () => {
-      try {
-        const response = await getDocumentById(id);
-        if (response?.data) {
-          setDocument(response.data);
-        } else {
-          setError("Document not found.");
-        }
-      } catch (err) {
-        setError("Failed to fetch document.");
-      } finally {
-        setLoading(false);
+  const { refreshData, resetRefresh } = useRefresh();
+
+
+
+  const fetchDocument = async () => {
+    try {
+      const response = await getDocumentById(id);
+      if (response?.data) {
+        setDocument(response.data);
+      } else {
+        setError("Document not found.");
       }
-    };
+    } catch (err) {
+      setError("Failed to fetch document.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
 
     fetchDocument();
-  }, [id]);
+  }, [id,refresh, refreshData]);
 
   // console.log("object",document);
 
@@ -96,7 +101,7 @@ const DocumentDetails = ({ id }) => {
     <div className="px-4 py-3">
       <div className="grid grid-cols-2 min-w-full">
         <span className="text-xl font-bold mb-1">दस्तावेज़ विवरण</span>
-        <span className="text-xl font-bold mb-1">QR स्कैनर</span>
+        {/* <span className="text-xl font-bold mb-1">QR स्कैनर</span> */}
       </div>
       <div className="grid grid-cols-2 min-w-full">
         <div className="border rounded-lg shadow-md p-6 w-full bg-white max-w-xl ">
@@ -134,13 +139,12 @@ const DocumentDetails = ({ id }) => {
             <span className="font-semibold">ग्रेड:</span>
             <span>
               <div
-                className={`w-fit px-3 font-semibold rounded-lg ${
-                  document.grade === "A"
+                className={`w-fit px-3 font-semibold rounded-lg ${document.grade === "A"
                     ? "bg-red-100 text-red-800"
                     : document.grade === "B"
-                    ? "bg-yellow-100 text-yellow-800"
-                    : "bg-green-100 text-green-800"
-                }`}
+                      ? "bg-yellow-100 text-yellow-800"
+                      : "bg-green-100 text-green-800"
+                  }`}
               >
                 ग्रेड - {document.grade}
               </div>
@@ -153,23 +157,22 @@ const DocumentDetails = ({ id }) => {
 
             <span className="font-semibold">स्थिति:</span>
             <span
-              className={`w-fit px-3 font-semibold ${
-                document.status === "created"
+              className={`w-fit px-3 font-semibold ${document.status === "created"
                   ? "bg-yellow-100 rounded-lg text-yel"
                   : document.status === "pending"
-                  ? "bg-orange-100 rounded-lg text-orange-500"
-                  : document.status === "completed"
-                  ? "bg-green-100 rounded-lg text-green-700"
-                  : "bg-red-100 rounded-lg text-red-800"
-              }`}
+                    ? "bg-orange-100 rounded-lg text-orange-500"
+                    : document.status === "completed"
+                      ? "bg-green-100 rounded-lg text-green-700"
+                      : "bg-red-100 rounded-lg text-red-800"
+                }`}
             >
               {document.status === "created"
                 ? "निर्मित"
                 : document.status === "pending"
-                ? "प्रतीक्षित"
-                : document.status === "completed"
-                ? "पूर्ण"
-                : "निष्क्रिय"}
+                  ? "प्रतीक्षित"
+                  : document.status === "completed"
+                    ? "पूर्ण"
+                    : "निष्क्रिय"}
             </span>
           </div>
           <div>
@@ -179,33 +182,40 @@ const DocumentDetails = ({ id }) => {
                 {/* <CustomButton text={"शाखा निस्तारित"}  onClick={() => setAcceptOpen(true)} /> */}
                 <CustomButton
                   text={"अपडेट करें"}
-                  sx={{fontSize:"14px"}}
+                  sx={{ fontSize: "14px" }}
                   size="small"
                   fullWidth
                   onClick={() => setUpdateOpen(true)}
                 />
-                <CustomButton
-                  text={"पूर्ण निस्तारित "}
-                  sx={{fontSize:"14px"}}
-                   size="small"
-                   fullWidth
-                  onClick={() => setResolveOpen(true)}
-                />
+                {document.status != "completed" && (
+                  <CustomButton
+                    text={"पूर्ण निराकृत "}
+                    sx={{ fontSize: "14px" }}
+                    size="small"
+                    fullWidth
+                    onClick={() => setResolveOpen(true)}
+                  />
+
+                )}
+
+                {document.status != "completed" && (
+
                 <CustomButton
                   text={"आगे बढ़ाएं"}
-                  sx={{fontSize:"14px"}}
-                   size="small"
-                   fullWidth
+                  sx={{ fontSize: "14px" }}
+                  size="small"
+                  fullWidth
                   onClick={() => setForwardOpen(true)}
                 />
+                 )}
               </div>
             )}
           </div>
         </div>
 
-        <div className="">
+        {/* <div className="">
           <QRScanner value={`https://karya-nirikshan.vercel.app/open-track-doc/${id}`} />
-        </div>
+        </div> */}
       </div>
       {/* <DepartmentResolve open={acceptOpen} setOpen={setAcceptOpen}  /> */}
       <Update
@@ -214,12 +224,15 @@ const DocumentDetails = ({ id }) => {
         documentId={document.id}
         handledDepartmentId={user.department_id}
         handledUserId={user.id}
+        onLogCreated={onLogCreated}
       />
+
       <AllResolve
         open={resolveOpen}
         setOpen={setResolveOpen}
         userId={user.id}
         documentId={document.id}
+        onLogCreated={onLogCreated}
       />
       <Forward
         open={forwardOpen}
@@ -227,6 +240,7 @@ const DocumentDetails = ({ id }) => {
         documentId={document.id}
         forwardedBy={user.id}
         fromDepartmentId={user.department_id}
+        onLogCreated={onLogCreated}
       />
     </div>
   );

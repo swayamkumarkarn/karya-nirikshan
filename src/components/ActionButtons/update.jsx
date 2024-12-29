@@ -7,11 +7,13 @@ import { updateLog } from '../../services/documentService'; // Adjust the path a
 import {setAlert,clearAlert} from "../../redux/actions/alert";
 import { useSelector, useDispatch } from "react-redux";
 
-const UpdatePopup = ({ open, setOpen, documentId, handledDepartmentId, handledUserId }) => {
+const UpdatePopup = ({ open, setOpen, documentId, handledDepartmentId, handledUserId , onLogCreated }) => {
     const [action, setAction] = useState('');
     const [remark, setRemark] = useState('');
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
+
+    const [logData, setLogData] = useState("");
   
 
     const handleUpdate = async () => {
@@ -44,6 +46,11 @@ const UpdatePopup = ({ open, setOpen, documentId, handledDepartmentId, handledUs
             console.log('Document Updated:', response);
             // setAlert({ open: true, severity: 'success', message: 'दस्तावेज़ सफलतापूर्वक अपडेट हो गया! दस्तावेज़ अपडेट करने में विफल।' });
             dispatch(setAlert("success", "दस्तावेज़ सफलतापूर्वक अपडेट हो गया!"));
+
+            setLogData("");
+            if (onLogCreated) {
+              onLogCreated(); // Notify parent to refresh logs
+            }
           
             setOpen(false);
         } catch (err) {
