@@ -9,12 +9,19 @@ const TrackDocId = () => {
   const { id } = useParams();
 
   // id="968ef1b5-1d0d-4c07-9374-067b748d1e06"
+
+  const [refreshLogs, setRefreshLogs] = useState(false);
+
+  // Function to toggle refresh state
+  const triggerLogRefresh = () => {
+    setRefreshLogs((prev) => !prev);
+  };
   return (
     <>
-      <DocumentDetails id={id} />
+      <DocumentDetails id={id} onLogCreated={triggerLogRefresh} refresh={refreshLogs}/>
 
       <div className="w-[90%]">
-        <EventDetails id={id} />
+        <EventDetails id={id} refresh={refreshLogs} />
       </div>
     </>
   );

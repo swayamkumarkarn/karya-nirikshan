@@ -16,6 +16,7 @@ import { submitAction } from "../../../services/NotificationService";
 import CustomTypo from "../CustomTypo/CustomTypo";
 import CardWrap from "../CardWrap";
 import CustomButton from "../CustomButton";
+import { useRefresh } from "../../../contexts/RefreshContext";
 
 const CustomTable = ({
   title,
@@ -31,6 +32,8 @@ const CustomTable = ({
     severity: "success",
   });
 
+
+  const { triggerRefresh } = useRefresh();
   const userId = useSelector((state) => state?.auth?.user?.data?.id);
 
   const handleAction = async (rowIndex, actionType, rowId) => {
@@ -52,7 +55,8 @@ const CustomTable = ({
         severity: "success",
       });
   
-      refetchData(); // Refetch the data after a successful action
+      refetchData();
+      triggerRefresh(); // Refetch the data after a successful action
     } catch (error) {
       console.error(`Error during ${actionType.toLowerCase()} action:`, error);
       setAlertData({

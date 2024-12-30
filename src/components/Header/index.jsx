@@ -7,6 +7,7 @@ import CustomButton from "../Common/CustomButton";
 import NotificationTable from "../NotificationAction";
 import navigateToPage from "../../lib/functionality/navigation";
 import { fetchSearchData } from "../../services/searchService";
+import { submitAction } from "../../services/NotificationService";
 
 const Header = ({ toggleSidebar, isSidebarOpen }) => {
   const [open, setOpen] = useState(false);
@@ -37,11 +38,12 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
     }
   };
 
+
+
   return (
     <header
-      className={`text-black px-6 py-4 flex items-center transition-all duration-300 ${
-        isSidebarOpen ? "w-[100%]" : "w-full"
-      }`}
+      className={`text-black px-6 py-4 flex items-center transition-all duration-300 ${isSidebarOpen ? "w-[100%]" : "w-full"
+        }`}
     >
       <div className="flex items-start space-x-4 flex-grow">
         <CustomButton
@@ -52,20 +54,23 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
           onClick={() => console.log("बटन क्लिक किया गया!")}
           size="small"
         />
-        <div className="flex gap-4 items-center">
-          <SearchBar
-            placeholder="दस्तावेज़ विवरण से खोजें..."
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <CustomButton
-            onlyIcon
-            color="white"
-            background="black"
-            startIcon={<FaPaperPlane className="text-md" />}
-            onClick={handleSearch}
-            size="small"
-            disabled={isLoading} // Disable while loading
-          />
+        <div className="flex gap-4 items-center" >
+          <form className="flex gap-4 items-center" >
+            <SearchBar
+              placeholder="दस्तावेज़ विवरण से खोजें..."
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <CustomButton
+              onlyIcon
+              type={submitAction}
+              color="white"
+              background="black"
+              startIcon={<FaPaperPlane className="text-md" />}
+              onClick={handleSearch}
+              size="small"
+              disabled={isLoading} // Disable while loading
+            />
+          </form>
           <CustomButton
             text="नया दस्तावेज"
             color="yellow"
@@ -83,9 +88,8 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
       </div>
       <button onClick={toggleSidebar}>
         <div
-          className={`flex items-center space-x-4 cursor-pointer p-2 px-4 rounded-lg bg-black text-white transition-all duration-300 ${
-            isSidebarOpen ? "mr-80" : "mr-0"
-          }`}
+          className={`flex items-center space-x-4 cursor-pointer p-2 px-4 rounded-lg bg-black text-white transition-all duration-300 ${isSidebarOpen ? "mr-80" : "mr-0"
+            }`}
         >
           <div className="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center font-bold">
             {userData?.department_name[0]}

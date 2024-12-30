@@ -71,7 +71,7 @@ const Form = () => {
   const handleChange = async (e) => {
     const { name, value } = e.target;
 
-   
+
     setFormData({
       ...formData,
       [name]: value,
@@ -85,7 +85,7 @@ const Form = () => {
 
       // If the selected department is "शिकायत शाखा", fetch complaint types
       if (selectedDepartment && selectedDepartment.label === "शिकायत शाखा") {
-        console.log("object",value);
+        console.log("object", value);
         try {
           const categoryList = await fetchCategoryList(value); // Pass department ID
           const options = categoryList.map((item) => ({
@@ -106,7 +106,7 @@ const Form = () => {
   // console.log("departmentOptions",departmentOptions);
   // console.log("complaintTypeOptions",complaintTypeOptions);
 
-  console.log("formdata",formData);
+  console.log("formdata", formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,7 +116,7 @@ const Form = () => {
 
     const requestBody = {
       createdBy,
-      category_id : formData.complaintType ,
+      category_id: formData.complaintType,
       registerId: formData.registerId,
       dispatchDocNumber: formData.unitNumber,
       departmentId: formData.departmentName,
@@ -127,7 +127,7 @@ const Form = () => {
       currentDeprtmentId,
       tags: [],
     };
-    console.log("complaintTypeOptions",requestBody);
+    console.log("complaintTypeOptions", requestBody);
 
     try {
       const response = await createDocument(requestBody);
@@ -196,11 +196,11 @@ const Form = () => {
 
           <div>
             <CustomInput
-              label="दर्ज संख्या"
+              label="आवक-जावक संख्या"
               name="unitNumber"
               value={formData.unitNumber}
               onChange={handleChange}
-              placeholder="Enter Unit Number"
+              placeholder="Enter Dispatch Number"
               type="text"
               required
             />
@@ -254,27 +254,8 @@ const Form = () => {
             />
           </div>
 
-          <div>
-            <CustomSelect
-              label="ग्रेड"
-              options={gradeOptions}
-              value={formData.grade}
-              onChange={handleChange}
-              name="grade"
-              required
-            />
-          </div>
 
-          <div>
-            <CustomSelect
-              label="प्राथमिकता"
-              options={priorityOptions}
-              value={formData.priority}
-              onChange={handleChange}
-              name="priority"
-              required
-            />
-          </div>
+
 
           <div>
             <label>विवरण</label>
@@ -286,6 +267,32 @@ const Form = () => {
               className="w-[100%] h-20 p-2 border-2 border-gray-300 rounded-md resize-none"
               required
             />
+          </div>
+          <div className="md:grid-cols-1 gap-4">
+            {complaintTypeOptions.length > 0 && (
+              <div className="mb-3">
+                <CustomSelect
+                  label="ग्रेड"
+                  options={gradeOptions}
+                  value={formData.grade}
+                  onChange={handleChange}
+                  name="grade"
+                  required
+                />
+              </div>
+            )}
+            {complaintTypeOptions.length > 0 && (
+              <div>
+                <CustomSelect
+                  label="प्राथमिकता"
+                  options={priorityOptions}
+                  value={formData.priority}
+                  onChange={handleChange}
+                  name="priority"
+                  required
+                />
+              </div>
+            )}
           </div>
         </div>
 

@@ -8,12 +8,14 @@ import { docForward } from "../../services/documentService";
 import {setAlert,clearAlert} from "../../redux/actions/alert";
 import { useSelector, useDispatch } from "react-redux";
 
-const ForwardPopup = ({ open, setOpen, documentId, fromDepartmentId, forwardedBy }) => {
+const ForwardPopup = ({ open, setOpen, documentId, fromDepartmentId, forwardedBy , onLogCreated }) => {
     const [departmentType, setDepartmentType] = useState("");
     const [toDepartmentId, setToDepartmentId] = useState("");
     const [remarks, setRemarks] = useState("");
     const [departmentOptions, setDepartmentOptions] = useState([]);
     const dispatch = useDispatch();
+
+     const [logData, setLogData] = useState("");
 
     useEffect(() => {
         const getDepartments = async () => {
@@ -59,6 +61,10 @@ const ForwardPopup = ({ open, setOpen, documentId, fromDepartmentId, forwardedBy
                 setToDepartmentId("");
                 setRemarks("");
                 setOpen(false); // Close the popup after forwarding
+                setLogData("");
+                if (onLogCreated) {
+                  onLogCreated(); // Notify parent to refresh logs
+                }
             } else {
                 
                 dispatch(setAlert("error", `त्रुटि: ${response.message}`));
