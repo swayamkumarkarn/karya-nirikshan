@@ -32,6 +32,8 @@ const CustomTable = ({
     severity: "success",
   });
 
+  console.log("rows",rows);
+
 
   const { triggerRefresh } = useRefresh();
   const userId = useSelector((state) => state?.auth?.user?.data?.id);

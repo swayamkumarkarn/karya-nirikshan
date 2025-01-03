@@ -29,6 +29,7 @@ const DocumentDetails = ({ id, onLogCreated ,refresh}) => {
       const response = await getDocumentById(id);
       if (response?.data) {
         setDocument(response.data);
+        
       } else {
         setError("Document not found.");
       }
@@ -43,7 +44,7 @@ const DocumentDetails = ({ id, onLogCreated ,refresh}) => {
     fetchDocument();
   }, [id,refresh, refreshData]);
 
-  // console.log("object",document);
+  console.log("object",document);
 
   if (loading) {
     return (

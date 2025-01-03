@@ -42,6 +42,7 @@ const App = ({ open, setOpen }) => {
       fetchData();
     }
   }, [departmentId]);
+  console.log("new rows",tableRows);
 
   return (
     <div style={{ padding: "20px" }}>

@@ -176,7 +176,7 @@ const Form = () => {
     <div className="bg-gray-100 min-h-screen flex  w-full justify-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-lg shadow-md  w-[60%] fixed"
+        className=" p-6 rounded-lg   w-[60%] fixed"
       >
         <h2 className="text-xl font-bold mb-4 justify-center flex">
           दस्तावेज़ पंजीयन (Document Registration)
@@ -191,6 +191,7 @@ const Form = () => {
               onChange={handleChange}
               name="registerId"
               required
+              
             />
           </div>
 
@@ -253,10 +254,6 @@ const Form = () => {
               required
             />
           </div>
-
-
-
-
           <div>
             <label>विवरण</label>
             <textarea
@@ -264,7 +261,7 @@ const Form = () => {
               value={formData.description}
               onChange={handleChange}
               placeholder="Enter Description"
-              className="w-[100%] h-20 p-2 border-2 border-gray-300 rounded-md resize-none"
+              className="w-[100%] h-20 p-2 border-2 bg-gray rounded-md resize-none"
               required
             />
           </div>

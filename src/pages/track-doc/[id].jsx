@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 
 const TrackDocId = () => {
   const { id } = useParams();
+  console.log("id :",id);
 
   // id="968ef1b5-1d0d-4c07-9374-067b748d1e06"
 

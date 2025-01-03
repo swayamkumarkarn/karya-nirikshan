@@ -8,6 +8,7 @@ import NotificationTable from "../NotificationAction";
 import navigateToPage from "../../lib/functionality/navigation";
 import { fetchSearchData } from "../../services/searchService";
 import { submitAction } from "../../services/NotificationService";
+import { FiSearch } from 'react-icons/fi';
 
 const Header = ({ toggleSidebar, isSidebarOpen }) => {
   const [open, setOpen] = useState(false);
@@ -65,7 +66,7 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
               type={submitAction}
               color="white"
               background="black"
-              startIcon={<FaPaperPlane className="text-md" />}
+              startIcon={ <FiSearch className=" cursor-pointer"  size={20} />}
               onClick={handleSearch}
               size="small"
               disabled={isLoading} // Disable while loading
@@ -79,12 +80,12 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
             size="small"
           />
         </div>
-        <CustomButton
+        {/* <CustomButton
           text="आवक दस्तावेज"
           variant="contained"
           size="small"
           onClick={() => setOpen(true)}
-        />
+        /> */}
       </div>
       <button onClick={toggleSidebar}>
         <div
